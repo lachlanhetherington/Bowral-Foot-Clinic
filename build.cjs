@@ -158,6 +158,7 @@ async function normalize(tab, page) {
         try {
           const url=new URL(target,'https://thebowralfootclinic.com.au');
           if (/nookal\.com$/.test(url.hostname)||/\/book-online\/?$/.test(url.pathname)) node.href=booking;
+          else if (url.hostname==='thebowralfootclinic.com.au' && url.pathname==='/team/') node.setAttribute('href','/our-team/');
           else if (/^(https?:|tel:|mailto:)$/.test(url.protocol)) node.setAttribute('href', url.hostname==='thebowralfootclinic.com.au' && known.includes(url.pathname) ? url.pathname+url.hash : url.href);
           else node.replaceWith(...node.childNodes);
         } catch {node.replaceWith(...node.childNodes);}
@@ -166,6 +167,7 @@ async function normalize(tab, page) {
     }
     return wrapper.innerHTML.replace(/Prospect Podiatry/gi,'The Bowral Foot Clinic').replace(/Our Location Accross NSW/gi,'Our locations across NSW')
       .replace(/Monday-Friday:\s*9:00am\s*[–-]\s*5:00pm<br>Weekend:\s*Closed/gi,'Monday to Friday: 8:30 am to 5:30 pm<br>Saturday: 8:30 am to 12 pm<br>Sunday: Closed')
+      .replace(/(?:\(02\)|02)\s*4861\s*3123/g,'(02) 4005 2668')
       .replace(/[—–]/g,' - ').replace(/\u200b/g,'');
   }), {payload,known:pages.map(p=>p.slug?'/'+p.slug+'/':'/'),booking});
   payload.forEach((block,i)=>block.clean=sanitized[i]);
