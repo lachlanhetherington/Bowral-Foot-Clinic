@@ -201,11 +201,26 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 .footer-top p { margin-bottom: 0; }
 .footer-bottom { border-top: 1px solid #ffffff45; padding-top: 1.4rem; font-size: .88rem; }
 .page-hero { padding-block: clamp(2.5rem, 5vw, 5rem); }
-.page-hero h1 { font-size: clamp(2.2rem, 4.3vw, 4.1rem); font-weight: 600; }
+.page-hero h1 { font-size: clamp(2.2rem, 4.3vw, 4.1rem); font-weight: 600; text-wrap: balance; }
+.page-hero .split { gap: 1rem clamp(1.75rem, 5vw, 4.75rem); }
+.page-hero .breadcrumb { grid-column: 1 / -1; }
+.page-hero img { aspect-ratio: 4/3; }
+.page-hero-copy p { color: var(--muted); }
 .breadcrumb { margin-bottom: .85rem; font-size: .9rem; color: var(--muted); }
 .prose { max-width: 49rem; }
 .prose :is(h2,h3,h4):not(:first-child), .prose section { margin-top: 1.5em; }
 .prose figure { margin-block: 1.75rem; }
+.interior-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(15rem, .4fr); gap: clamp(1.75rem, 5vw, 5rem); align-items: start; }
+.interior-layout .prose h2 { font-size: clamp(1.45rem, 2.6vw, 2.4rem); }
+.interior-layout .prose a { overflow-wrap: anywhere; }
+.appointment-sidebar { position: sticky; top: 7rem; padding: clamp(1.2rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: var(--radius); background: var(--tint); }
+.appointment-sidebar h2 { font-size: 1.35rem; }
+.appointment-sidebar .sidebar-phone { margin: .75rem 0; }
+.related-care .care-card-body > span:not(.text-link) { color: var(--muted); }
+.booking-steps { padding-inline-start: 1.6rem; }
+.booking-steps li { padding-inline-start: .4rem; }
+.booking-steps li + li { border-top: 1px solid var(--line); padding-top: .8rem; }
+.booking-steps li::marker { color: var(--link); font-weight: 600; }
 .menu-toggle { display: none; }
 @media (max-width: 68rem) {
   .header-inner { gap: 1rem; }
@@ -234,6 +249,9 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .mega-links { grid-template-columns: 1fr; padding: .4rem; }
   .mega-links a { align-items: center; }
   .hero-inner, .split, .faq { grid-template-columns: 1fr; }
+  .interior-layout { grid-template-columns: 1fr; }
+  .appointment-sidebar { position: static; }
+  .page-hero img { aspect-ratio: 16/10; }
   .home .header { margin-bottom: -65px; }
   .home .header:not(.scrolled):has(.menu-toggle[aria-expanded="true"]) { background: #102e43; }
   .hero-inner { padding-block: 8rem 2rem; min-height: 0; }

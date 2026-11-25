@@ -1,7 +1,7 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
-const { execFileSync } = require('node:child_process');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
+const { photography, care } = require('./interior-data.cjs');
 const source = require('../Incoming/source-audit.json');
 const pages = source.filter(page => page.group !== 'reference');
 const home = pages.find(page => !page.slug);
@@ -12,6 +12,7 @@ const reviewsListing = 'https://maps.app.goo.gl/U7JjjtqZqgvtb4Z99';
 const phone = '<a href="tel:+61240052668">(02) 4005 2668</a>';
 const assetCache = new Map();
 const treatmentImages = new Map();
+const interiorImages = new Map();
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const book = () => `<a class="button" href="${booking}">Book a Session <span aria-hidden="true">↗</span></a>`;
 const titleFor = page => ({'our-team':'Meet the Team', 'biomechanics':'Biomechanics','podiatrist-southern-highlands':'Southern Highlands','podiatrists-moss-vale':'Moss Vale','podiatrists-wollondilly':'Wollondilly'}[page.slug] || page.headings[0]);
@@ -33,9 +34,6 @@ async function asset(url) {
 }
 
 function image(file, alt='', eager=false) {
-  if (file==='assets/bowral-shopfront.webp') {
-    return `<img src="${file}" srcset="assets/bowral-shopfront-mobile.webp 800w, ${file} 1600w" sizes="100vw" alt="${esc(alt)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">`;
-  }
   return file ? `<img src="${file}" alt="${esc(alt)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">` : '';
 }
 
@@ -186,24 +184,60 @@ function homepage(hero,team) {
   <section class="section network"><div class="wrap"><div class="section-heading"><h2>Our clinic network</h2></div><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
 }
 
-function interior(page,hero,team) {
+function clinicSection(tinted=true) {
+  return `<section class="section${tinted?' tint':''}"><div class="wrap"><h2>Plan your visit to Bowral</h2>${visit()}</div></section>`;
+}
+
+function relatedCare(slugs) {
+  const items = slugs.map(slug => pages.find(p=>p.slug===slug));
+  return `<section class="section tint related-care"><div class="wrap"><h2>Explore related care</h2><div class="care-grid">${items.map(item=>`<a class="care-card" href="${href(item.slug)}"><span class="care-card-body"><strong>${esc(titleFor(item))}</strong><span>${esc(menuDescriptions[item.slug] || 'Meet the practitioners at our Bowral clinic.')}</span><span class="text-link">Learn more <span aria-hidden="true">→</span></span></span></a>`).join('')}</div></div></section>`;
+}
+
+function appointmentSidebar(page) {
+  return `<aside class="appointment-sidebar"><h2>Book an appointment</h2><p>${page.group==='conditions'?'Tell us what’s bothering you when you book.':'If you’re unsure which appointment to choose, call the clinic.'}</p>${book()}<p class="sidebar-phone">${phone}</p><a class="text-link" href="/#visit">Clinic address and hours <span aria-hidden="true">→</span></a></aside>`;
+}
+
+function interior(page,team) {
   const blocks = [...page.blocks];
-  const title = page.slug==='our-team' ? 'Meet the Team' : page.headings[0];
+  const clinicPhoto = home.blocks[5].file;
+  const title = page.slug==='our-team' ? 'Meet the Team' : page.group==='locations' ? `Podiatry near ${titleFor(page)}` : page.headings[0];
   if (blocks[0].type==='heading') blocks.shift();
-  const lead = blocks[0]?.type==='text-editor' ? blocks.shift().clean : '';
-  const leadImage = blocks.findIndex(b=>b.type==='image' && b.file);
-  const photo = leadImage!==-1 ? blocks.splice(leadImage,1)[0].file : hero;
-  const banner = `<section class="page-hero"><div class="wrap split"><div><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> ${esc(titleFor(page))}</nav><h1>${esc(title)}</h1>${lead}<div class="actions">${book()}</div></div>${image(photo,'',true)}</div></section>`;
+  const existingLead = blocks[0]?.type==='text-editor' ? blocks.shift().clean : '';
+  const introductions = {
+    about:'Foot and lower limb care for Bowral and the Southern Highlands.',
+    'our-team':'Meet the practitioners providing podiatry and general foot care at our Boolwey Street clinic.',
+    'book-online':'Choose an appointment at The Bowral Foot Clinic through Nookal.'
+  };
+  const lead = page.group==='locations'
+    ? `<p>Visiting from ${esc(titleFor(page))}? Appointments are held at The Bowral Foot Clinic on Boolwey Street.</p>`
+    : existingLead || `<p>${esc(introductions[page.slug] || menuDescriptions[page.slug]+'.')}</p>`;
+  if (page.group==='locations' && existingLead) blocks.unshift({clean:existingLead});
+  const photo = interiorImages.get(page.slug) || clinicPhoto;
+  const parent = {services:['#services','Services'],conditions:['#conditions','Conditions'],locations:['#visit','Locations']}[page.group];
+  const breadcrumb = `<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span>
+    ${parent ? link(...parent)+' <span aria-hidden="true">/</span> ' : ''}<span aria-current="page">${esc(titleFor(page))}</span></nav>`;
+  const banner = `<section class="page-hero"><div class="wrap split">${breadcrumb}<div class="page-hero-copy"><h1>${esc(title)}</h1>${lead}<div class="actions">${book()}${page.group==='locations'?'<a class="outline-button" href="'+maps+'">Get directions</a>':''}</div></div>${image(photo,'',true)}</div></section>`;
   let content;
-  if (page.slug==='our-team') content = `<section class="section"><div class="wrap"><p>${esc(home.blocks[4].text)}</p>${practitioners(team,true)}</div></section>`;
-  else if (page.slug==='book-online') content = `<section class="section"><div class="wrap"><h2>Book online with Nookal</h2><p>Choose The Bowral Foot Clinic and select a practitioner and appointment time.</p>${book()}<p>For help booking, call ${phone}.</p></div></section>`;
-  else if (page.slug==='about') content = `<section class="section"><article class="wrap prose"><h2>About the clinic</h2><p>${esc(home.blocks[4].text)}</p><a class="text-link" href="/our-team/">Meet the Team ↗</a></article></section>`;
+  if (page.slug==='our-team') {
+    content = `<section class="section"><div class="wrap"><h2>Our Bowral practitioners</h2><p>Select a practitioner below to read their bio. For general foot care only, you can book with Arega Sarkisian.</p>${practitioners(team,true)}</div></section>${clinicSection()}`;
+  } else if (page.slug==='book-online') {
+    content = `<section class="section"><div class="wrap interior-layout"><article class="prose"><h2>Book online with Nookal</h2><ol class="booking-steps">
+    <li><strong>Select an appointment</strong><p>Choose an appointment type and practitioner at the Bowral location.</p></li><li><strong>Choose a time</strong><p>Pick an available time and enter your details to confirm the booking.</p></li>
+    <li><strong>Check your confirmation</strong><p>Use the appointment confirmation to check the time and location. If you have a referral or relevant records, bring them along.</p></li></ol></article>${appointmentSidebar(page)}</div></section>${clinicSection()}`;
+  } else if (page.slug==='about') {
+    content = `<section class="section"><div class="wrap split"><article class="prose"><h2>About the clinic</h2><p>${esc(home.blocks[4].text)}</p><a class="text-link" href="/our-team/">Meet the Team ↗</a></article>${renderBlock(home.blocks[25])}</div></section>
+    ${relatedCare(['general-foot-care','biomechanics','childrens-podiatry'])}${clinicSection()}`;
+  }
   else {
     const extras = {'toenail-problems':[['partial-nail-avulsion','Partial nail avulsion (PNA)','Ask our podiatrists about this procedure for ingrown toenails.'],['onyfix','Onyfix nail correction','Ask at your appointment whether Onyfix nail correction is suitable for you.']],
       'general-foot-care':[['wart-removal','Wart removal','Book an appointment to discuss treatment options for plantar warts.']]};
-    content = `<section class="section"><article class="wrap prose">${blocks.filter(b=>b.type!=='button').map(renderBlock).join('')}
+    const detail = blocks.filter(b=>b.type!=='button' && !['icon','shortcode'].includes(b.type)).map(renderBlock).join('').trim();
+    const questions = page.slug==='neural-therapy' || page.slug==='shockwave-therapy-2'
+      ? '<section><h2>Questions to bring to your appointment</h2><ul><li>What would make this treatment appropriate for me?</li><li>What alternatives should I consider?</li><li>What should I know about costs and follow-up?</li></ul></section>' : '';
+    content = `${page.group==='locations'?clinicSection(false):''}<section class="section"><div class="wrap interior-layout"><article class="prose">${detail}
       ${page.slug==='custom-orthotics'?'<p>Custom orthotics are prescribed in Bowral and made at the Kirrawee head office.</p>':''}
-      ${(extras[page.slug]||[]).map(([id,label,copy])=>`<section id="${id}"><h2>${label}</h2><p>${copy}</p></section>`).join('')}</article></section>`;
+      ${(extras[page.slug]||[]).map(([id,label,copy])=>`<section id="${id}"><h2>${label}</h2><p>${copy}</p></section>`).join('')}${questions}</article>${appointmentSidebar(page)}</div></section>
+      ${relatedCare(care[page.slug] || ['general-foot-care','biomechanics','our-team'])}${page.group==='locations'?reviews():''}`;
   }
   return banner + content;
 }
@@ -248,19 +282,15 @@ async function main() {
   try {
     const tab=await browser.newPage();
     const logo=await asset(home.images.find(i=>i.alt==='Bowral Foot Clinic logo').url);
-    const heroSource=await asset(home.backgrounds[0]);
-    const hero='assets/bowral-shopfront.webp';
-    for (const [file,width] of [[hero,1600],['assets/bowral-shopfront-mobile.webp',800]]) {
-      try { await fs.access(file); }
-      catch (error) {
-        if (error.code!=='ENOENT') throw error;
-        execFileSync('ffmpeg',['-v','error','-n','-i',heroSource,'-vf','scale='+width+':-2','-quality','79',file]);
-      }
-    }
     const reference=source.find(p=>p.group==='reference' && !p.slug);
     for (const [slug,filename] of [['biomechanics','svc-biomechanics.webp'],['custom-orthotics','svc-orthotics.webp'],['shockwave-therapy','svc-shockwave.webp']]) {
       treatmentImages.set(slug,await asset(reference.images.find(i=>i.url.endsWith('/'+filename))?.url));
     }
+    await Promise.all(Object.entries(photography).map(async ([slug,filename])=>{
+      const photo = reference.images.find(i=>i.url.endsWith('/'+filename));
+      if (!photo) throw new Error('Missing reference photograph: '+filename);
+      interiorImages.set(slug,await asset(photo.url));
+    }));
     for (const page of pages) await normalize(tab,page);
     const team=[];
     for (const id of ['arega-sarkisian','dr-elissa-all','dr-mohemed-al-heyoury','dr-yousef-najjarine']) {
@@ -273,7 +303,7 @@ async function main() {
       team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':await asset(portrait?.media[0].url),bio:bio.blocks.map(renderBlock)});
     }
     for (const page of pages) {
-      const body = page.slug ? interior(page,hero,team) : homepage(home.blocks[5].file,team);
+      const body = page.slug ? interior(page,team) : homepage(home.blocks[5].file,team);
       const base=page.slug?'../':'./';
       const document=`<!doctype html>
 <html lang="en-AU">
