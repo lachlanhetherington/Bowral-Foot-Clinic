@@ -3,8 +3,9 @@ name: Bowral Foot Clinic
 description: Navy and orange clinic identity with local photography, a scannable treatment rail, and direct booking.
 colors:
   navy: "#0c2c41"
-  header: "#102e43f7"
+  header: "#f7f8f9f5"
   header-opaque: "#102e43"
+  header-overlay: "#102e43a8"
   booking: "#bd440e"
   booking-hover: "#9c350c"
   light: "#fcfcfd"
@@ -82,7 +83,7 @@ The Dr Abbie family identity pairs white and pale blue sections, burnt-orange bo
 
 ## Colors
 
-White and pale blue alternate through the content in either device color preference. Navy supports photo overlays and the sticky navigation, charcoal anchors the footer, and orange identifies booking. Blue marks secondary links and actions.
+White and pale blue alternate through the content in either device color preference. Navy supports photo overlays, charcoal anchors the footer, and orange identifies booking. Blue marks secondary links and actions.
 
 ## Typography
 
@@ -94,7 +95,7 @@ Sections share a centered container. The homepage progresses from the hero to pr
 
 ## Elevation & Depth
 
-Navy gradients support white labels on photography. Borders and canvas tints separate cards and sections. The sticky header uses a 14px backdrop blur when the browser’s transparency and contrast preferences allow it.
+Navy gradients support white labels on photography. Borders and canvas tints separate cards and sections. The home header overlays the hero with white links and a white, transparent logo treatment. After the first 32px of scroll, it switches to a frosted light surface and the original blue logo. Interior pages use the light header from the start.
 
 ## Shapes
 

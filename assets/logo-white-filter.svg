@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <filter id="white-mark" color-interpolation-filters="sRGB">
+    <!-- Keep the blue artwork white and knock out the original white letter. -->
+    <feColorMatrix type="matrix" values="
+       0    0    0   0  1
+       0    0    0   0  1
+       0    0    0   0  1
+      -1.3 -0.9 -0.3 0  2"/>
+    <feComposite in2="SourceAlpha" operator="in"/>
+  </filter>
+</svg>

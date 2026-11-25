@@ -66,7 +66,7 @@ function navGroup(label, links) {
 function header(logo) {
   return `<a class="skip" href="#content">Skip to content</a>
   <header class="header"><div class="wrap header-inner">
-  <a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a>
+  <a class="logo" href="/">${image(logo,'Bowral Foot Clinic home',true)}</a>
   <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" hidden>Menu</button>
   <nav id="navigation" aria-label="Main navigation">
   ${navGroup('Services',[...group('services').map(p=>link(p.slug,titleFor(p))),...additions.map(p=>link(p.slug,p.label))])}
@@ -121,7 +121,7 @@ function careCards(items, withImages=false) {
 
 function homepage(hero,team) {
   const b=home.blocks;
-  return `<section class="hero">${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
+  return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
   <a class="rating" href="${maps}"><span aria-hidden="true">★★★★★</span> 5 stars on Google</a>
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>

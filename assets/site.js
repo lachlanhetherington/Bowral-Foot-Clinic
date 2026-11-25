@@ -35,12 +35,12 @@ document.addEventListener('keydown', event => {
 });
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const hero = document.querySelector('.hero');
-if (hero) {
+const headerScrollMarker = document.querySelector('.header-scroll-marker');
+if (headerScrollMarker) {
   const header = document.querySelector('.header');
   new IntersectionObserver(([entry]) => {
-    header.classList.toggle('scrolled', !entry.isIntersecting);
-  }, {threshold: .8}).observe(hero);
+    header.classList.toggle('scrolled', entry.boundingClientRect.bottom <= 0);
+  }).observe(headerScrollMarker);
 }
 
 for (const carousel of document.querySelectorAll('[data-carousel]')) {
