@@ -143,8 +143,9 @@ function practitioners(team, full=false) {
   return `<div class="team-carousel" data-carousel><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners')}</div>`;
 }
 
-function railButtons(label) {
-  return `<div class="rail-controls"><button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
+function railButtons(label, looping=false) {
+  const pause = looping ? '<button type="button" class="rail-pause" aria-label="Pause treatments carousel" aria-pressed="false" title="Pause treatments carousel" hidden><span aria-hidden="true"></span></button>' : '';
+  return `<div class="rail-controls">${pause}<button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
 }
 
 function treatmentRail() {
@@ -154,7 +155,7 @@ function treatmentRail() {
     return {slug,label:titleFor(page),file:treatmentImages.get(slug) || page.blocks.find(b=>b.file)?.file};
   })];
   tiles.splice(3,0,...additions);
-  return `<div class="treatments" data-carousel><div class="rail-heading"><h2>Our treatments</h2>${railButtons('treatments')}</div>
+  return `<div class="treatments" data-carousel data-loop><div class="rail-heading"><h2>Our treatments</h2>${railButtons('treatments',true)}</div>
   <div class="rail" data-track tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
 }
 

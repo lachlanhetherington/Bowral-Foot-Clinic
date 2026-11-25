@@ -61,9 +61,70 @@ if (headerScrollMarker) {
   }).observe(headerScrollMarker);
 }
 
+function initializeTreatmentLoop(carousel, rail, originals, advance) {
+  function copies() {
+    return originals.map(card => {
+      const copy = card.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.tabIndex = -1;
+      return copy;
+    });
+  }
+  const trailing = copies();
+  rail.prepend(...copies());
+  rail.append(...trailing);
+
+  const first = rail.firstElementChild;
+  const start = () => originals[0].offsetLeft - first.offsetLeft;
+  rail.scrollTo({left: start(), behavior: 'instant'});
+
+  // Recenter on the identical card in the middle set after a snap settles.
+  function wrap() {
+    const beginning = start();
+    const end = trailing[0].offsetLeft - first.offsetLeft;
+    const cycle = end - beginning;
+    if (cycle <= 0) return;
+    if (rail.scrollLeft < beginning - 1) rail.scrollBy({left: cycle, behavior: 'instant'});
+    if (rail.scrollLeft >= end - 1) rail.scrollBy({left: -cycle, behavior: 'instant'});
+  }
+  if ('onscrollend' in rail) {
+    rail.addEventListener('scrollend', wrap);
+  } else {
+    let settleTimer;
+    rail.addEventListener('scroll', () => {
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(wrap, 150);
+    }, {passive:true});
+  }
+
+  const pause = carousel.querySelector('.rail-pause');
+  pause.hidden = false;
+  let paused = false;
+  let visible = false;
+  let interacting = false;
+  const hover = matchMedia('(hover: hover)');
+  pause.addEventListener('click', () => {
+    paused = !paused;
+    pause.setAttribute('aria-pressed', String(paused));
+    pause.title = paused ? 'Resume treatments carousel' : 'Pause treatments carousel';
+  });
+  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, {threshold:.5}).observe(carousel);
+  rail.addEventListener('pointerdown', () => { interacting = true; }, {passive:true});
+  for (const event of ['pointerup', 'pointercancel']) {
+    window.addEventListener(event, () => { interacting = false; }, {passive:true});
+  }
+  setInterval(() => {
+    if (!visible || paused || interacting || document.hidden || reducedMotion.matches) return;
+    if (carousel.matches(':focus-within') || (hover.matches && carousel.matches(':hover'))) return;
+    advance(1);
+  }, 4200);
+}
+
 for (const carousel of document.querySelectorAll('[data-carousel]')) {
   const rail = carousel.querySelector('[data-track]');
-  const buttons = [...carousel.querySelectorAll('.rail-controls button')];
+  const buttons = [...carousel.querySelectorAll('[data-step]')];
+  const originals = [...rail.children];
+  const looping = carousel.hasAttribute('data-loop') && originals.length > 3;
   function updateControls() {
     buttons[0].disabled = rail.scrollLeft < 2;
     buttons[1].disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
@@ -79,9 +140,13 @@ for (const carousel of document.querySelectorAll('[data-carousel]')) {
     event.preventDefault();
     advance(event.key === 'ArrowLeft' ? -1 : 1);
   });
-  rail.addEventListener('scroll', updateControls, {passive: true});
-  new ResizeObserver(updateControls).observe(rail);
-  updateControls();
+  if (looping) {
+    initializeTreatmentLoop(carousel, rail, originals, advance);
+  } else {
+    rail.addEventListener('scroll', updateControls, {passive: true});
+    new ResizeObserver(updateControls).observe(rail);
+    updateControls();
+  }
 }
 
 if (!reducedMotion.matches) {
