@@ -104,7 +104,7 @@ Rounded corners frame photos, treatment cards, staff cards, and dropdowns. Booki
 ## Components
 
 - **Booking and location links** use an orange primary pill and a transparent, outlined secondary pill on the hero. Pressing a button scales it to 97%. With standard motion settings, button motion eases out over 160ms.
-- **Navigation and FAQs** use native disclosures for submenus and answers. On mobile, a button with an expanded state toggles the navigation. Escape closes the open submenu or mobile navigation and returns focus to its control.
+- **Navigation and FAQs** use native disclosures. Desktop mega menus pair a pale-blue intro with a two-column link grid and a featured photo card. Mobile keeps the same destinations in a single-column disclosure. Escape closes the open submenu or mobile navigation and returns focus to its control.
 - **Treatment tiles** use photography where available and a blue backing for text-only treatments. The rail supports direct scrolling, keyboard focus, and previous and next buttons. It snaps to tile starts and disables buttons at either end. Button-driven scrolling is instant with reduced motion.
 - **Staff, condition and service cards** use white bordered surfaces. Staff cards place a portrait or initials above the name. The home staff rail supports touch, arrows, and keyboard navigation.
 - **Motion** brings in hero content, section headings and disclosure contents with short fades and translations. Reduced-motion settings disable these effects.

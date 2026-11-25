@@ -59,19 +59,66 @@ const href = slug => {
   return '/' + (route ? route.replace(/\/$/,'') + '/' : '') + (hash ? '#'+hash : '');
 };
 const link = (slug,label) => `<a href="${href(slug)}">${esc(label)}</a>`;
-function navGroup(label, links) {
-  return `<details class="nav-group"><summary>${label}</summary><div class="dropdown">${links.join('')}</div></details>`;
+const menuDescriptions = {
+  'biomechanics':'Lower limb, gait and posture assessments',
+  'custom-orthotics':'Orthotics prescribed for your feet',
+  'childrens-podiatry':'Foot and lower limb care for children',
+  'shockwave-therapy':'A treatment option for persistent pain',
+  'dry-needling':'A technique used in soft tissue care',
+  'foot-mobilisations':'Hands-on work for foot joint movement',
+  'sports-podiatry':'Care for sports and overuse injuries',
+  'general-foot-care':'Nails, corns, calluses and routine care',
+  'strapping':'Support for feet and ankles',
+  'neural-therapy':'Explore this injection therapy service',
+  'shockwave-therapy-2':'Learn about prolotherapy at Bowral',
+  'toenail-problems/#partial-nail-avulsion':'An option for ingrown toenails',
+  'toenail-problems/#onyfix':'Nail correction treatment',
+  'general-foot-care/#wart-removal':'Care for plantar warts',
+  'childrens-foot-problems':'Flat feet, gait and growing pains',
+  'diabetic-foot-care':'Foot checks and wound care',
+  'foot-ankle-injuries':'Foot and ankle pain or injury',
+  'heel-pain':'Plantar fasciitis and other causes',
+  'knee-hip-back-pain':'Lower limb assessments for recurring pain',
+  'toenail-problems':'Ingrown, fungal or injured nails',
+  '#visit':'Shop 3, 2-4 Boolwey Street',
+  'podiatrist-southern-highlands':'Podiatry for Southern Highlands residents',
+  'podiatrists-moss-vale':'Podiatry near Moss Vale',
+  'podiatrists-wollondilly':'Podiatry for Wollondilly residents'
+};
+
+function navGroup(label, options) {
+  const {title, description, cta, items, feature} = options;
+  return `<details class="nav-group"><summary>${label}</summary><div class="dropdown mega-menu">
+    <div class="mega-intro"><strong>${esc(title)}</strong><p>${esc(description)}</p>${link(cta.slug,cta.label+' →')}</div>
+    <ul class="mega-links">${items.map(item=>`<li><a href="${href(item.slug)}"><span class="mega-icon" aria-hidden="true">→</span><span><strong>${esc(item.label || titleFor(item))}</strong><small>${esc(menuDescriptions[item.slug])}</small></span></a></li>`).join('')}</ul>
+    <a class="mega-feature" href="${href(feature.slug)}">${image(feature.file)}<span><strong>${esc(feature.title)}</strong><span>${esc(feature.label)} <span aria-hidden="true">→</span></span></span></a>
+  </div></details>`;
 }
 
 function header(logo) {
+  const assessment = treatmentImages.get('biomechanics');
+  const serviceOrder = ['biomechanics','custom-orthotics','childrens-podiatry','shockwave-therapy','dry-needling','foot-mobilisations','sports-podiatry','general-foot-care','strapping','neural-therapy','shockwave-therapy-2'];
   return `<a class="skip" href="#content">Skip to content</a>
   <header class="header"><div class="wrap header-inner">
   <a class="logo" href="/">${image(logo,'Bowral Foot Clinic home',true)}</a>
   <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" hidden>Menu</button>
   <nav id="navigation" aria-label="Main navigation">
-  ${navGroup('Services',[...group('services').map(p=>link(p.slug,titleFor(p))),...additions.map(p=>link(p.slug,p.label))])}
-  ${navGroup('Conditions',group('conditions').map(p=>link(p.slug,titleFor(p))))}
-  ${navGroup('Locations',[link('#visit','Bowral'),...group('locations').map(p=>link(p.slug,titleFor(p)))])}
+  ${navGroup('Services', {
+    title:'Find the right treatment', description:'Browse the treatments available at The Bowral Foot Clinic.',
+    cta:{slug:'#services',label:'All treatments'},
+    items:[...serviceOrder.map(slug=>pages.find(page=>page.slug===slug)),...additions],
+    feature:{slug:'biomechanics',file:assessment,title:'Start with a biomechanical assessment',label:'How it works'}
+  })}
+  ${navGroup('Conditions', {
+    title:'What we treat', description:'Explore common foot, ankle and lower limb concerns.',
+    cta:{slug:'#conditions',label:'All conditions'}, items:group('conditions'),
+    feature:{slug:'heel-pain',file:treatmentImages.get('shockwave-therapy'),title:'Dealing with heel pain?',label:'Explore heel pain'}
+  })}
+  ${navGroup('Locations', {
+    title:'Visit us in Bowral', description:'Our Boolwey Street clinic serves Bowral and the Southern Highlands.',
+    cta:{slug:'#visit',label:'Address and opening hours'}, items:[{slug:'#visit',label:'Bowral'},...group('locations')],
+    feature:{slug:'our-team',file:home.blocks[5].file,title:'Meet the Bowral practitioners',label:'Meet the team'}
+  })}
   ${link('our-team','Meet the Team')}${link('about','About')}</nav>
   <div class="header-actions">${phone}${book()}</div></div></header>`;
 }
@@ -127,9 +174,9 @@ function homepage(hero,team) {
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
   ${reviews()}
-  <section class="section"><div class="wrap"><div class="section-heading"><h2>Problems we treat</h2></div>${careCards(group('conditions'))}<details class="more-care"><summary>See more conditions</summary><div class="source-list">${b[22].clean}${b[23].clean}</div></details></div></section>
+  <section class="section" id="conditions"><div class="wrap"><div class="section-heading"><h2>Problems we treat</h2></div>${careCards(group('conditions'))}<details class="more-care"><summary>See more conditions</summary><div class="source-list">${b[22].clean}${b[23].clean}</div></details></div></section>
   <section class="section tint"><div class="wrap split"><div><h2>${esc(b[3].text)}</h2><p>${esc(b[4].text)}</p><a class="text-link" href="/about/">About the clinic ↗</a></div>${renderBlock(b[5])}</div></section>
-  <section class="section tint services-section"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
+  <section class="section tint services-section" id="services"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
   <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
   <section class="section tint" id="visit"><div class="wrap"><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div></section>

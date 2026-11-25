@@ -20,7 +20,14 @@ document.addEventListener('click', event => {
   if (!navigation.contains(event.target)) dropdowns.forEach(item => { item.open = false; });
 });
 navigation.addEventListener('click', event => {
-  if (event.target.closest('a') && mobile.matches) setMenu(false);
+  if (!event.target.closest('a')) return;
+  dropdowns.forEach(item => { item.open = false; });
+  if (mobile.matches) setMenu(false);
+});
+navigation.addEventListener('focusout', event => {
+  if (event.relatedTarget && !navigation.contains(event.relatedTarget)) {
+    dropdowns.forEach(item => { item.open = false; });
+  }
 });
 document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
