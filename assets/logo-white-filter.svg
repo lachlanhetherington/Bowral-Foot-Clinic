@@ -1,11 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-  <filter id="white-mark" color-interpolation-filters="sRGB">
-    <!-- Keep the blue artwork white and knock out the original white letter. -->
-    <feColorMatrix type="matrix" values="
-       0    0    0   0  1
-       0    0    0   0  1
-       0    0    0   0  1
-      -1.3 -0.9 -0.3 0  2"/>
-    <feComposite in2="SourceAlpha" operator="in"/>
+  <filter id="white-wordmark" primitiveUnits="objectBoundingBox" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+    <!-- Split in the transparent space between the blue icon and the lettering. -->
+    <feFlood x="0" y="0" width=".258" height="1" result="icon-area"/>
+    <feComposite in="SourceGraphic" in2="icon-area" operator="in" result="original-icon"/>
+    <feFlood x=".258" y="0" width=".742" height="1" flood-color="white" result="wordmark-ink"/>
+    <feComposite in="wordmark-ink" in2="SourceAlpha" operator="in" result="white-text"/>
+    <feMerge>
+      <feMergeNode in="original-icon"/>
+      <feMergeNode in="white-text"/>
+    </feMerge>
   </filter>
 </svg>

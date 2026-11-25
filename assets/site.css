@@ -52,7 +52,7 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .logo { display: block; flex: 0 0 auto; width: 158px; background: #fcfcfd; padding: 3px 9px; border-radius: 8px; }
 .logo img { aspect-ratio: 1024/359; object-fit: contain; }
 .header .logo { width: clamp(9rem, 12vw, 12rem); background: transparent; padding: 0; border-radius: 0; }
-.home .header:not(.scrolled) .logo img { filter: url("logo-white-filter.svg#white-mark"); }
+.home .header:not(.scrolled) .logo img { filter: url("logo-white-filter.svg#white-wordmark"); }
 .header-scroll-marker { position: absolute; top: 32px; width: 1px; height: 1px; pointer-events: none; }
 .header nav { justify-content: center; gap: clamp(.65rem, 1.8vw, 1.9rem); flex: 1; font-size: .87rem; font-weight: 600; }
 .header nav > a:hover, .nav-group > summary:hover, .header-actions > a:not(.button):hover { text-decoration: underline; text-underline-offset: .28em; }

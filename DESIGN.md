@@ -95,7 +95,7 @@ Sections share a centered container. The homepage progresses from the hero to pr
 
 ## Elevation & Depth
 
-Navy gradients support white labels on photography. Borders and canvas tints separate cards and sections. The home header overlays the hero with white links and a white, transparent logo treatment. After the first 32px of scroll, it switches to a frosted light surface and the original blue logo. Interior pages use the light header from the start.
+Navy gradients support white labels on photography. Borders and canvas tints separate cards and sections. The home header overlays the hero with white links and white logo lettering, retaining the original blue icon on a transparent background. After the first 32px of scroll, it switches to a frosted light surface and the original blue lettering. Interior pages use the light header from the start.
 
 ## Shapes
 
