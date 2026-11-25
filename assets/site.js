@@ -61,12 +61,14 @@ if (headerScrollMarker) {
   }).observe(headerScrollMarker);
 }
 
-function initializeTreatmentLoop(carousel, rail, originals, advance) {
+function initializeCarouselLoop(carousel, rail, originals, advance) {
   function copies() {
     return originals.map(card => {
       const copy = card.cloneNode(true);
       copy.setAttribute('aria-hidden', 'true');
-      copy.tabIndex = -1;
+      copy.removeAttribute('id');
+      if (copy.matches('a')) copy.tabIndex = -1;
+      copy.querySelectorAll('a').forEach(link => { link.tabIndex = -1; });
       return copy;
     });
   }
@@ -98,6 +100,7 @@ function initializeTreatmentLoop(carousel, rail, originals, advance) {
   }
 
   const pause = carousel.querySelector('.rail-pause');
+  const pauseLabel = pause.getAttribute('aria-label');
   pause.hidden = false;
   let paused = false;
   let visible = false;
@@ -106,9 +109,9 @@ function initializeTreatmentLoop(carousel, rail, originals, advance) {
   pause.addEventListener('click', () => {
     paused = !paused;
     pause.setAttribute('aria-pressed', String(paused));
-    pause.title = paused ? 'Resume treatments carousel' : 'Pause treatments carousel';
+    pause.title = paused ? pauseLabel.replace('Pause ', 'Resume ') : pauseLabel;
   });
-  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, {threshold:.5}).observe(carousel);
+  new IntersectionObserver(([entry]) => { visible = entry.intersectionRatio >= .5; }, {threshold:.5}).observe(carousel);
   rail.addEventListener('pointerdown', () => { interacting = true; }, {passive:true});
   for (const event of ['pointerup', 'pointercancel']) {
     window.addEventListener(event, () => { interacting = false; }, {passive:true});
@@ -141,7 +144,7 @@ for (const carousel of document.querySelectorAll('[data-carousel]')) {
     advance(event.key === 'ArrowLeft' ? -1 : 1);
   });
   if (looping) {
-    initializeTreatmentLoop(carousel, rail, originals, advance);
+    initializeCarouselLoop(carousel, rail, originals, advance);
   } else {
     rail.addEventListener('scroll', updateControls, {passive: true});
     new ResizeObserver(updateControls).observe(rail);

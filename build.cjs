@@ -140,11 +140,11 @@ function practitioners(team, full=false) {
     <div class="person-info"><h3>${esc(person.name)}</h3><p>${esc(person.role)}</p>
     ${full ? `<details><summary>Read bio</summary>${person.bio.join('')}</details>` : `<a class="text-link" href="/our-team/#${person.id}">View profile ↗</a>`}</div></article>`).join('');
   if (full) return `<div class="team-grid">${cards}</div>`;
-  return `<div class="team-carousel" data-carousel><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners')}</div>`;
+  return `<div class="team-carousel" data-carousel data-loop><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners',true)}</div>`;
 }
 
 function railButtons(label, looping=false) {
-  const pause = looping ? '<button type="button" class="rail-pause" aria-label="Pause treatments carousel" aria-pressed="false" title="Pause treatments carousel" hidden><span aria-hidden="true"></span></button>' : '';
+  const pause = looping ? `<button type="button" class="rail-pause" aria-label="Pause ${label} carousel" aria-pressed="false" title="Pause ${label} carousel" hidden><span aria-hidden="true"></span></button>` : '';
   return `<div class="rail-controls">${pause}<button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
 }
 
