@@ -46,7 +46,7 @@ function renderBlock(block) {
 }
 
 function reviews() {
-  return `<section class="section reviews"><div class="wrap"><h2>Google reviews</h2><p>Find patient reviews and the clinic’s current rating on Google.</p><a class="text-link" href="${maps}">Read Google reviews <span aria-hidden="true">↗</span></a></div></section>`;
+  return `<section class="section tint reviews"><div class="wrap section-heading"><h2>What our patients say</h2><div class="review-panel"><span class="review-stars" aria-hidden="true">★★★★★</span><p>Find patient reviews and the clinic’s current rating on Google.</p><a class="text-link" href="${maps}">Read Google reviews <span aria-hidden="true">↗</span></a></div></div></section>`;
 }
 
 const additions = [
@@ -83,15 +83,21 @@ function visit() {
 }
 
 function footer(logo) {
-  return `<footer class="footer"><div class="wrap"><div class="footer-top"><div><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p></div>${book()}</div>
-  ${visit()}<div class="footer-bottom"><a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a><div>${link('book-online','Book Online')} · <a href="https://dr-abbie.com/">Dr. Abbie Clinics</a></div><small>© ${new Date().getFullYear()} The Bowral Foot Clinic</small></div></div></footer>`;
+  return `<footer class="footer"><div class="wrap"><div class="footer-top"><a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a><nav class="footer-links" aria-label="Footer navigation">${link('our-team','Meet the Team')}${link('about','About')}${link('book-online','Book Online')}<a href="https://dr-abbie.com/">Dr. Abbie Clinics</a></nav>${book()}</div>
+  ${visit()}<div class="footer-bottom"><small>© ${new Date().getFullYear()} The Bowral Foot Clinic</small></div></div></footer>`;
 }
 
 function practitioners(team, full=false) {
-  return `<div class="team-grid">${team.map(person=>`<article class="person" id="${person.id}">
+  const cards = team.map(person=>`<article class="person" id="${person.id}">
     ${image(person.file, person.name) || '<div class="initials" aria-hidden="true">AS</div>'}
     <div class="person-info"><h3>${esc(person.name)}</h3><p>${esc(person.role)}</p>
-    ${full ? `<details><summary>Read bio</summary>${person.bio.join('')}</details>` : `<a class="text-link" href="/our-team/#${person.id}">View profile ↗</a>`}</div></article>`).join('')}</div>`;
+    ${full ? `<details><summary>Read bio</summary>${person.bio.join('')}</details>` : `<a class="text-link" href="/our-team/#${person.id}">View profile ↗</a>`}</div></article>`).join('');
+  if (full) return `<div class="team-grid">${cards}</div>`;
+  return `<div class="team-carousel" data-carousel><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners')}</div>`;
+}
+
+function railButtons(label) {
+  return `<div class="rail-controls"><button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
 }
 
 function treatmentRail() {
@@ -101,8 +107,16 @@ function treatmentRail() {
     return {slug,label:titleFor(page),file:treatmentImages.get(slug) || page.blocks.find(b=>b.file)?.file};
   })];
   tiles.splice(3,0,...additions);
-  return `<div class="treatments"><div class="rail-heading"><h2>Our treatments</h2><div class="rail-controls"><button type="button" data-step="-1" aria-label="Previous treatments">←</button><button type="button" data-step="1" aria-label="Next treatments">→</button></div></div>
-  <div class="rail" tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
+  return `<div class="treatments" data-carousel><div class="rail-heading"><h2>Our treatments</h2>${railButtons('treatments')}</div>
+  <div class="rail" data-track tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
+}
+
+function careCards(items, withImages=false) {
+  return `<div class="care-grid${withImages?' care-grid-images':''}">${items.map(item=>{
+    const title = item.label || titleFor(item);
+    const media = withImages && (treatmentImages.get(item.slug) || item.blocks?.find(b=>b.file)?.file);
+    return `<a class="care-card" href="${href(item.slug)}">${media ? image(media) : ''}<span class="care-card-body"><strong>${esc(title)}</strong><span class="text-link">Learn more <span aria-hidden="true">→</span></span></span></a>`;
+  }).join('')}</div>`;
 }
 
 function homepage(hero,team) {
@@ -111,14 +125,15 @@ function homepage(hero,team) {
   <a class="rating" href="${maps}"><span aria-hidden="true">★★★★★</span> 5 stars on Google</a>
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
-  <section class="section"><div class="wrap split"><div><h2>${esc(b[3].text)}</h2><p>${esc(b[4].text)}</p><a class="text-link" href="/about/">About the clinic ↗</a></div>${renderBlock(b[5])}</div></section>
-  <section class="section tint"><div class="wrap"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p>${practitioners(team)}</div></section>
+  <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
   ${reviews()}
-  <section class="section tint"><div class="wrap split"><div><h2>Problems we treat</h2><div class="link-list">${group('conditions').map(p=>link(p.slug,titleFor(p))).join('')}</div></div><div class="source-list">${b[22].clean}${b[23].clean}</div></div></section>
-  <section class="section"><div class="wrap split">${renderBlock(b[25])}<div><h2>Range of services</h2><p>${esc(b[17].text)}</p><div class="source-list">${b[27].clean}${b[28].clean}</div><div class="link-list additional-services">${additions.map(service=>link(service.slug,service.label)).join('')}</div></div></div></section>
-  <section class="section tint"><div class="wrap faq"><h2>Frequently asked questions</h2><div>${b[30].clean}</div></div></section>
-  <section class="section" id="visit"><div class="wrap"><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div></section>
-  <section class="section tint"><div class="wrap"><h2>Our clinic network</h2><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
+  <section class="section"><div class="wrap"><div class="section-heading"><h2>Problems we treat</h2></div>${careCards(group('conditions'))}<details class="more-care"><summary>See more conditions</summary><div class="source-list">${b[22].clean}${b[23].clean}</div></details></div></section>
+  <section class="section tint"><div class="wrap split"><div><h2>${esc(b[3].text)}</h2><p>${esc(b[4].text)}</p><a class="text-link" href="/about/">About the clinic ↗</a></div>${renderBlock(b[5])}</div></section>
+  <section class="section tint services-section"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
+  <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
+  <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
+  <section class="section tint" id="visit"><div class="wrap"><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div></section>
+  <section class="section network"><div class="wrap"><div class="section-heading"><h2>Our clinic network</h2></div><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
 }
 
 function interior(page,hero,team) {
@@ -208,7 +223,7 @@ async function main() {
       team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':await asset(portrait?.media[0].url),bio:bio.blocks.map(renderBlock)});
     }
     for (const page of pages) {
-      const body = page.slug ? interior(page,hero,team) : homepage(hero,team);
+      const body = page.slug ? interior(page,hero,team) : homepage(home.blocks[5].file,team);
       const base=page.slug?'../':'./';
       const document=`<!doctype html>
 <html lang="en-AU">
@@ -225,7 +240,7 @@ ${page.description===null?'':`<meta name="description" content="${esc(page.descr
 <link rel="stylesheet" href="${base}assets/site.css">
 <script src="${base}assets/site.js" defer></script>
 </head>
-<body>${header(logo)}<main id="content">${body}</main>${footer(logo)}</body>
+<body${page.slug?'':' class="home"'}>${header(logo)}<main id="content">${body}</main>${footer(logo)}</body>
 </html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
       if(page.slug) await fs.mkdir(page.slug,{recursive:true});
       await fs.writeFile(path.join(page.slug,'index.html'),document);

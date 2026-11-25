@@ -34,19 +34,48 @@ document.addEventListener('keydown', event => {
   }
 });
 
-const rail = document.querySelector('.rail');
-if (rail) {
-  const buttons = [...document.querySelectorAll('.rail-controls button')];
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const hero = document.querySelector('.hero');
+if (hero) {
+  const header = document.querySelector('.header');
+  new IntersectionObserver(([entry]) => {
+    header.classList.toggle('scrolled', !entry.isIntersecting);
+  }, {threshold: .8}).observe(hero);
+}
+
+for (const carousel of document.querySelectorAll('[data-carousel]')) {
+  const rail = carousel.querySelector('[data-track]');
+  const buttons = [...carousel.querySelectorAll('.rail-controls button')];
   function updateControls() {
     buttons[0].disabled = rail.scrollLeft < 2;
     buttons[1].disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
   }
-  buttons.forEach(button => button.addEventListener('click', () => {
-    const tiles = [...rail.children];
-    const step = tiles[1].offsetLeft - tiles[0].offsetLeft;
-    rail.scrollBy({left: step * Number(button.dataset.step), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
-  }));
+  function advance(direction) {
+    const [first, second] = rail.children;
+    if (!second) return;
+    rail.scrollBy({left: (second.offsetLeft - first.offsetLeft) * direction, behavior: reducedMotion.matches ? 'instant' : 'smooth'});
+  }
+  buttons.forEach(button => button.addEventListener('click', () => advance(Number(button.dataset.step))));
+  rail.addEventListener('keydown', event => {
+    if (event.target !== rail || !['ArrowLeft','ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    advance(event.key === 'ArrowLeft' ? -1 : 1);
+  });
   rail.addEventListener('scroll', updateControls, {passive: true});
   new ResizeObserver(updateControls).observe(rail);
   updateControls();
+}
+
+if (!reducedMotion.matches) {
+  const reveal = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      if (!reducedMotion.matches) entry.target.animate(
+        [{opacity:.76, transform:'translateY(12px)'},{opacity:1, transform:'translateY(0)'}],
+        {duration:420, easing:'cubic-bezier(.16,1,.3,1)'}
+      );
+      reveal.unobserve(entry.target);
+    }
+  }, {threshold:.25});
+  document.querySelectorAll('.home .section-heading, .home .booking-band .wrap').forEach(node => reveal.observe(node));
 }

@@ -7,92 +7,170 @@
       "navy": {
         "role": "primary",
         "displayName": "Clinic Navy",
-        "tonalRamp": ["oklch(15% 0.054 241.3)", "oklch(26% 0.054 241.3)", "oklch(38% 0.054 241.3)", "oklch(49% 0.054 241.3)", "oklch(61% 0.054 241.3)", "oklch(72% 0.054 241.3)", "oklch(84% 0.054 241.3)", "oklch(95% 0.054 241.3)"]
+        "tonalRamp": [
+          "oklch(15% 0.054 241.3)",
+          "oklch(26% 0.054 241.3)",
+          "oklch(38% 0.054 241.3)",
+          "oklch(49% 0.054 241.3)",
+          "oklch(61% 0.054 241.3)",
+          "oklch(72% 0.054 241.3)",
+          "oklch(84% 0.054 241.3)",
+          "oklch(95% 0.054 241.3)"
+        ]
       },
       "header": {
         "role": "primary",
         "displayName": "Translucent Header Navy",
-        "tonalRamp": ["oklch(15% 0.052 242.2)", "oklch(26% 0.052 242.2)", "oklch(38% 0.052 242.2)", "oklch(49% 0.052 242.2)", "oklch(61% 0.052 242.2)", "oklch(72% 0.052 242.2)", "oklch(84% 0.052 242.2)", "oklch(95% 0.052 242.2)"]
+        "tonalRamp": [
+          "oklch(15% 0.052 242.2)",
+          "oklch(26% 0.052 242.2)",
+          "oklch(38% 0.052 242.2)",
+          "oklch(49% 0.052 242.2)",
+          "oklch(61% 0.052 242.2)",
+          "oklch(72% 0.052 242.2)",
+          "oklch(84% 0.052 242.2)",
+          "oklch(95% 0.052 242.2)"
+        ]
       },
       "header-opaque": {
         "role": "primary",
         "displayName": "Opaque Header Navy",
-        "tonalRamp": ["oklch(15% 0.052 242.2)", "oklch(26% 0.052 242.2)", "oklch(38% 0.052 242.2)", "oklch(49% 0.052 242.2)", "oklch(61% 0.052 242.2)", "oklch(72% 0.052 242.2)", "oklch(84% 0.052 242.2)", "oklch(95% 0.052 242.2)"]
+        "tonalRamp": [
+          "oklch(15% 0.052 242.2)",
+          "oklch(26% 0.052 242.2)",
+          "oklch(38% 0.052 242.2)",
+          "oklch(49% 0.052 242.2)",
+          "oklch(61% 0.052 242.2)",
+          "oklch(72% 0.052 242.2)",
+          "oklch(84% 0.052 242.2)",
+          "oklch(95% 0.052 242.2)"
+        ]
       },
       "booking": {
         "role": "secondary",
         "displayName": "Booking Orange",
-        "tonalRamp": ["oklch(15% 0.162 39.4)", "oklch(26% 0.162 39.4)", "oklch(38% 0.162 39.4)", "oklch(49% 0.162 39.4)", "oklch(61% 0.162 39.4)", "oklch(72% 0.162 39.4)", "oklch(84% 0.162 39.4)", "oklch(95% 0.162 39.4)"]
+        "tonalRamp": [
+          "oklch(15% 0.162 39.4)",
+          "oklch(26% 0.162 39.4)",
+          "oklch(38% 0.162 39.4)",
+          "oklch(49% 0.162 39.4)",
+          "oklch(61% 0.162 39.4)",
+          "oklch(72% 0.162 39.4)",
+          "oklch(84% 0.162 39.4)",
+          "oklch(95% 0.162 39.4)"
+        ]
       },
       "booking-hover": {
         "role": "secondary",
         "displayName": "Booking Hover Orange",
-        "tonalRamp": ["oklch(15% 0.145 38.7)", "oklch(26% 0.145 38.7)", "oklch(38% 0.145 38.7)", "oklch(49% 0.145 38.7)", "oklch(61% 0.145 38.7)", "oklch(72% 0.145 38.7)", "oklch(84% 0.145 38.7)", "oklch(95% 0.145 38.7)"]
+        "tonalRamp": [
+          "oklch(15% 0.145 38.7)",
+          "oklch(26% 0.145 38.7)",
+          "oklch(38% 0.145 38.7)",
+          "oklch(49% 0.145 38.7)",
+          "oklch(61% 0.145 38.7)",
+          "oklch(72% 0.145 38.7)",
+          "oklch(84% 0.145 38.7)",
+          "oklch(95% 0.145 38.7)"
+        ]
       },
       "light": {
         "role": "neutral",
         "displayName": "Light Canvas",
-        "tonalRamp": ["oklch(15% 0.001 286.4)", "oklch(26% 0.001 286.4)", "oklch(38% 0.001 286.4)", "oklch(49% 0.001 286.4)", "oklch(61% 0.001 286.4)", "oklch(72% 0.001 286.4)", "oklch(84% 0.001 286.4)", "oklch(95% 0.001 286.4)"]
+        "tonalRamp": [
+          "oklch(15% 0.001 286.4)",
+          "oklch(26% 0.001 286.4)",
+          "oklch(38% 0.001 286.4)",
+          "oklch(49% 0.001 286.4)",
+          "oklch(61% 0.001 286.4)",
+          "oklch(72% 0.001 286.4)",
+          "oklch(84% 0.001 286.4)",
+          "oklch(95% 0.001 286.4)"
+        ]
       },
       "light-ink": {
         "role": "neutral",
         "displayName": "Light Text",
-        "tonalRamp": ["oklch(15% 0.049 240.3)", "oklch(26% 0.049 240.3)", "oklch(38% 0.049 240.3)", "oklch(49% 0.049 240.3)", "oklch(61% 0.049 240.3)", "oklch(72% 0.049 240.3)", "oklch(84% 0.049 240.3)", "oklch(95% 0.049 240.3)"]
+        "tonalRamp": [
+          "oklch(15% 0.049 240.3)",
+          "oklch(26% 0.049 240.3)",
+          "oklch(38% 0.049 240.3)",
+          "oklch(49% 0.049 240.3)",
+          "oklch(61% 0.049 240.3)",
+          "oklch(72% 0.049 240.3)",
+          "oklch(84% 0.049 240.3)",
+          "oklch(95% 0.049 240.3)"
+        ]
       },
       "light-muted": {
         "role": "neutral",
         "displayName": "Light Secondary Text",
-        "tonalRamp": ["oklch(15% 0.043 240.2)", "oklch(26% 0.043 240.2)", "oklch(38% 0.043 240.2)", "oklch(49% 0.043 240.2)", "oklch(61% 0.043 240.2)", "oklch(72% 0.043 240.2)", "oklch(84% 0.043 240.2)", "oklch(95% 0.043 240.2)"]
+        "tonalRamp": [
+          "oklch(15% 0.043 240.2)",
+          "oklch(26% 0.043 240.2)",
+          "oklch(38% 0.043 240.2)",
+          "oklch(49% 0.043 240.2)",
+          "oklch(61% 0.043 240.2)",
+          "oklch(72% 0.043 240.2)",
+          "oklch(84% 0.043 240.2)",
+          "oklch(95% 0.043 240.2)"
+        ]
       },
       "light-tint": {
         "role": "neutral",
         "displayName": "Light Support Surface",
-        "tonalRamp": ["oklch(15% 0.008 228.9)", "oklch(26% 0.008 228.9)", "oklch(38% 0.008 228.9)", "oklch(49% 0.008 228.9)", "oklch(61% 0.008 228.9)", "oklch(72% 0.008 228.9)", "oklch(84% 0.008 228.9)", "oklch(95% 0.008 228.9)"]
+        "tonalRamp": [
+          "oklch(15% 0.008 228.9)",
+          "oklch(26% 0.008 228.9)",
+          "oklch(38% 0.008 228.9)",
+          "oklch(49% 0.008 228.9)",
+          "oklch(61% 0.008 228.9)",
+          "oklch(72% 0.008 228.9)",
+          "oklch(84% 0.008 228.9)",
+          "oklch(95% 0.008 228.9)"
+        ]
       },
       "light-line": {
         "role": "neutral",
         "displayName": "Light Divider",
-        "tonalRamp": ["oklch(15% 0.021 236.8)", "oklch(26% 0.021 236.8)", "oklch(38% 0.021 236.8)", "oklch(49% 0.021 236.8)", "oklch(61% 0.021 236.8)", "oklch(72% 0.021 236.8)", "oklch(84% 0.021 236.8)", "oklch(95% 0.021 236.8)"]
+        "tonalRamp": [
+          "oklch(15% 0.021 236.8)",
+          "oklch(26% 0.021 236.8)",
+          "oklch(38% 0.021 236.8)",
+          "oklch(49% 0.021 236.8)",
+          "oklch(61% 0.021 236.8)",
+          "oklch(72% 0.021 236.8)",
+          "oklch(84% 0.021 236.8)",
+          "oklch(95% 0.021 236.8)"
+        ]
       },
       "light-focus": {
         "role": "secondary",
         "displayName": "Light Focus Ring",
-        "tonalRamp": ["oklch(15% 0.164 41.3)", "oklch(26% 0.164 41.3)", "oklch(38% 0.164 41.3)", "oklch(49% 0.164 41.3)", "oklch(61% 0.164 41.3)", "oklch(72% 0.164 41.3)", "oklch(84% 0.164 41.3)", "oklch(95% 0.164 41.3)"]
-      },
-      "dark-paper": {
-        "role": "neutral",
-        "displayName": "Dark Canvas",
-        "tonalRamp": ["oklch(15% 0.042 241.2)", "oklch(26% 0.042 241.2)", "oklch(38% 0.042 241.2)", "oklch(49% 0.042 241.2)", "oklch(61% 0.042 241.2)", "oklch(72% 0.042 241.2)", "oklch(84% 0.042 241.2)", "oklch(95% 0.042 241.2)"]
-      },
-      "dark-ink": {
-        "role": "neutral",
-        "displayName": "Dark Text",
-        "tonalRamp": ["oklch(15% 0.008 225.1)", "oklch(26% 0.008 225.1)", "oklch(38% 0.008 225.1)", "oklch(49% 0.008 225.1)", "oklch(61% 0.008 225.1)", "oklch(72% 0.008 225.1)", "oklch(84% 0.008 225.1)", "oklch(95% 0.008 225.1)"]
-      },
-      "dark-muted": {
-        "role": "neutral",
-        "displayName": "Dark Secondary Text",
-        "tonalRamp": ["oklch(15% 0.023 237.7)", "oklch(26% 0.023 237.7)", "oklch(38% 0.023 237.7)", "oklch(49% 0.023 237.7)", "oklch(61% 0.023 237.7)", "oklch(72% 0.023 237.7)", "oklch(84% 0.023 237.7)", "oklch(95% 0.023 237.7)"]
-      },
-      "dark-tint": {
-        "role": "neutral",
-        "displayName": "Dark Support Surface",
-        "tonalRamp": ["oklch(15% 0.050 238.0)", "oklch(26% 0.050 238.0)", "oklch(38% 0.050 238.0)", "oklch(49% 0.050 238.0)", "oklch(61% 0.050 238.0)", "oklch(72% 0.050 238.0)", "oklch(84% 0.050 238.0)", "oklch(95% 0.050 238.0)"]
-      },
-      "dark-line": {
-        "role": "neutral",
-        "displayName": "Dark Divider",
-        "tonalRamp": ["oklch(15% 0.043 237.9)", "oklch(26% 0.043 237.9)", "oklch(38% 0.043 237.9)", "oklch(49% 0.043 237.9)", "oklch(61% 0.043 237.9)", "oklch(72% 0.043 237.9)", "oklch(84% 0.043 237.9)", "oklch(95% 0.043 237.9)"]
-      },
-      "dark-focus": {
-        "role": "secondary",
-        "displayName": "Dark Focus Ring",
-        "tonalRamp": ["oklch(15% 0.134 45.7)", "oklch(26% 0.134 45.7)", "oklch(38% 0.134 45.7)", "oklch(49% 0.134 45.7)", "oklch(61% 0.134 45.7)", "oklch(72% 0.134 45.7)", "oklch(84% 0.134 45.7)", "oklch(95% 0.134 45.7)"]
+        "tonalRamp": [
+          "oklch(15% 0.164 41.3)",
+          "oklch(26% 0.164 41.3)",
+          "oklch(38% 0.164 41.3)",
+          "oklch(49% 0.164 41.3)",
+          "oklch(61% 0.164 41.3)",
+          "oklch(72% 0.164 41.3)",
+          "oklch(84% 0.164 41.3)",
+          "oklch(95% 0.164 41.3)"
+        ]
       },
       "tile": {
         "role": "primary",
         "displayName": "Treatment Tile Blue",
-        "tonalRamp": ["oklch(15% 0.059 237.0)", "oklch(26% 0.059 237.0)", "oklch(38% 0.059 237.0)", "oklch(49% 0.059 237.0)", "oklch(61% 0.059 237.0)", "oklch(72% 0.059 237.0)", "oklch(84% 0.059 237.0)", "oklch(95% 0.059 237.0)"]
+        "tonalRamp": [
+          "oklch(15% 0.059 237.0)",
+          "oklch(26% 0.059 237.0)",
+          "oklch(38% 0.059 237.0)",
+          "oklch(49% 0.059 237.0)",
+          "oklch(61% 0.059 237.0)",
+          "oklch(72% 0.059 237.0)",
+          "oklch(84% 0.059 237.0)",
+          "oklch(95% 0.059 237.0)"
+        ]
       }
     },
     "typographyMeta": {
@@ -117,8 +195,13 @@
       },
       {
         "name": "button-transition",
-        "value": "140ms ease-out",
+        "value": "160ms ease-out",
         "purpose": "Transform and background transitions when reduced motion is off."
+      },
+      {
+        "name": "section-reveal",
+        "value": "420ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "Reveal selected homepage headings when they enter view."
       }
     ],
     "breakpoints": [
@@ -143,7 +226,7 @@
       "refersTo": "button-booking",
       "description": "Primary appointment link.",
       "html": "<a class=\"ds-button\" href=\"#booking\">Book a Session <span aria-hidden=\"true\">↗</span></a>",
-      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; gap: .9rem; min-height: 48px; box-sizing: border-box; padding: .44rem 1.15rem; border: 1px solid transparent; border-radius: var(--pill, 999px); color: var(--light, #fcfcfd); font: 600 1rem/1.65 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-button:active { transform: scale(.97); } @media (prefers-reduced-motion: no-preference) { .ds-button { transition: transform 140ms ease-out, background-color 140ms ease-out; } } .ds-button { background: var(--accent, #b94312); } .ds-button:hover { background: #9c350c; } .ds-button span { display: grid; place-items: center; width: 1.7rem; aspect-ratio: 1; border-radius: 50%; background: var(--light, #fcfcfd); color: #8f300a; } .ds-button:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; } @media (prefers-color-scheme: dark) { .ds-button:focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-button { display: inline-flex; align-items: center; justify-content: center; gap: .9rem; min-height: 48px; box-sizing: border-box; padding: .44rem 1.15rem; border: 1px solid transparent; border-radius: var(--pill, 999px); color: var(--light, #fcfcfd); font: 600 1rem/1.65 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-button:active { transform: scale(.97); } @media (prefers-reduced-motion: no-preference) { .ds-button { transition: transform 160ms ease-out, background-color 160ms ease-out; } } .ds-button { background: var(--accent, #bd440e); } .ds-button:hover { background: #9c350c; } .ds-button span { display: grid; place-items: center; width: 1.7rem; aspect-ratio: 1; border-radius: 50%; background: var(--light, #fcfcfd); color: #8f300a; } .ds-button:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; }"
     },
     {
       "name": "Location button",
@@ -151,7 +234,7 @@
       "refersTo": "button-secondary",
       "description": "Secondary clinic location link on the hero.",
       "html": "<div class=\"ds-hero\"><a class=\"ds-button\" href=\"#visit\">Find our clinic</a></div>",
-      "css": ".ds-hero { display: inline-block; padding: .5rem; background: var(--navy, #0c2c41); } .ds-button { display: inline-flex; align-items: center; justify-content: center; gap: .9rem; min-height: 48px; box-sizing: border-box; padding: .44rem 1.15rem; border: 1px solid transparent; border-radius: var(--pill, 999px); color: var(--light, #fcfcfd); font: 600 1rem/1.65 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-button:active { transform: scale(.97); } @media (prefers-reduced-motion: no-preference) { .ds-button { transition: transform 140ms ease-out, background-color 140ms ease-out; } } .ds-button { border-color: #f2f6f9ba; background: transparent; } .ds-button:hover { background: #f2f6f926; } .ds-button:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; } @media (prefers-color-scheme: dark) { .ds-button:focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-hero { display: inline-block; padding: .5rem; background: var(--navy, #0c2c41); } .ds-button { display: inline-flex; align-items: center; justify-content: center; gap: .9rem; min-height: 48px; box-sizing: border-box; padding: .44rem 1.15rem; border: 1px solid transparent; border-radius: var(--pill, 999px); color: var(--light, #fcfcfd); font: 600 1rem/1.65 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-button:active { transform: scale(.97); } @media (prefers-reduced-motion: no-preference) { .ds-button { transition: transform 160ms ease-out, background-color 160ms ease-out; } } .ds-button { border-color: #f2f6f9ba; background: transparent; } .ds-button:hover { background: #f2f6f926; } .ds-button:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; }"
     },
     {
       "name": "Navigation disclosure",
@@ -159,7 +242,7 @@
       "refersTo": "nav-dropdown",
       "description": "A native disclosure for navigation groups.",
       "html": "<div class=\"ds-hero\"><details class=\"ds-nav\" open><summary>Services</summary><div class=\"ds-dropdown\"><a href=\"#biomechanics\">Biomechanics</a><a href=\"#orthotics\">Custom Orthotics</a></div></details></div>",
-      "css": ".ds-hero { display: inline-block; padding: .5rem; background: var(--navy, #0c2c41); } .ds-nav { font: 600 .87rem/1.65 Poppins, system-ui, sans-serif; color: var(--light, #fcfcfd); } .ds-nav summary { display: flex; align-items: center; min-height: 44px; list-style: none; cursor: pointer; } .ds-nav summary::-webkit-details-marker { display: none; } .ds-nav summary::after { content: \"\"; width: .42rem; height: .42rem; margin: -.2rem 0 0 .55rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); } .ds-nav[open] summary::after { transform: rotate(225deg); margin-top: .2rem; } .ds-dropdown { display: grid; border: 1px solid; border-radius: var(--radius, 14px); padding: .55rem; min-width: 15rem; } .ds-dropdown { background: var(--paper, #fcfcfd); color: var(--ink, #102d40); border-color: var(--line, #c6d5df); } @media (prefers-color-scheme: dark) { .ds-dropdown { background: var(--paper, #102737); color: var(--ink, #eef5f8); border-color: var(--line, #4c6779); } } .ds-dropdown a { padding: .58rem .7rem; border-radius: 8px; color: inherit; text-decoration: none; } .ds-dropdown a:hover { background: var(--tint, #edf3f6); } @media (prefers-color-scheme: dark) { .ds-dropdown a:hover { background: var(--tint, #173649); } } .ds-nav :is(summary, a):focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; } @media (prefers-color-scheme: dark) { .ds-nav :is(summary, a):focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-hero { display: inline-block; padding: .5rem; background: var(--navy, #0c2c41); } .ds-nav { font: 600 .87rem/1.65 Poppins, system-ui, sans-serif; color: var(--light, #fcfcfd); } .ds-nav summary { display: flex; align-items: center; min-height: 44px; list-style: none; cursor: pointer; } .ds-nav summary::-webkit-details-marker { display: none; } .ds-nav summary::after { content: \"\"; width: .42rem; height: .42rem; margin: -.2rem 0 0 .55rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); } .ds-nav[open] summary::after { transform: rotate(225deg); margin-top: .2rem; } .ds-dropdown { display: grid; border: 1px solid; border-radius: var(--radius, 14px); padding: .55rem; min-width: 15rem; } .ds-dropdown { background: var(--paper, #fcfcfd); color: var(--ink, #102d40); border-color: var(--line, #cddde6); } .ds-dropdown a { padding: .58rem .7rem; border-radius: 8px; color: inherit; text-decoration: none; } .ds-dropdown a:hover { background: var(--tint, #dceff9); } .ds-nav :is(summary, a):focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; }"
     },
     {
       "name": "Service link",
@@ -167,7 +250,7 @@
       "refersTo": "service-link",
       "description": "A compact direct link in the services list.",
       "html": "<a class=\"ds-service-link\" href=\"#wart-removal\">Wart removal</a>",
-      "css": ".ds-service-link { display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: .4rem .85rem; border: 1px solid var(--line, #c6d5df); border-radius: var(--pill, 999px); color: var(--ink, #102d40); font: 400 1rem/1.65 Poppins, system-ui, sans-serif; text-decoration: none; } @media (prefers-color-scheme: dark) { .ds-service-link { border-color: var(--line, #4c6779); color: var(--ink, #eef5f8); } } .ds-service-link:hover { text-decoration: underline; text-underline-offset: .22em; } .ds-service-link:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; } @media (prefers-color-scheme: dark) { .ds-service-link:focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-service-link { display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: .4rem .85rem; border: 1px solid var(--line, #cddde6); border-radius: var(--pill, 999px); color: var(--ink, #102d40); font: 400 1rem/1.65 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-service-link:hover { text-decoration: underline; text-underline-offset: .22em; } .ds-service-link:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; }"
     },
     {
       "name": "Treatment tile",
@@ -175,7 +258,7 @@
       "refersTo": "treatment-tile",
       "description": "The text-only treatment tile uses the same navy gradient as photo tiles.",
       "html": "<a class=\"ds-tile\" href=\"#wart-removal\"><span>Wart removal</span></a>",
-      "css": ".ds-tile { display: flex; align-items: end; width: min(100%, 10rem); aspect-ratio: 3/4; background: linear-gradient(0deg, #09293e 0%, transparent 85%), #20475e; border-radius: var(--radius, 14px); color: var(--light, #fcfcfd); font: 600 clamp(.75rem, 1vw, .95rem)/1.25 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-tile span { padding: .75rem; } .ds-tile:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: -4px; } @media (max-width: 51rem) { .ds-tile { aspect-ratio: 4/3; } } @media (prefers-color-scheme: dark) { .ds-tile:focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-tile { display: flex; align-items: end; width: min(100%, 10rem); aspect-ratio: 3/4; background: linear-gradient(0deg, #09293e 0%, transparent 85%), #20475e; border-radius: var(--radius, 14px); color: var(--light, #fcfcfd); font: 600 clamp(.75rem, 1vw, .95rem)/1.25 Poppins, system-ui, sans-serif; text-decoration: none; } .ds-tile span { padding: .75rem; } .ds-tile:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: -4px; } @media (max-width: 51rem) { .ds-tile { aspect-ratio: 4/3; } }"
     },
     {
       "name": "Staff card",
@@ -183,18 +266,18 @@
       "refersTo": "person-card",
       "description": "Staff card with the initials fallback and an expandable bio.",
       "html": "<article class=\"ds-person\"><div class=\"ds-initials\" aria-hidden=\"true\">A</div><div class=\"ds-person-info\"><h3>Arega</h3><details><summary>Read bio</summary><p>Podiatrist</p></details></div></article>",
-      "css": ".ds-person { width: min(100%, 12rem); border: 1px solid; border-radius: var(--radius, 14px); overflow: hidden; font: 400 .91rem/1.65 Poppins, system-ui, sans-serif; } .ds-person { background: var(--paper, #fcfcfd); color: var(--ink, #102d40); border-color: var(--line, #c6d5df); } @media (prefers-color-scheme: dark) { .ds-person { background: var(--paper, #102737); color: var(--ink, #eef5f8); border-color: var(--line, #4c6779); } } .ds-initials { display: grid; place-items: center; aspect-ratio: 4/4.4; background: var(--navy, #0c2c41); color: var(--light, #fcfcfd); font-size: clamp(2rem, 5vw, 4rem); } .ds-person-info { padding: 1rem; } .ds-person-info h3 { margin: 0 0 .55em; font: 600 1.2rem/1.13 Poppins, system-ui, sans-serif; letter-spacing: -.035em; } .ds-person-info summary { cursor: pointer; font-weight: 600; padding-block: .55rem; } .ds-person-info summary:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; } @media (prefers-color-scheme: dark) { .ds-person-info summary:focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-person { width: min(100%, 12rem); border: 1px solid; border-radius: var(--radius, 14px); overflow: hidden; font: 400 .91rem/1.65 Poppins, system-ui, sans-serif; } .ds-person { background: var(--paper, #fcfcfd); color: var(--ink, #102d40); border-color: var(--line, #cddde6); } .ds-initials { display: grid; place-items: center; aspect-ratio: 4/4.4; background: var(--navy, #0c2c41); color: var(--light, #fcfcfd); font-size: clamp(2rem, 5vw, 4rem); } .ds-person-info { padding: 1rem; } .ds-person-info h3 { margin: 0 0 .55em; font: 600 1.2rem/1.13 Poppins, system-ui, sans-serif; letter-spacing: -.035em; } .ds-person-info summary { cursor: pointer; font-weight: 600; padding-block: .55rem; } .ds-person-info summary:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; }"
     },
     {
       "name": "Treatment rail controls",
       "kind": "custom",
       "description": "Circular controls with an example disabled state at the start of the rail.",
       "html": "<div class=\"ds-rail-controls\"><button type=\"button\" aria-label=\"Previous treatments\" disabled>←</button><button type=\"button\" aria-label=\"Next treatments\">→</button></div>",
-      "css": ".ds-rail-controls { display: inline-flex; gap: .35rem; padding: .5rem; background: var(--navy, #0c2c41); } .ds-rail-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff6d; border-radius: 50%; background: #0c2c41b6; color: var(--light, #fcfcfd); font: 400 1rem/1.65 Poppins, system-ui, sans-serif; cursor: pointer; } .ds-rail-controls button:disabled { opacity: .5; cursor: default; } .ds-rail-controls button:enabled:active { transform: scale(.97); } @media (prefers-reduced-motion: no-preference) { .ds-rail-controls button { transition: transform 140ms ease-out, background-color 140ms ease-out; } } .ds-rail-controls button:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; } @media (prefers-color-scheme: dark) { .ds-rail-controls button:focus-visible { outline-color: var(--focus, #ff9c6d); } }"
+      "css": ".ds-rail-controls { display: inline-flex; gap: .35rem; padding: .5rem; background: var(--navy, #0c2c41); } .ds-rail-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff6d; border-radius: 50%; background: #0c2c41b6; color: var(--light, #fcfcfd); font: 400 1rem/1.65 Poppins, system-ui, sans-serif; cursor: pointer; } .ds-rail-controls button:disabled { opacity: .5; cursor: default; } .ds-rail-controls button:enabled:active { transform: scale(.97); } @media (prefers-reduced-motion: no-preference) { .ds-rail-controls button { transition: transform 160ms ease-out, background-color 160ms ease-out; } } .ds-rail-controls button:focus-visible { outline: 3px solid var(--focus, #c9521d); outline-offset: 4px; }"
     }
   ],
   "narrative": {
-    "overview": "The Dr Abbie family identity pairs deep clinic navy, burnt-orange booking buttons, Poppins, and photography from the clinic. The Bowral shopfront identifies the home page while adjacent treatment links help patients find the right service.",
+    "overview": "White and pale blue sections, orange booking controls and navy photo overlays connect Bowral with the Dr Abbie family.",
     "dos": [
       "Do use clinic photographs and keep the navy gradient behind white treatment labels.",
       "Do use the orange pill for booking and keep the visible focus ring on links and controls."

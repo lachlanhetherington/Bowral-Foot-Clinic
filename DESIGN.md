@@ -5,25 +5,22 @@ colors:
   navy: "#0c2c41"
   header: "#102e43f7"
   header-opaque: "#102e43"
-  booking: "#b94312"
+  booking: "#bd440e"
   booking-hover: "#9c350c"
   light: "#fcfcfd"
   light-ink: "#102d40"
   light-muted: "#3c5567"
-  light-tint: "#edf3f6"
-  light-line: "#c6d5df"
+  paper: "#ffffff"
+  light-tint: "#dceff9"
+  light-line: "#cddde6"
+  link: "#14638e"
+  footer: "#222628"
   light-focus: "#c9521d"
-  dark-paper: "#102737"
-  dark-ink: "#eef5f8"
-  dark-muted: "#c1d1dc"
-  dark-tint: "#173649"
-  dark-line: "#4c6779"
-  dark-focus: "#ff9c6d"
   tile: "#20475e"
 typography:
   display:
     fontFamily: "Poppins, system-ui, sans-serif"
-    fontSize: "clamp(2.3rem, 4.3vw, 4.2rem)"
+    fontSize: "clamp(2.3rem, 4.6vw, 4.45rem)"
     fontWeight: 400
     lineHeight: 1.13
     letterSpacing: "-.035em"
@@ -81,11 +78,11 @@ components:
 
 ## Overview
 
-The Dr Abbie family identity pairs deep clinic navy, burnt-orange booking buttons, Poppins, and photography from the clinic. The Bowral shopfront identifies the home page while adjacent treatment links help patients find the right service.
+The Dr Abbie family identity pairs white and pale blue sections, burnt-orange booking buttons, Poppins, and clinical photography. Bowral's existing team photograph fills the home hero beside the treatment rail.
 
 ## Colors
 
-Navy anchors the footer and image overlays. The sticky header uses its own translucent navy and becomes opaque for increased contrast or reduced transparency. Orange identifies booking. The browser’s color preference switches the canvas, text, support surfaces, dividers, and focus ring.
+White and pale blue alternate through the content in either device color preference. Navy supports photo overlays and the sticky navigation, charcoal anchors the footer, and orange identifies booking. Blue marks secondary links and actions.
 
 ## Typography
 
@@ -93,7 +90,7 @@ Poppins Regular (400) sets the home hero and body. Semibold (600) sets interior 
 
 ## Layout
 
-Sections share a centered container. At up to 68rem the header hides the phone link. At up to 51rem the hero stacks booking above the treatment rail, navigation collapses behind a Menu button, and the team grid changes from four to two columns. At up to 24rem the rail shows a little over two cards and partner logos stack.
+Sections share a centered container. The homepage progresses from the hero to practitioners, reviews, conditions, clinic information, treatments, FAQ and booking. At up to 51rem booking stacks above the treatment rail, the navigation opens below the header, and the home practitioner rail shows the edge of the next card.
 
 ## Elevation & Depth
 
@@ -105,10 +102,11 @@ Rounded corners frame photos, treatment cards, staff cards, and dropdowns. Booki
 
 ## Components
 
-- **Booking and location links** use an orange primary pill and a transparent, outlined secondary pill on the hero. Pressing a button scales it to 97%. With standard motion settings, transitions ease out over 140ms.
+- **Booking and location links** use an orange primary pill and a transparent, outlined secondary pill on the hero. Pressing a button scales it to 97%. With standard motion settings, button motion eases out over 160ms.
 - **Navigation and FAQs** use native disclosures for submenus and answers. On mobile, a button with an expanded state toggles the navigation. Escape closes the open submenu or mobile navigation and returns focus to its control.
 - **Treatment tiles** use photography where available and a blue backing for text-only treatments. The rail supports direct scrolling, keyboard focus, and previous and next buttons. It snaps to tile starts and disables buttons at either end. Button-driven scrolling is instant with reduced motion.
-- **Staff cards and service links** use bordered, low-depth surfaces. Staff cards place a portrait or initials above the name and bio. Service links wrap and underline on hover.
+- **Staff, condition and service cards** use white bordered surfaces. Staff cards place a portrait or initials above the name. The home staff rail supports touch, arrows, and keyboard navigation.
+- **Motion** brings in hero content, section headings and disclosure contents with short fades and translations. Reduced-motion settings disable these effects.
 
 ## Do's and Don'ts
 
