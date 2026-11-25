@@ -8,7 +8,7 @@ py -3 -m http.server 8765 --bind 127.0.0.1
 
 Open http://127.0.0.1:8765/. Booking buttons open the Bowral Nookal booking flow.
 
-The HTML is ready to serve. To regenerate from the original sites, create a sibling `Incoming` folder, set `BOWRAL_PLAYWRIGHT` to the installed Playwright package location, and run `node collect.cjs` followed by `node build.cjs` from this directory. Chrome is used to collect the existing page content and metadata.
+The HTML is ready to serve. To regenerate from the original sites, create a sibling `Incoming` folder, set `BOWRAL_PLAYWRIGHT` to the installed Playwright package location, and run `node collect.cjs` followed by `node build.cjs` from this directory. Chrome is used to collect the existing page content and metadata. Generating new shopfront WebP assets requires FFmpeg.
 
 ## Migration notes
 

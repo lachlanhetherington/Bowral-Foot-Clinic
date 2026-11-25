@@ -1,5 +1,6 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
+const { execFileSync } = require('node:child_process');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
 const source = require('../Incoming/source-audit.json');
 const pages = source.filter(page => page.group !== 'reference');
@@ -31,6 +32,9 @@ async function asset(url) {
 }
 
 function image(file, alt='', eager=false) {
+  if (file==='assets/bowral-shopfront.webp') {
+    return `<img src="${file}" srcset="assets/bowral-shopfront-mobile.webp 800w, ${file} 1600w" sizes="100vw" alt="${esc(alt)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">`;
+  }
   return file ? `<img src="${file}" alt="${esc(alt)}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">` : '';
 }
 
@@ -176,7 +180,15 @@ async function main() {
   try {
     const tab=await browser.newPage();
     const logo=await asset(home.images.find(i=>i.alt==='Bowral Foot Clinic logo').url);
-    const hero=await asset(home.backgrounds[0]);
+    const heroSource=await asset(home.backgrounds[0]);
+    const hero='assets/bowral-shopfront.webp';
+    for (const [file,width] of [[hero,1600],['assets/bowral-shopfront-mobile.webp',800]]) {
+      try { await fs.access(file); }
+      catch (error) {
+        if (error.code!=='ENOENT') throw error;
+        execFileSync('ffmpeg',['-v','error','-n','-i',heroSource,'-vf','scale='+width+':-2','-quality','79',file]);
+      }
+    }
     const reference=source.find(p=>p.group==='reference' && !p.slug);
     for (const [slug,filename] of [['biomechanics','svc-biomechanics.webp'],['custom-orthotics','svc-orthotics.webp'],['shockwave-therapy','svc-shockwave.webp']]) {
       treatmentImages.set(slug,await asset(reference.images.find(i=>i.url.endsWith('/'+filename))?.url));
@@ -204,11 +216,14 @@ async function main() {
 ${page.description===null?'':`<meta name="description" content="${esc(page.description)}">`}
 <link rel="canonical" href="${esc(page.canonical)}">
 <link rel="icon" href="${base}${logo}">
+<link rel="preload" href="${base}assets/poppins-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${base}assets/poppins-semibold.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('has-js');</script>
 <link rel="stylesheet" href="${base}assets/site.css">
 <script src="${base}assets/site.js" defer></script>
 </head>
 <body>${header(logo)}<main id="content">${body}</main>${footer(logo)}</body>
-</html>`.replace(/src="assets\//g,'src="'+base+'assets/').split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
+</html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
       if(page.slug) await fs.mkdir(page.slug,{recursive:true});
       await fs.writeFile(path.join(page.slug,'index.html'),document);
     }

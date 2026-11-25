@@ -156,6 +156,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .header-actions { margin-left: 0; }
   .header nav { order: 4; flex: 0 0 100%; display: grid; gap: 0; max-height: 65svh; overflow: auto; padding-bottom: .55rem; }
   .header nav[hidden] { display: none; }
+  .has-js .header-inner:not(:has(.menu-toggle[aria-expanded="true"])) nav { display: none; }
   .dropdown { position: static; min-width: 0; max-height: none; }
   .hero-inner, .split, .faq { grid-template-columns: 1fr; }
   .hero-inner { padding-block: 3rem 2rem; min-height: 0; }
