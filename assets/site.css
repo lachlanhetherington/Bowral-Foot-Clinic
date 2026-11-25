@@ -89,6 +89,7 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .mega-links a { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: .6rem; height: 100%; min-height: 44px; padding: .5rem; text-decoration: none; border-radius: 8px; line-height: 1.35; }
 .mega-links a:hover, .mega-links a:focus-visible { background: #eff7fc; }
 .mega-icon { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 8px; background: var(--tint); color: var(--link); }
+.mega-icon svg { display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .mega-links small { display: block; color: var(--muted); font-size: .79rem; font-weight: 400; margin-top: .15rem; }
 .mega-feature { display: flex; flex-direction: column; align-self: start; margin: 1.4rem 1.4rem 1.4rem 0; background: var(--navy); color: var(--light); text-decoration: none; border-radius: var(--radius); overflow: hidden; }
 .mega-feature img { aspect-ratio: 16/10; object-position: center 68%; }

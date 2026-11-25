@@ -19,3 +19,4 @@ The HTML is ready to serve. To regenerate from the original sites, create a sibl
 - The existing About route displays WordPress sample copy. The preview uses the clinic introduction from the existing homepage on that route and retains its existing metadata.
 - The clinic logo, storefront photos, and original portraits of Dr Elissa All and Dr Mohemed Al-Heyoury come from Bowral’s public Media Library. Additional portraits and topic photography come from the Dr Abbie family site. Photo assignments are in `build.cjs` and `interior-data.cjs`. The Poppins license is in `assets/poppins-OFL.txt`.
 - Run `node archive-bowral-images.cjs` with `BOWRAL_PLAYWRIGHT` set to collect the original Bowral-hosted images used on public sitemap pages. The script stores one copy of each original and its source inventory in the sibling `Incoming/Bowral image archive` folder.
+- Mega menu glyphs come from Tabler Icons v3.34.1. The license is in `assets/tabler-icons-license.txt`.

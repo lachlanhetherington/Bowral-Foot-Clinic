@@ -92,11 +92,44 @@ const menuDescriptions = {
   'podiatrists-wollondilly':'Podiatry for Wollondilly residents'
 };
 
+const megaMenuIcons = {
+  'biomechanics': 'walk',
+  'custom-orthotics': 'shoe',
+  'childrens-podiatry': 'baby-carriage',
+  'shockwave-therapy': 'wave-sine',
+  'dry-needling': 'needle',
+  'foot-mobilisations': 'rotate-2',
+  'sports-podiatry': 'run',
+  'general-foot-care': 'first-aid-kit',
+  'strapping': 'bandage',
+  'neural-therapy': 'vaccine',
+  'shockwave-therapy-2': 'vaccine-bottle',
+  'toenail-problems/#partial-nail-avulsion': 'scissors',
+  'toenail-problems/#onyfix': 'ruler-2',
+  'general-foot-care/#wart-removal': 'virus',
+  'childrens-foot-problems': 'mood-kid',
+  'diabetic-foot-care': 'droplet',
+  'foot-ankle-injuries': 'bone',
+  'heel-pain': 'shoe',
+  'knee-hip-back-pain': 'body-scan',
+  'toenail-problems': 'scissors',
+  '#visit': 'map-pin',
+  'podiatrist-southern-highlands': 'map-2',
+  'podiatrists-moss-vale': 'compass',
+  'podiatrists-wollondilly': 'building-community',
+};
+
+function megaMenuIcon(slug) {
+  const icon = megaMenuIcons[slug];
+  if (!icon) throw new Error('Missing mega menu icon for '+slug);
+  return `<span class="mega-icon" aria-hidden="true"><svg width="20" height="20" focusable="false"><use href="assets/mega-menu-icons.svg#${icon}"></use></svg></span>`;
+}
+
 function navGroup(label, options) {
   const {title, description, cta, items, feature} = options;
   return `<details class="nav-group"><summary>${label}</summary><div class="dropdown mega-menu">
     <div class="mega-intro"><strong>${esc(title)}</strong><p>${esc(description)}</p>${link(cta.slug,cta.label+' →')}</div>
-    <ul class="mega-links">${items.map(item=>`<li><a href="${href(item.slug)}"><span class="mega-icon" aria-hidden="true">→</span><span><strong>${esc(item.label || titleFor(item))}</strong><small>${esc(menuDescriptions[item.slug])}</small></span></a></li>`).join('')}</ul>
+    <ul class="mega-links">${items.map(item=>`<li><a href="${href(item.slug)}">${megaMenuIcon(item.slug)}<span><strong>${esc(item.label || titleFor(item))}</strong><small>${esc(menuDescriptions[item.slug])}</small></span></a></li>`).join('')}</ul>
     <a class="mega-feature" href="${href(feature.slug)}">${image(feature.file)}<span><strong>${esc(feature.title)}</strong><span>${esc(feature.label)} <span aria-hidden="true">→</span></span></span></a>
   </div></details>`;
 }
@@ -345,7 +378,7 @@ ${page.description===null?'':`<meta name="description" content="${esc(page.descr
 <script src="${base}assets/site.js" defer></script>
 </head>
 <body${page.slug?'':' class="home"'}>${header(logo)}<main id="content">${body}</main>${footer(logo,!page.slug)}</body>
-</html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
+</html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).replaceAll('href="assets/mega-menu-icons.svg#','href="'+base+'assets/mega-menu-icons.svg#').split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
       if(page.slug) await fs.mkdir(page.slug,{recursive:true});
       await fs.writeFile(path.join(page.slug,'index.html'),document);
     }
