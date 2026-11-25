@@ -128,9 +128,9 @@ function visit() {
   <div><h3>Contact</h3>${phone}<br><a href="mailto:bowralfootclinic@gmail.com">bowralfootclinic@gmail.com</a></div></div>`;
 }
 
-function footer(logo) {
+function footer(logo, hasMotion) {
   return `<footer class="footer"><div class="wrap"><div class="footer-top"><a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a><nav class="footer-links" aria-label="Footer navigation">${link('our-team','Meet the Team')}${link('about','About')}${link('book-online','Book Online')}<a href="https://dr-abbie.com/">Dr. Abbie Clinics</a></nav>${book()}</div>
-  ${visit()}<div class="footer-bottom"><small>© ${new Date().getFullYear()} The Bowral Foot Clinic</small></div></div></footer>`;
+  ${visit()}<div class="footer-bottom"><small>© ${new Date().getFullYear()} The Bowral Foot Clinic</small>${hasMotion?'<button type="button" class="motion-setting" hidden>Pause animations</button>':''}</div></div></footer>`;
 }
 
 function practitioners(team, full=false) {
@@ -139,12 +139,11 @@ function practitioners(team, full=false) {
     <div class="person-info"><h3>${esc(person.name)}</h3><p>${esc(person.role)}</p>
     ${full ? `<details><summary>Read bio</summary>${person.bio.join('')}</details>` : `<a class="text-link" href="/our-team/#${person.id}">View profile ↗</a>`}</div></article>`).join('');
   if (full) return `<div class="team-grid">${cards}</div>`;
-  return `<div class="team-carousel" data-carousel data-loop><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners',true)}</div>`;
+  return `<div class="team-carousel" data-carousel data-loop><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners')}</div>`;
 }
 
-function railButtons(label, looping=false) {
-  const pause = looping ? `<button type="button" class="rail-pause" aria-label="Pause ${label} carousel" aria-pressed="false" title="Pause ${label} carousel" hidden><span aria-hidden="true"></span></button>` : '';
-  return `<div class="rail-controls">${pause}<button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
+function railButtons(label) {
+  return `<div class="rail-controls"><button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
 }
 
 function treatmentRail() {
@@ -154,7 +153,7 @@ function treatmentRail() {
     return {slug,label:titleFor(page),file:treatmentImages.get(slug) || page.blocks.find(b=>b.file)?.file};
   })];
   tiles.splice(3,0,...additions);
-  return `<div class="treatments" data-carousel data-loop><div class="rail-heading"><h2>Our treatments</h2>${railButtons('treatments',true)}</div>
+  return `<div class="treatments" data-carousel data-loop><div class="rail-heading"><h2>Our treatments</h2>${railButtons('treatments')}</div>
   <div class="rail" data-track tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
 }
 
@@ -171,8 +170,7 @@ function homepage(hero,team) {
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
   <a class="rating" href="${reviewsListing}">Google reviews <span aria-hidden="true">↗</span></a>
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
-  ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div>
-  <button type="button" class="hero-motion-toggle" aria-label="Pause background animation" aria-pressed="false" title="Pause background animation"><span aria-hidden="true"></span></button></section>
+  ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
   ${reviews()}
   <section class="section" id="conditions"><div class="wrap"><div class="section-heading"><h2>Problems we treat</h2></div>${careCards(group('conditions'))}<details class="more-care"><summary>See more conditions</summary><div class="source-list">${b[22].clean}${b[23].clean}</div></details></div></section>
@@ -320,7 +318,7 @@ ${page.description===null?'':`<meta name="description" content="${esc(page.descr
 <link rel="stylesheet" href="${base}assets/site.css">
 <script src="${base}assets/site.js" defer></script>
 </head>
-<body${page.slug?'':' class="home"'}>${header(logo)}<main id="content">${body}</main>${footer(logo)}</body>
+<body${page.slug?'':' class="home"'}>${header(logo)}<main id="content">${body}</main>${footer(logo,!page.slug)}</body>
 </html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
       if(page.slug) await fs.mkdir(page.slug,{recursive:true});
       await fs.writeFile(path.join(page.slug,'index.html'),document);

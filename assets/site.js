@@ -42,15 +42,15 @@ document.addEventListener('keydown', event => {
 });
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const backgroundMotion = document.querySelector('.hero-motion-toggle');
-if (backgroundMotion) {
-  const hero = backgroundMotion.closest('.hero');
-  hero.dataset.backgroundMotion = 'playing';
-  backgroundMotion.addEventListener('click', () => {
-    const paused = hero.dataset.backgroundMotion === 'playing';
-    hero.dataset.backgroundMotion = paused ? 'paused' : 'playing';
-    backgroundMotion.setAttribute('aria-pressed', String(paused));
-    backgroundMotion.title = paused ? 'Resume background animation' : 'Pause background animation';
+const motionSetting = document.querySelector('.motion-setting');
+let animationsPaused = false;
+if (motionSetting) {
+  document.body.dataset.ambientMotion = 'playing';
+  motionSetting.hidden = false;
+  motionSetting.addEventListener('click', () => {
+    animationsPaused = !animationsPaused;
+    document.body.dataset.ambientMotion = animationsPaused ? 'paused' : 'playing';
+    motionSetting.textContent = animationsPaused ? 'Resume animations' : 'Pause animations';
   });
 }
 const headerScrollMarker = document.querySelector('.header-scroll-marker');
@@ -99,25 +99,16 @@ function initializeCarouselLoop(carousel, rail, originals, advance) {
     }, {passive:true});
   }
 
-  const pause = carousel.querySelector('.rail-pause');
-  const pauseLabel = pause.getAttribute('aria-label');
-  pause.hidden = false;
-  let paused = false;
   let visible = false;
   let interacting = false;
   const hover = matchMedia('(hover: hover)');
-  pause.addEventListener('click', () => {
-    paused = !paused;
-    pause.setAttribute('aria-pressed', String(paused));
-    pause.title = paused ? pauseLabel.replace('Pause ', 'Resume ') : pauseLabel;
-  });
   new IntersectionObserver(([entry]) => { visible = entry.intersectionRatio >= .5; }, {threshold:.5}).observe(carousel);
   rail.addEventListener('pointerdown', () => { interacting = true; }, {passive:true});
   for (const event of ['pointerup', 'pointercancel']) {
     window.addEventListener(event, () => { interacting = false; }, {passive:true});
   }
   setInterval(() => {
-    if (!visible || paused || interacting || document.hidden || reducedMotion.matches) return;
+    if (!visible || animationsPaused || interacting || document.hidden || reducedMotion.matches) return;
     if (carousel.matches(':focus-within') || (hover.matches && carousel.matches(':hover'))) return;
     advance(1);
   }, 4200);
@@ -156,7 +147,7 @@ if (!reducedMotion.matches) {
   const reveal = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;
-      if (!reducedMotion.matches) entry.target.animate(
+      if (!animationsPaused && !reducedMotion.matches) entry.target.animate(
         [{opacity:.76, transform:'translateY(12px)'},{opacity:1, transform:'translateY(0)'}],
         {duration:420, easing:'cubic-bezier(.16,1,.3,1)'}
       );

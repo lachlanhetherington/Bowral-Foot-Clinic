@@ -111,9 +111,6 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .hero-copy { align-self: center; }
 .hero-copy p { font-size: clamp(1rem, 1.45vw, 1.21rem); max-width: 46ch; }
 .hero h1 { font-size: clamp(2.3rem, 4.6vw, 4.45rem); margin-top: .28em; }
-.hero-motion-toggle { display: none; position: absolute; bottom: 1rem; left: max(1.5rem, calc((100% - 77rem)/2)); place-items: center; width: 44px; height: 44px; border: 1px solid #ffffff80; border-radius: 50%; background: #0c2c41c9; }
-.hero-motion-toggle span { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
-.hero-motion-toggle[aria-pressed="true"] span { width: 0; height: 0; border: 6px solid transparent; border-right: 0; border-left: 9px solid currentColor; }
 .rating { display: inline-flex; align-items: center; gap: .65rem; font-weight: 600; font-size: .87rem; min-height: 44px; text-decoration: none; }
 .rating:hover { text-decoration: underline; }
 .treatments { min-width: 0; }
@@ -122,11 +119,8 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .rail-controls { display: flex; gap: .35rem; }
 .rail-controls button { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #ffffff6d; border-radius: 50%; background: #0c2c41b6; }
 .rail-controls button:disabled { opacity: .5; cursor: default; }
-.rail-controls .rail-pause[hidden] { display: none; }
-.rail-pause span { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
-.rail-pause[aria-pressed="true"] span { width: 0; height: 0; border: 6px solid transparent; border-right: 0; border-left: 9px solid currentColor; }
 @media (prefers-reduced-motion: reduce) {
-  .rail-controls .rail-pause { display: none; }
+  .motion-setting { display: none; }
 }
 .rail { display: grid; grid-auto-columns: calc((100% - 1rem)/3); grid-auto-flow: column; gap: .5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: .4rem; }
 .tile { position: relative; isolation: isolate; display: flex; align-items: end; text-decoration: none; aspect-ratio: 3/4; background: #20475e; overflow: hidden; border-radius: var(--radius); scroll-snap-align: start; }
@@ -200,6 +194,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 .footer-top h2 { font-size: clamp(1.55rem, 3vw, 2.5rem); }
 .footer-top p { margin-bottom: 0; }
 .footer-bottom { border-top: 1px solid #ffffff45; padding-top: 1.4rem; font-size: .88rem; }
+.motion-setting { min-height: 44px; padding: .25rem 0; border: 0; background: transparent; text-decoration: underline; text-underline-offset: .22em; }
 .page-hero { padding-block: clamp(2.5rem, 5vw, 5rem); }
 .page-hero h1 { font-size: clamp(2.2rem, 4.3vw, 4.1rem); font-weight: 600; text-wrap: balance; }
 .page-hero .split { gap: 1rem clamp(1.75rem, 5vw, 4.75rem); }
@@ -255,7 +250,6 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .home .header { margin-bottom: -65px; }
   .home .header:not(.scrolled):has(.menu-toggle[aria-expanded="true"]) { background: #102e43; }
   .hero-inner { padding-block: 8rem 2rem; min-height: 0; }
-  .hero-motion-toggle { position: static; margin: -1.25rem 1rem .75rem auto; }
   .hero > img { object-position: 64% 55%; }
   .hero::after { background: linear-gradient(0deg,#09293efb 5%,#09293ed9 54%,#09293e78 90%); }
   .hero h1 { font-size: clamp(2.05rem, 7vw, 3.5rem); }
@@ -282,9 +276,8 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
-  .hero[data-background-motion] > img { animation: hero-photo-zoom 18s ease-in-out infinite alternate; transform-origin: 60% 58%; }
-  .hero[data-background-motion="paused"] > img { animation-play-state: paused; }
-  .hero[data-background-motion] .hero-motion-toggle { display: grid; }
+  .home[data-ambient-motion] .hero > img { animation: hero-photo-zoom 18s ease-in-out infinite alternate; transform-origin: 60% 58%; }
+  .home[data-ambient-motion="paused"] .hero > img { animation-play-state: paused; }
   @keyframes hero-photo-zoom { from { transform: scale(1); } to { transform: scale(1.095); } }
   .button, .rail-controls button, .header { transition: transform 160ms ease-out, background-color 200ms ease-out; }
   .nav-group[open] .dropdown { animation: menu-in 180ms ease-out both; }

@@ -109,7 +109,7 @@ Rounded corners frame photos, treatment cards, staff cards, and dropdowns. Booki
 - **Navigation and FAQs** use native disclosures. Desktop mega menus pair a pale-blue intro with a two-column link grid and a featured photo card. Mobile keeps the same destinations in a single-column disclosure. Escape closes the open submenu or mobile navigation and returns focus to its control.
 - **Treatment tiles** use photography where available and a blue backing for text-only treatments. The rail loops in both directions and auto-advances every 4.2 seconds while in view. Visitors can pause it or browse using touch, arrow buttons, or the keyboard. Auto-advance is off with reduced motion, and manual scrolling becomes instant.
 - **Staff, condition and service cards** use white bordered surfaces. Staff cards place a portrait or initials above the name. The home staff rail uses the same looping, pause and reduced-motion behavior as the treatment rail.
-- **Motion** brings in hero content, section headings and disclosure contents with short fades and translations. Reduced-motion settings disable these effects.
+- **Motion** brings in hero content, section headings and disclosure contents with short fades and translations. A text control in the homepage footer pauses the hero zoom and both auto-advancing carousels. Reduced-motion settings disable automatic motion.
 
 ## Do's and Don'ts
 
