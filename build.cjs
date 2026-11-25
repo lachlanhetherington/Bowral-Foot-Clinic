@@ -280,6 +280,7 @@ async function main() {
   try {
     const tab=await browser.newPage();
     const logo=await asset(home.images.find(i=>i.alt==='Bowral Foot Clinic logo').url);
+    const favicon=await asset('https://i0.wp.com/thebowralfootclinic.com.au/wp-content/uploads/2025/07/cropped-Agency-Canva-Templates-1.png?fit=192%2C192&ssl=1');
     const reference=source.find(p=>p.group==='reference' && !p.slug);
     for (const [slug,filename] of [['biomechanics','svc-biomechanics.webp'],['custom-orthotics','svc-orthotics.webp'],['shockwave-therapy','svc-shockwave.webp']]) {
       treatmentImages.set(slug,await asset(reference.images.find(i=>i.url.endsWith('/'+filename))?.url));
@@ -311,7 +312,7 @@ async function main() {
 <title>${esc(page.pageTitle)}</title>
 ${page.description===null?'':`<meta name="description" content="${esc(page.description)}">`}
 <link rel="canonical" href="${esc(page.canonical)}">
-<link rel="icon" href="${base}${logo}">
+<link rel="icon" type="image/png" sizes="192x192" href="${base}${favicon}">
 <link rel="preload" href="${base}assets/poppins-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${base}assets/poppins-semibold.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('has-js');</script>
