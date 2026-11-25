@@ -93,11 +93,11 @@ Poppins Regular (400) sets the home hero and body. Semibold (600) sets interior 
 
 Sections share a centered container. The homepage progresses from the hero to practitioners, reviews, conditions, clinic information, treatments, FAQ and booking. At up to 51rem booking stacks above the treatment rail, the navigation opens below the header, and the home practitioner rail shows the edge of the next card.
 
-Interior pages use split heroes with topic-specific photography. Service and condition pages pair readable main content with a booking sidebar and related links. Location pages surface Bowral directions and clinic hours before the main article. The sidebar moves into the reading flow on mobile.
+Interior pages use full-width topic photography with a navy overlay, breadcrumbs, booking and phone buttons, and a practitioner rail on desktop. Mobile prioritises the page introduction and clinic actions. Service and condition pages pair the main content with a booking sidebar and related links. Location pages surface Bowral directions and clinic hours before the main article.
 
 ## Elevation & Depth
 
-Navy gradients support white labels on photography. Borders and canvas tints separate cards and sections. The home header overlays the hero with white links and white logo lettering, retaining the original blue icon on a transparent background. After the first 32px of scroll, it switches to a frosted light surface and the original blue lettering. Interior pages use the light header from the start.
+Navy gradients support white labels on photography. Borders and canvas tints separate cards and sections. The header overlays the photo heroes with white links and white logo lettering, retaining the original blue icon on a transparent background. After the first 32px of scroll, it switches to a frosted light surface and the original blue lettering.
 
 ## Shapes
 
