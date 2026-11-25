@@ -42,6 +42,17 @@ document.addEventListener('keydown', event => {
 });
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const backgroundMotion = document.querySelector('.hero-motion-toggle');
+if (backgroundMotion) {
+  const hero = backgroundMotion.closest('.hero');
+  hero.dataset.backgroundMotion = 'playing';
+  backgroundMotion.addEventListener('click', () => {
+    const paused = hero.dataset.backgroundMotion === 'playing';
+    hero.dataset.backgroundMotion = paused ? 'paused' : 'playing';
+    backgroundMotion.setAttribute('aria-pressed', String(paused));
+    backgroundMotion.title = paused ? 'Resume background animation' : 'Pause background animation';
+  });
+}
 const headerScrollMarker = document.querySelector('.header-scroll-marker');
 if (headerScrollMarker) {
   const header = document.querySelector('.header');

@@ -171,7 +171,8 @@ function homepage(hero,team) {
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
   <a class="rating" href="${maps}"><span aria-hidden="true">★★★★★</span> 5 stars on Google</a>
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
-  ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
+  ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div>
+  <button type="button" class="hero-motion-toggle" aria-label="Pause background animation" aria-pressed="false" title="Pause background animation"><span aria-hidden="true"></span></button></section>
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
   ${reviews()}
   <section class="section" id="conditions"><div class="wrap"><div class="section-heading"><h2>Problems we treat</h2></div>${careCards(group('conditions'))}<details class="more-care"><summary>See more conditions</summary><div class="source-list">${b[22].clean}${b[23].clean}</div></details></div></section>
