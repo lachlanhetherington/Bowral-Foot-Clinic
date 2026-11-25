@@ -180,6 +180,12 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .faq summary { font-weight: 600; min-height: 44px; }
 .faq details :is(h2,h3,h4) { font-size: 1rem; line-height: 1.65; letter-spacing: 0; font-weight: 400; margin-bottom: .55rem; }
 .visit-data { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 1.35rem; margin-block: 1.5rem 2rem; overflow-wrap: anywhere; }
+.visit-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: start; gap: clamp(1.5rem, 4vw, 4rem); }
+.visit-layout .visit-data { grid-template-columns: 1fr 1.25fr; }
+.visit-photo img { aspect-ratio: 4/3; border-radius: var(--radius); }
+.visit-photo figcaption, .about-frontage figcaption { color: var(--muted); margin-top: .65rem; font-size: .88rem; }
+.about-frontage { padding-top: 0; }
+.about-frontage img { aspect-ratio: 3.8/1; object-position: center top; border-radius: var(--radius); }
 address { font-style: normal; margin-bottom: .55rem; }
 dl, dd { margin: 0; }
 dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 22rem; }
@@ -259,6 +265,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .care-grid, .care-grid-images { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .care-card-body { padding: .85rem; }
   .visit-data { grid-template-columns: 1fr; }
+  .visit-layout, .visit-layout .visit-data { grid-template-columns: 1fr; }
 }
 @media (max-width: 21rem) {
   .care-grid, .care-grid-images { grid-template-columns: 1fr; }

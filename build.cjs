@@ -13,6 +13,13 @@ const phone = '<a href="tel:+61240052668">(02) 4005 2668</a>';
 const assetCache = new Map();
 const treatmentImages = new Map();
 const interiorImages = new Map();
+const bowralPhotos = {
+  kneeAssessment: 'DR.ABBIECLINICSHOOT-014-1.jpg',
+  mohemed: 'DR.ABBIECLINICSHOOT-096.jpg',
+  elissa: 'DR.ABBIECLINICSHOOT-108.jpg',
+  biomechanics: 'DR.ABBIECLINICSHOOT-123-1.jpg',
+  generalCare: 'DSC05041-scaled-1.jpg'
+};
 const esc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const book = () => `<a class="button" href="${booking}">Book a Session <span aria-hidden="true">↗</span></a>`;
 const titleFor = page => ({'our-team':'Meet the Team', 'biomechanics':'Biomechanics','podiatrist-southern-highlands':'Southern Highlands','podiatrists-moss-vale':'Moss Vale','podiatrists-wollondilly':'Wollondilly'}[page.slug] || page.headings[0]);
@@ -95,7 +102,7 @@ function navGroup(label, options) {
 }
 
 function header(logo) {
-  const assessment = treatmentImages.get('biomechanics');
+  const assessment = home.blocks[24].file;
   const serviceOrder = ['biomechanics','custom-orthotics','childrens-podiatry','shockwave-therapy','dry-needling','foot-mobilisations','sports-podiatry','general-foot-care','strapping','neural-therapy','shockwave-therapy-2'];
   return `<a class="skip" href="#content">Skip to content</a>
   <header class="header"><div class="wrap header-inner">
@@ -126,6 +133,11 @@ function visit() {
   return `<div class="visit-data"><div><h3>Address</h3><address>Shop 3, 2-4 Boolwey St<br>Bowral NSW 2576</address><a class="text-link" href="${maps}">Get directions ↗</a></div>
   <div><h3>Opening hours</h3><dl><div><dt>Monday to Friday</dt><dd>8:30 am to 5:30 pm</dd></div><div><dt>Saturday</dt><dd>8:30 am to 12 pm</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl></div>
   <div><h3>Contact</h3>${phone}<br><a href="mailto:bowralfootclinic@gmail.com">bowralfootclinic@gmail.com</a></div></div>`;
+}
+
+function bowralStreetPhoto() {
+  const street = pages.find(page=>page.slug==='general-foot-care').blocks.find(block=>block.file==='assets/0.webp');
+  return `<figure class="visit-photo">${image(street.file,'The Bowral Foot Clinic frontage in the Boolwey 2000 shopping complex')}<figcaption>Boolwey 2000, where you’ll find the clinic entrance.</figcaption></figure>`;
 }
 
 function footer(logo, hasMotion) {
@@ -178,7 +190,7 @@ function homepage(hero,team) {
   <section class="section tint services-section" id="services"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
   <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
-  <section class="section tint" id="visit"><div class="wrap"><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div></section>
+  <section class="section tint" id="visit"><div class="wrap visit-layout"><div><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div>${bowralStreetPhoto()}</div></section>
   <section class="section network"><div class="wrap"><div class="section-heading"><h2>Our clinic network</h2></div><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
 }
 
@@ -224,12 +236,13 @@ function interior(page,team) {
     <li><strong>Check your confirmation</strong><p>Use the appointment confirmation to check the time and location. If you have a referral or relevant records, bring them along.</p></li></ol></article>${appointmentSidebar(page)}</div></section>${clinicSection()}`;
   } else if (page.slug==='about') {
     content = `<section class="section"><div class="wrap split"><article class="prose"><h2>About the clinic</h2><p>${esc(home.blocks[4].text)}</p><a class="text-link" href="/our-team/">Meet the Team ↗</a></article>${renderBlock(home.blocks[25])}</div></section>
+    <section class="section about-frontage"><div class="wrap"><h2>The clinic on Boolwey Street</h2><figure>${image(home.blocks[37].file,'Podiatry signage above the Bowral Foot Clinic entrance')}<figcaption>Shop 3, 2-4 Boolwey Street, Bowral. <a class="text-link" href="${maps}">Get directions ↗</a></figcaption></figure></div></section>
     ${relatedCare(['general-foot-care','biomechanics','childrens-podiatry'])}${clinicSection()}`;
   }
   else {
     const extras = {'toenail-problems':[['partial-nail-avulsion','Partial nail avulsion (PNA)','Ask our podiatrists about this procedure for ingrown toenails.'],['onyfix','Onyfix nail correction','Ask at your appointment whether Onyfix nail correction is suitable for you.']],
       'general-foot-care':[['wart-removal','Wart removal','Book an appointment to discuss treatment options for plantar warts.']]};
-    const detail = blocks.filter(b=>b.type!=='button' && !['icon','shortcode'].includes(b.type)).map(renderBlock).join('').trim();
+    const detail = blocks.filter(b=>b.type!=='button' && !['icon','shortcode'].includes(b.type) && b.file!==photo && b.file!=='assets/0.webp').map(renderBlock).join('').trim();
     const questions = page.slug==='neural-therapy' || page.slug==='shockwave-therapy-2'
       ? '<section><h2>Questions to bring to your appointment</h2><ul><li>What would make this treatment appropriate for me?</li><li>What alternatives should I consider?</li><li>What should I know about costs and follow-up?</li></ul></section>' : '';
     content = `${page.group==='locations'?clinicSection(false):''}<section class="section"><div class="wrap interior-layout"><article class="prose">${detail}
@@ -291,6 +304,17 @@ async function main() {
       interiorImages.set(slug,await asset(photo.url));
     }));
     for (const page of pages) await normalize(tab,page);
+    const clinicPhotos = new Map(await Promise.all(Object.entries(bowralPhotos).map(async ([role,filename])=>{
+      const url = 'https://i0.wp.com/thebowralfootclinic.com.au/wp-content/uploads/2025/07/'+filename+'?w=1150&ssl=1';
+      return [role,await asset(url)];
+    })));
+    interiorImages.set('knee-hip-back-pain',clinicPhotos.get('kneeAssessment'));
+    interiorImages.set('biomechanics',clinicPhotos.get('biomechanics'));
+    interiorImages.set('general-foot-care',clinicPhotos.get('generalCare'));
+    for (const slug of ['strapping','dry-needling']) {
+      const original = pages.find(page=>page.slug===slug).blocks.find(block=>block.file);
+      interiorImages.set(slug,original.file);
+    }
     const team=[];
     for (const id of ['arega-sarkisian','dr-elissa-all','dr-mohemed-al-heyoury','dr-yousef-najjarine']) {
       const profile=source.find(p=>p.slug==='team/'+id+'/');
@@ -299,7 +323,8 @@ async function main() {
       const portrait=profile.blocks.find(b=>b.type==='image'&&b.media[0]);
       const bio={blocks:profile.blocks.slice(start+1,end).filter(b=>b.type==='text-editor'||b.type==='heading')};
       await normalize(tab,bio);
-      team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':await asset(portrait?.media[0].url),bio:bio.blocks.map(renderBlock)});
+      const localPhoto = {'dr-elissa-all':clinicPhotos.get('elissa'),'dr-mohemed-al-heyoury':clinicPhotos.get('mohemed')}[id];
+      team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':localPhoto || await asset(portrait?.media[0].url),bio:bio.blocks.map(renderBlock)});
     }
     for (const page of pages) {
       const body = page.slug ? interior(page,team) : homepage(home.blocks[5].file,team);
