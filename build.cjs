@@ -99,7 +99,8 @@ function treatmentRail() {
   const tiles = [...featured.map(slug=>{
     const page=pages.find(p=>p.slug===slug);
     return {slug,label:titleFor(page),file:treatmentImages.get(slug) || page.blocks.find(b=>b.file)?.file};
-  }), ...additions];
+  })];
+  tiles.splice(3,0,...additions);
   return `<div class="treatments"><div class="rail-heading"><h2>Our treatments</h2><div class="rail-controls"><button type="button" data-step="-1" aria-label="Previous treatments">←</button><button type="button" data-step="1" aria-label="Next treatments">→</button></div></div>
   <div class="rail" tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
 }
@@ -114,7 +115,7 @@ function homepage(hero,team) {
   <section class="section tint"><div class="wrap"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p>${practitioners(team)}</div></section>
   ${reviews()}
   <section class="section tint"><div class="wrap split"><div><h2>Problems we treat</h2><div class="link-list">${group('conditions').map(p=>link(p.slug,titleFor(p))).join('')}</div></div><div class="source-list">${b[22].clean}${b[23].clean}</div></div></section>
-  <section class="section"><div class="wrap split">${renderBlock(b[25])}<div><h2>Range of services</h2><p>${esc(b[17].text)}</p><div class="source-list">${b[27].clean}${b[28].clean}</div></div></div></section>
+  <section class="section"><div class="wrap split">${renderBlock(b[25])}<div><h2>Range of services</h2><p>${esc(b[17].text)}</p><div class="source-list">${b[27].clean}${b[28].clean}</div><div class="link-list additional-services">${additions.map(service=>link(service.slug,service.label)).join('')}</div></div></div></section>
   <section class="section tint"><div class="wrap faq"><h2>Frequently asked questions</h2><div>${b[30].clean}</div></div></section>
   <section class="section" id="visit"><div class="wrap"><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div></section>
   <section class="section tint"><div class="wrap"><h2>Our clinic network</h2><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
