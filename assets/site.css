@@ -115,7 +115,7 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .hero-motion-toggle span { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
 .hero-motion-toggle[aria-pressed="true"] span { width: 0; height: 0; border: 6px solid transparent; border-right: 0; border-left: 9px solid currentColor; }
 .rating { display: inline-flex; align-items: center; gap: .65rem; font-weight: 600; font-size: .87rem; min-height: 44px; text-decoration: none; }
-.rating span { color: #ffd261; font-size: 1.14rem; letter-spacing: .08em; }
+.rating:hover { text-decoration: underline; }
 .treatments { min-width: 0; }
 .rail-heading { display: flex; justify-content: space-between; gap: .6rem; align-items: center; margin-bottom: .65rem; }
 .rail-heading h2 { font-size: 1rem; margin: 0; letter-spacing: 0; }
@@ -161,7 +161,6 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .reviews .section-heading { margin-bottom: 0; }
 .review-panel { max-width: 44rem; padding: 1.25rem; margin: 1.8rem auto 0; border-radius: var(--radius); background: var(--paper); }
 .review-panel p { margin-inline: auto; }
-.review-stars { color: #986100; letter-spacing: .14em; }
 .care-grid { display: grid; grid-template-columns: repeat(3,minmax(0, 1fr)); gap: 1rem; }
 .care-grid-images { grid-template-columns: repeat(4,minmax(0, 1fr)); }
 .care-card { display: flex; flex-direction: column; overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; }

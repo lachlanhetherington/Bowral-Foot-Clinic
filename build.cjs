@@ -8,6 +8,7 @@ const home = pages.find(page => !page.slug);
 const teamPage = pages.find(page => page.slug === 'our-team');
 const booking = 'https://book.nookal.com/bookings/book/9E0edcA3-35A8-9fFF-0C33-59ECb896F885/location/BVMNW';
 const maps = 'https://www.google.com/maps/search/?api=1&query=The+Bowral+Foot+Clinic+2-4+Boolwey+Street+Bowral';
+const reviewsListing = 'https://maps.app.goo.gl/U7JjjtqZqgvtb4Z99';
 const phone = '<a href="tel:+61240052668">(02) 4005 2668</a>';
 const assetCache = new Map();
 const treatmentImages = new Map();
@@ -46,7 +47,7 @@ function renderBlock(block) {
 }
 
 function reviews() {
-  return `<section class="section tint reviews"><div class="wrap section-heading"><h2>What our patients say</h2><div class="review-panel"><span class="review-stars" aria-hidden="true">★★★★★</span><p>Find patient reviews and the clinic’s current rating on Google.</p><a class="text-link" href="${maps}">Read Google reviews <span aria-hidden="true">↗</span></a></div></div></section>`;
+  return `<section class="section tint reviews"><div class="wrap section-heading"><h2>Google reviews</h2><div class="review-panel"><p>Read reviews for The Bowral Foot Clinic on Google Maps.</p><a class="outline-button" href="${reviewsListing}">View all reviews on Google <span aria-hidden="true">↗</span></a></div></div></section>`;
 }
 
 const additions = [
@@ -170,7 +171,7 @@ function careCards(items, withImages=false) {
 function homepage(hero,team) {
   const b=home.blocks;
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
-  <a class="rating" href="${maps}"><span aria-hidden="true">★★★★★</span> 5 stars on Google</a>
+  <a class="rating" href="${reviewsListing}">Google reviews <span aria-hidden="true">↗</span></a>
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div>
   <button type="button" class="hero-motion-toggle" aria-label="Pause background animation" aria-pressed="false" title="Pause background animation"><span aria-hidden="true"></span></button></section>
