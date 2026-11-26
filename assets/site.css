@@ -134,7 +134,25 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .split, .faq { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(1.75rem, 6vw, 6rem); }
 .split img, .prose img { aspect-ratio: 3/2; border-radius: var(--radius); }
 .text-link { font-weight: 600; color: var(--link); }
-.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2rem; }
+.team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+.team-profile { display: grid; grid-template-columns: minmax(0, .45fr) minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; column-gap: clamp(.85rem, 2vw, 1.5rem); row-gap: .75rem; padding: clamp(1rem, 2vw, 1.5rem); border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+.team-profile:target { border-color: var(--link); }
+.team-profile-portrait { grid-row: 1 / span 2; border-radius: 10px; overflow: hidden; }
+.team-profile-portrait > * { aspect-ratio: 4/5; object-position: center 18%; }
+.team-profile-portrait .initials { aspect-ratio: 4/5; font-size: clamp(1.8rem, 3vw, 2.7rem); }
+.team-profile h3 { font-size: clamp(1.2rem, 2vw, 1.55rem); margin-bottom: .3rem; }
+.team-profile header p, .team-profile-details p { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+.team-profile-details .team-qualification { margin-bottom: .55rem; color: var(--ink); font-weight: 600; }
+.team-interests { display: flex; flex-wrap: wrap; gap: .45rem; margin: .9rem 0 0; padding: 0; list-style: none; }
+.team-interests a { display: inline-flex; align-items: center; min-height: 44px; padding: .35rem .75rem; border-radius: var(--pill); background: var(--tint); color: var(--link); font-size: .8rem; font-weight: 600; text-decoration: none; }
+.team-interests a:hover { background: var(--navy); color: var(--paper); }
+.team-booking { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 7vw, 6rem); }
+.team-booking .actions { margin-top: 1.25rem; }
+.team-booking .outline-button { background: var(--paper); }
+.team-booking .outline-button:hover { background: var(--tint); }
+.team-booking-options { display: grid; gap: 1rem; }
+.team-booking-options > div { border-top: 1px solid var(--line); padding-top: 1rem; }
+.team-booking-options p { margin-bottom: 0; }
 .section-heading { text-align: center; margin-bottom: clamp(1.5rem, 4vw, 3.2rem); }
 .section-heading p { margin-inline: auto; color: var(--muted); }
 .section-action { text-align: center; margin-top: 1.75rem; }
@@ -149,9 +167,7 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .person img, .initials { aspect-ratio: 4/4.4; object-position: 50% 15%; }
 .initials { display: grid; place-items: center; background: var(--navy); color: var(--light); font-size: clamp(2rem, 5vw, 4rem); }
 .person-info { padding: 1rem; }
-.person-info p, .person-info details { font-size: .91rem; }
-.person-info summary { font-weight: 600; padding-block: .55rem; }
-.person-info details h2, .person-info details h3 { font-size: 1rem; margin-top: 1rem; }
+.person-info p { font-size: .91rem; }
 .reviews { padding-block: clamp(2.5rem, 5vw, 4.5rem); }
 .review-summary { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
 .review-summary strong { font-size: 1.35rem; }
@@ -339,6 +355,8 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 .page-hero > img { object-position: center 55%; }
 .page-hero::after { content: ""; background: linear-gradient(90deg,#0c2c41f0 0%,#0c2c41c9 43%,#0c2c4166 100%), linear-gradient(0deg,#0c2c41c7,transparent 72%); }
 .page-hero-inner { min-height: 45.4rem; display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); gap: clamp(1.75rem,5vw,5.5rem); align-items: end; padding-block: 11.1rem 2.8rem; padding-inline-start: clamp(0rem,3vw,2.75rem); }
+.team-hero .page-hero-inner { display: block; min-height: 0; padding-bottom: clamp(3rem, 7vw, 6.5rem); }
+.team-hero .page-hero-copy { width: min(100%, 38rem); }
 .page-hero-copy { align-self: start; }
 .page-hero h1 { font-size: clamp(2.75rem,4.8vw,4.4rem); font-weight: 400; line-height: 1.04; margin-bottom: .29em; }
 .page-hero .breadcrumb { color: #dfebf2; margin-bottom: 1.15rem; }
@@ -427,7 +445,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .hero::after { background: linear-gradient(0deg,#09293efb 5%,#09293ed9 54%,#09293e78 90%); }
   .hero h1 { font-size: clamp(2.05rem, 7vw, 3.5rem); }
   .tile { aspect-ratio: 4/3; }
-  .team-grid { grid-template-columns: repeat(2,1fr); }
+  .team-grid, .team-booking { grid-template-columns: 1fr; }
   .team-track { grid-auto-columns: 68%; }
   .care-grid, .service-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .conditions-layout { grid-template-columns: 1fr; }
@@ -440,6 +458,12 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .visit-layout { grid-template-columns: 1fr; }
   .visit-photo img { flex: none; height: auto; min-height: 0; aspect-ratio: 4/3; }
   .network-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 38rem) {
+  .team-profile { grid-template-columns: 5.75rem minmax(0, 1fr); grid-template-rows: auto; }
+  .team-profile-portrait { grid-row: auto; }
+  .team-profile header { align-self: center; }
+  .team-profile-details { grid-column: 1 / -1; }
 }
 @media (max-width: 39rem) {
   .visit-nearby ul { grid-template-columns: 1fr; }
