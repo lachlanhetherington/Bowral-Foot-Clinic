@@ -75,7 +75,6 @@ function reviews(id) {
   return `<section class="section tint reviews"${id ? ` id="${id}"` : ''}><div class="wrap">
     <div class="section-heading">
       <h2>Google reviews</h2>
-      <div class="review-summary" role="img" aria-label="${googleRating} out of 5 on Google"><strong>${googleRating}</strong><span class="rating-stars" aria-hidden="true">★★★★★</span><img src="assets/google-wordmark.webp" alt="" width="78" height="27" decoding="async"></div>
       <p>Selected reviews from our Google Maps listing.</p>
     </div>
     <ul class="review-grid">${featuredReviews.map(({name, avatar, quote, reply})=>`
@@ -87,8 +86,12 @@ function reviews(id) {
         <blockquote><p>${esc(quote)}</p></blockquote>
         <details class="review-reply"><summary>Response from the owner</summary><p>${esc(reply)}</p></details>
       </li>`).join('')}
+      <li class="review-card review-listing">
+        <h3>Bowral on Google Maps</h3>
+        <div class="review-summary" role="img" aria-label="${googleRating} out of 5 on Google"><strong>${googleRating}</strong><span class="rating-stars" aria-hidden="true">★★★★★</span><img src="assets/google-wordmark.webp" alt="" width="78" height="27" decoding="async"></div>
+        <a class="outline-button" href="${reviewsListing}">View all reviews on Google <span aria-hidden="true">↗</span></a>
+      </li>
     </ul>
-    <div class="section-action"><a class="outline-button" href="${reviewsListing}">View all reviews on Google <span aria-hidden="true">↗</span></a></div>
   </div></section>`;
 }
 
