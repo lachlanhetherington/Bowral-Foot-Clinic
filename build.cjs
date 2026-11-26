@@ -218,6 +218,23 @@ function careCards(items, withImages=false) {
   }).join('')}</div>`;
 }
 
+function homepageConditions() {
+  const conditions = group('conditions');
+  const featured = conditions.find(item=>item.slug==='heel-pain');
+  return `<section class="section home-conditions" id="conditions" aria-labelledby="conditions-title"><div class="wrap">
+    <header class="conditions-heading"><h2 id="conditions-title">Problems we treat</h2><p>Find information about common foot, ankle and lower limb concerns.</p></header>
+    <div class="conditions-layout">
+      <a class="condition-feature" href="${href(featured.slug)}">
+        ${image(interiorImages.get(featured.slug))}
+        <span class="condition-feature-copy"><strong>${esc(titleFor(featured))}</strong><span>${esc(menuDescriptions[featured.slug])}</span><span class="condition-feature-action">Explore heel pain <span aria-hidden="true">→</span></span></span>
+      </a>
+      <div class="conditions-directory">
+        <ul class="condition-links">${conditions.filter(item=>item!==featured).map(item=>`<li><a href="${href(item.slug)}">${megaMenuIcon(item.slug)}<span class="condition-link-copy"><strong>${esc(titleFor(item))}</strong><span>${esc(menuDescriptions[item.slug])}</span></span><span class="condition-chevron" aria-hidden="true"></span></a></li>`).join('')}</ul>
+        <details class="condition-more"><summary>See more conditions</summary><div class="source-list">${home.blocks[22].clean}${home.blocks[23].clean}</div></details>
+      </div>
+    </div></div></section>`;
+}
+
 function homepage(hero,team,googleWordmark) {
   const b=home.blocks;
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
@@ -226,7 +243,7 @@ function homepage(hero,team,googleWordmark) {
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
   ${reviews()}
-  <section class="section" id="conditions"><div class="wrap"><div class="section-heading"><h2>Problems we treat</h2></div>${careCards(group('conditions'))}<details class="more-care"><summary>See more conditions</summary><div class="source-list">${b[22].clean}${b[23].clean}</div></details></div></section>
+  ${homepageConditions()}
   <section class="section tint"><div class="wrap split"><div><h2>${esc(b[3].text)}</h2><p>${esc(b[4].text)}</p><a class="text-link" href="/about/">About the clinic ↗</a></div>${renderBlock(b[5])}</div></section>
   <section class="section tint services-section" id="services"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
