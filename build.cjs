@@ -10,7 +10,9 @@ const booking = 'https://book.nookal.com/bookings/book/9E0edcA3-35A8-9fFF-0C33-5
 const maps = 'https://www.google.com/maps/search/?api=1&query=The+Bowral+Foot+Clinic+2-4+Boolwey+Street+Bowral';
 const reviewsListing = 'https://maps.app.goo.gl/jzYV5WmTtV9CG5HYA';
 const googleRating = '5.0';
-const phone = '<a href="tel:+61240052668">(02) 4005 2668</a>';
+const phoneNumber = '(02) 4005 2668';
+const phoneUrl = 'tel:+61240052668';
+const phone = `<a href="${phoneUrl}">${phoneNumber}</a>`;
 const assetCache = new Map();
 const treatmentImages = new Map();
 const carouselImages = new Map();
@@ -167,15 +169,44 @@ function header(logo) {
   <div class="header-actions">${phone}${book()}</div></div></header>`;
 }
 
+const clinicAddress = '<address>Shop 3, 2-4 Boolwey St<br>Bowral NSW 2576</address>';
+const clinicEmail = '<a href="mailto:bowralfootclinic@gmail.com">bowralfootclinic@gmail.com</a>';
+const clinicHours = '<dl><div><dt>Monday to Friday</dt><dd>8:30 am to 5:30 pm</dd></div><div><dt>Saturday</dt><dd>8:30 am to 12 pm</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl>';
+
 function visit() {
-  return `<div class="visit-data"><div><h3>Address</h3><address>Shop 3, 2-4 Boolwey St<br>Bowral NSW 2576</address><a class="text-link" href="${maps}">Get directions ↗</a></div>
-  <div><h3>Opening hours</h3><dl><div><dt>Monday to Friday</dt><dd>8:30 am to 5:30 pm</dd></div><div><dt>Saturday</dt><dd>8:30 am to 12 pm</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl></div>
-  <div><h3>Contact</h3>${phone}<br><a href="mailto:bowralfootclinic@gmail.com">bowralfootclinic@gmail.com</a></div></div>`;
+  return `<div class="visit-data"><div><h3>Address</h3>${clinicAddress}<a class="text-link" href="${maps}">Get directions ↗</a></div>
+  <div><h3>Opening hours</h3>${clinicHours}</div>
+  <div><h3>Contact</h3>${phone}<br>${clinicEmail}</div></div>`;
 }
 
-function bowralStreetPhoto() {
+function homepageVisit() {
   const street = pages.find(page=>page.slug==='general-foot-care').blocks.find(block=>block.file==='assets/0.webp');
-  return `<figure class="visit-photo">${image(street.file,'The Bowral Foot Clinic frontage in the Boolwey 2000 shopping complex')}<figcaption>Boolwey 2000, where you’ll find the clinic entrance.</figcaption></figure>`;
+  return `<section class="section tint" id="visit" aria-labelledby="visit-title"><div class="wrap">
+    <h2 id="visit-title">Visit us in Bowral</h2>
+    <div class="visit-layout">
+      <div class="visit-details">
+        <div class="visit-address">
+          ${megaMenuIcon('#visit')}
+          <div><h3>The Bowral Foot Clinic</h3>${clinicAddress}
+            <a class="visit-directions" href="${maps}">Get directions <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="visit-hours"><h3>Opening hours</h3>${clinicHours}</div>
+        <div class="visit-contact">
+          <a href="${phoneUrl}" aria-label="Call the clinic on ${phoneNumber}">${phoneNumber}</a>
+          ${clinicEmail}
+        </div>
+      </div>
+      <figure class="visit-photo">
+        ${image(street.file,'The Bowral Foot Clinic storefront in the Boolwey 2000 shopping complex')}
+        <figcaption><strong>Look for Boolwey 2000</strong><span>You’ll find the clinic entrance at Shop 3.</span></figcaption>
+      </figure>
+    </div>
+    <div class="visit-nearby">
+      <h3>Coming from nearby?</h3>
+      <ul>${group('locations').map(page=>`<li><a href="${href(page.slug)}">${megaMenuIcon(page.slug)}<span>${esc(titleFor(page))}</span><span aria-hidden="true">→</span></a></li>`).join('')}</ul>
+    </div>
+  </div></section>`;
 }
 
 function footer(logo, hasMotion) {
@@ -280,7 +311,7 @@ function homepage(hero,team,googleWordmark) {
   ${homepageServices()}
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
   <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
-  <section class="section tint" id="visit"><div class="wrap visit-layout"><div><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div>${bowralStreetPhoto()}</div></section>
+  ${homepageVisit()}
   <section class="section network"><div class="wrap"><div class="section-heading"><h2>Our clinic network</h2></div><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
 }
 
