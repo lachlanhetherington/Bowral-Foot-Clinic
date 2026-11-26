@@ -56,11 +56,45 @@ function renderBlock(block) {
   return block.clean || '';
 }
 
-function reviews() {
-  return `<section class="section tint reviews"><div class="wrap section-heading"><h2>Google reviews</h2><div class="review-panel">
-    <p class="review-summary" aria-label="${googleRating} out of 5 on Google"><strong>${googleRating}</strong><span class="rating-stars" aria-hidden="true">★★★★★</span><img src="assets/google-wordmark.webp" alt="" width="78" height="27" decoding="async"></p>
-    <p>Read the latest reviews for The Bowral Foot Clinic on Google Maps.</p><a class="outline-button" href="${reviewsListing}">View all reviews on Google <span aria-hidden="true">↗</span></a>
-  </div></div></section>`;
+const featuredReviews = [
+  {
+    name: 'Fofe Vrettos',
+    initials: 'FV',
+    quote: "Can't recommend highly enough. Honest, keeps to appointment times, great with kids and adults alike, very reasonably priced. Wouldn't go anywhere else.",
+    reply: 'Hi Fofe, thank you so much for your wonderful feedback! We’re delighted to hear you value our honesty, punctuality, and care for both kids and adults. Your recommendation means a lot to us, and we’re grateful for your trust in our clinic.',
+  },
+  {
+    name: 'Rachel Harman',
+    initials: 'RH',
+    quote: 'Consistantly a great friendly and professional service.',
+    reply: 'Hi Rachel, thank you for your lovely feedback! We’re so glad to hear you’ve consistently experienced friendly and professional care at our clinic. Your continued trust means a lot to us, and we look forward to seeing you again soon.',
+  },
+  {
+    name: 'Vida',
+    initials: 'V',
+    reply: 'Thank you for the five-star rating, Vida. We are delighted you had a positive experience and truly appreciate your support. We look forward to welcoming you back soon.',
+  },
+];
+
+function reviews(id) {
+  return `<section class="section tint reviews"${id ? ` id="${id}"` : ''}><div class="wrap">
+    <div class="section-heading">
+      <h2>Google reviews</h2>
+      <div class="review-summary" role="img" aria-label="${googleRating} out of 5 on Google"><strong>${googleRating}</strong><span class="rating-stars" aria-hidden="true">★★★★★</span><img src="assets/google-wordmark.webp" alt="" width="78" height="27" decoding="async"></div>
+      <p>Selected reviews from our Google Maps listing.</p>
+    </div>
+    <ul class="review-grid">${featuredReviews.map(({name, initials, quote, reply})=>`
+      <li class="review-card">
+        <div class="review-byline"><span class="review-avatar" aria-hidden="true">${initials}</span><div>
+          <h3>${esc(name)}</h3>
+          <span class="rating-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
+        </div></div>
+        ${quote ? `<blockquote><p>${esc(quote)}</p></blockquote>` : '<p class="review-rating-only">Rating only</p>'}
+        <details class="review-reply"><summary>Response from the owner</summary><p>${esc(reply)}</p></details>
+      </li>`).join('')}
+    </ul>
+    <div class="section-action"><a class="outline-button" href="${reviewsListing}">View all reviews on Google <span aria-hidden="true">↗</span></a></div>
+  </div></section>`;
 }
 
 const additions = [
@@ -345,7 +379,7 @@ function homepage(hero,team,googleWordmark) {
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
-  ${reviews()}
+  ${reviews('google-reviews')}
   ${homepageConditions()}
   ${homepageClinicStory()}
   ${homepageServices()}
