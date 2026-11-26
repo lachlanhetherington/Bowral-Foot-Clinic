@@ -1,5 +1,6 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
+const { createHash } = require('node:crypto');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
 const { photography, care } = require('./interior-data.cjs');
 const source = require('../Incoming/source-audit.json');
@@ -133,8 +134,8 @@ function megaMenuIcon(slug) {
 }
 
 function navGroup(label, options) {
-  const {title, description, cta, items, feature} = options;
-  return `<details class="nav-group"><summary>${label}</summary><div class="dropdown mega-menu">
+  const {title, description, cta, items, feature, menuClass = ''} = options;
+  return `<details class="nav-group"><summary>${label}</summary><div class="dropdown mega-menu${menuClass ? ' ' + menuClass : ''}">
     <div class="mega-intro"><strong>${esc(title)}</strong><p>${esc(description)}</p>${link(cta.slug,cta.label+' →')}</div>
     <ul class="mega-links">${items.map(item=>`<li><a href="${href(item.slug)}">${megaMenuIcon(item.slug)}<span><strong>${esc(item.label || titleFor(item))}</strong><small>${esc(menuDescriptions[item.slug])}</small></span></a></li>`).join('')}</ul>
     <a class="mega-feature" href="${href(feature.slug)}">${image(feature.file)}<span><strong>${esc(feature.title)}</strong><span>${esc(feature.label)} <span aria-hidden="true">→</span></span></span></a>
@@ -161,6 +162,7 @@ function header(logo) {
     feature:{slug:'heel-pain',file:treatmentImages.get('shockwave-therapy'),title:'Dealing with heel pain?',label:'Explore heel pain'}
   })}
   ${navGroup('Locations', {
+    menuClass:'locations-menu',
     title:'Visit us in Bowral', description:'Our Boolwey Street clinic serves Bowral and the Southern Highlands.',
     cta:{slug:'#visit',label:'Address and opening hours'}, items:[{slug:'#visit',label:'Bowral'},...group('locations')],
     feature:{slug:'our-team',file:home.blocks[5].file,title:'Meet the Bowral practitioners',label:'Meet the team'}
@@ -520,6 +522,11 @@ async function main() {
       const localPhoto = {'dr-elissa-all':clinicPhotos.get('elissa'),'dr-mohemed-al-heyoury':clinicPhotos.get('mohemed')}[id];
       team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':localPhoto || await asset(portrait?.media[0].url),bio:bio.blocks.map(renderBlock)});
     }
+    // Keep the shared stylesheet and script in sync with newly generated pages.
+    const [styleVersion, scriptVersion] = await Promise.all(['site.css', 'site.js'].map(async file => {
+      const content = await fs.readFile(path.join('assets', file));
+      return createHash('sha256').update(content).digest('hex').slice(0, 12);
+    }));
     for (const page of pages) {
       const body = page.slug ? interior(page,team) : homepage(home.blocks[5].file,team,googleWordmark);
       const base=page.slug?'../':'./';
@@ -535,8 +542,8 @@ ${page.description===null?'':`<meta name="description" content="${esc(page.descr
 <link rel="preload" href="${base}assets/poppins-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${base}assets/poppins-semibold.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('has-js');</script>
-<link rel="stylesheet" href="${base}assets/site.css">
-<script src="${base}assets/site.js" defer></script>
+<link rel="stylesheet" href="${base}assets/site.css?v=${styleVersion}">
+<script src="${base}assets/site.js?v=${scriptVersion}" defer></script>
 </head>
 <body class="photo-header${page.slug?'':' home'}">${header(logo)}<main id="content">${body}</main>${footer(logo)}</body>
 </html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).replaceAll('href="assets/mega-menu-icons.svg#','href="'+base+'assets/mega-menu-icons.svg#').split('\n').map(line=>line.trimEnd()).join('\n')+'\n';

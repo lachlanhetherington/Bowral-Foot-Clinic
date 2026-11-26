@@ -1,6 +1,6 @@
 const navigation = document.querySelector('#navigation');
 const menu = document.querySelector('.menu-toggle');
-const mobile = matchMedia('(max-width: 51rem)');
+const mobile = matchMedia('(max-width: 60rem)');
 
 function setMenu(open) {
   menu.setAttribute('aria-expanded', String(open));
