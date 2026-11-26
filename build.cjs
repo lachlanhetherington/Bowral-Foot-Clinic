@@ -59,13 +59,13 @@ function renderBlock(block) {
 const featuredReviews = [
   {
     name: 'Fofe Vrettos',
-    initials: 'FV',
+    avatar: 'assets/reviewer-fofe-vrettos.png',
     quote: "Can't recommend highly enough. Honest, keeps to appointment times, great with kids and adults alike, very reasonably priced. Wouldn't go anywhere else.",
     reply: 'Hi Fofe, thank you so much for your wonderful feedback! We’re delighted to hear you value our honesty, punctuality, and care for both kids and adults. Your recommendation means a lot to us, and we’re grateful for your trust in our clinic.',
   },
   {
     name: 'Rachel Harman',
-    initials: 'RH',
+    avatar: 'assets/reviewer-rachel-harman.png',
     quote: 'Consistantly a great friendly and professional service.',
     reply: 'Hi Rachel, thank you for your lovely feedback! We’re so glad to hear you’ve consistently experienced friendly and professional care at our clinic. Your continued trust means a lot to us, and we look forward to seeing you again soon.',
   },
@@ -78,9 +78,9 @@ function reviews(id) {
       <div class="review-summary" role="img" aria-label="${googleRating} out of 5 on Google"><strong>${googleRating}</strong><span class="rating-stars" aria-hidden="true">★★★★★</span><img src="assets/google-wordmark.webp" alt="" width="78" height="27" decoding="async"></div>
       <p>Selected reviews from our Google Maps listing.</p>
     </div>
-    <ul class="review-grid">${featuredReviews.map(({name, initials, quote, reply})=>`
+    <ul class="review-grid">${featuredReviews.map(({name, avatar, quote, reply})=>`
       <li class="review-card">
-        <div class="review-byline"><span class="review-avatar" aria-hidden="true">${initials}</span><div>
+        <div class="review-byline"><span class="review-avatar">${image(avatar)}</span><div>
           <h3>${esc(name)}</h3>
           <span class="rating-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
         </div></div>
