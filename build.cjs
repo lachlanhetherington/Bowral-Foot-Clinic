@@ -2,7 +2,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
-const { photography, care } = require('./interior-data.cjs');
+const { photography, serviceIllustrations, care } = require('./interior-data.cjs');
 const source = require('../Incoming/source-audit.json');
 const pages = source.filter(page => page.group !== 'reference');
 const home = pages.find(page => !page.slug);
@@ -421,6 +421,25 @@ function heroDetails(page) {
   return `<ul class="page-hero-details"><li>${esc(first)}</li><li>Online booking with Nookal</li><li><a href="${maps}">Shop 3, 2-4 Boolwey Street</a></li><li>Open Saturday mornings</li></ul>`;
 }
 
+function interiorDetail(blocks, hero, illustration) {
+  const detail = blocks.filter(block =>
+    !['button','icon','shortcode'].includes(block.type) &&
+    block.file !== hero && block.file !== 'assets/0.webp' &&
+    !(illustration && block.type === 'image')
+  );
+  const rendered = detail.map(renderBlock);
+  if (illustration) {
+    const {file, width, height, alt, caption, beforeHeading = 2} = illustration;
+    const nextHeading = detail.filter(block => block.type === 'heading')[beforeHeading - 1];
+    const position = nextHeading ? detail.indexOf(nextHeading) : rendered.length;
+    rendered.splice(position, 0, `<figure class="service-figure">
+      <img src="assets/${file}" alt="${esc(alt)}" width="${width}" height="${height}" loading="lazy" decoding="async">
+      <figcaption>${esc(caption)}</figcaption>
+    </figure>`);
+  }
+  return rendered.join('').trim();
+}
+
 function interior(page,team) {
   const blocks = [...page.blocks];
   const clinicPhoto = home.blocks[5].file;
@@ -438,7 +457,8 @@ function interior(page,team) {
     ? `<p>Visiting from ${esc(titleFor(page))}? Appointments are held at The Bowral Foot Clinic on Boolwey Street.</p>`
     : useExistingLead ? leadingBlock.clean : `<p>${esc(introductions[page.slug] || menuDescriptions[page.slug]+'.')}</p>`;
   if (leadingBlock && !useExistingLead) blocks.unshift(leadingBlock);
-  const photo = interiorImages.get(page.slug) || clinicPhoto;
+  const illustration = serviceIllustrations[page.slug];
+  const photo = illustration?.hero ? 'assets/' + illustration.hero : interiorImages.get(page.slug) || clinicPhoto;
   const parent = {services:['#services','Services'],conditions:['#conditions','Conditions'],locations:['#visit','Locations']}[page.group];
   const breadcrumb = `<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span>
     ${parent ? link(...parent)+' <span aria-hidden="true">/</span> ' : ''}<span aria-current="page">${esc(titleFor(page))}</span></nav>`;
@@ -461,7 +481,7 @@ function interior(page,team) {
   else {
     const extras = {'toenail-problems':[['partial-nail-avulsion','Partial nail avulsion (PNA)','Ask our podiatrists about this procedure for ingrown toenails.'],['onyfix','Onyfix nail correction','Ask at your appointment whether Onyfix nail correction is suitable for you.']],
       'general-foot-care':[['wart-removal','Wart removal','Book an appointment to discuss treatment options for plantar warts.']]};
-    const detail = blocks.filter(b=>b.type!=='button' && !['icon','shortcode'].includes(b.type) && b.file!==photo && b.file!=='assets/0.webp').map(renderBlock).join('').trim();
+    const detail = interiorDetail(blocks, photo, illustration);
     const questions = page.slug==='neural-therapy' || page.slug==='shockwave-therapy-2'
       ? '<section><h2>Questions to bring to your appointment</h2><ul><li>What would make this treatment appropriate for me?</li><li>What alternatives should I consider?</li><li>What should I know about costs and follow-up?</li></ul></section>' : '';
     content = `${page.group==='locations'?clinicSection(false):''}<section class="section"><div class="wrap interior-layout"><article class="prose">${detail}
