@@ -283,7 +283,7 @@ function footer(logo) {
 
 function practitioners(team) {
   const cards = team.map(person=>`<article class="person" id="${person.id}">
-    ${image(person.file, person.name)}
+    <div class="person-portrait" data-portrait="${person.id}">${image(person.file, person.name)}</div>
     <div class="person-info"><h3>${esc(person.name)}</h3><p>${esc(person.role)}</p>
     <a class="text-link" href="/our-team/#${person.id}">View profile ↗</a></div></article>`).join('');
   return `<div class="team-carousel" data-carousel data-loop><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners')}</div>`;
@@ -482,7 +482,7 @@ function meetTheTeam(team) {
       <h2 id="bowral-practitioners-title">Our Bowral podiatrists</h2>
       <div class="team-grid">${team.map(person=>`
         <article class="team-profile" id="${person.id}" aria-labelledby="${person.id}-name">
-          <div class="team-profile-portrait">${image(person.file)}</div>
+          <div class="team-profile-portrait" data-portrait="${person.id}">${image(person.file)}</div>
           <header><h3 id="${person.id}-name">${esc(person.name)}</h3><p>${esc(person.role)}</p></header>
           <div class="team-profile-details">
             <p class="team-qualification">${esc(person.qualification)}</p>

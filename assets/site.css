@@ -163,7 +163,9 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .team-carousel .rail-controls button { background: var(--paper); border-color: var(--line); color: var(--link); }
 .team-carousel .rail-controls button:hover:not(:disabled) { background: var(--tint); }
 .person { min-width: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--paper); }
+.person-portrait { overflow: hidden; }
 .person img { aspect-ratio: 4/4.4; object-position: 50% 15%; }
+[data-portrait="dr-mohemed-al-heyoury"] img { transform: scale(1.22); transform-origin: 50% 34%; }
 .person-info { padding: 1rem; }
 .person-info p { font-size: .91rem; }
 .reviews { padding-block: clamp(2.5rem, 5vw, 4.5rem); }
