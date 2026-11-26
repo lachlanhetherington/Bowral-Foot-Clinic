@@ -283,7 +283,7 @@ function footer(logo) {
 
 function practitioners(team) {
   const cards = team.map(person=>`<article class="person" id="${person.id}">
-    ${image(person.file, person.name) || '<div class="initials" aria-hidden="true">AS</div>'}
+    ${image(person.file, person.name)}
     <div class="person-info"><h3>${esc(person.name)}</h3><p>${esc(person.role)}</p>
     <a class="text-link" href="/our-team/#${person.id}">View profile ↗</a></div></article>`).join('');
   return `<div class="team-carousel" data-carousel data-loop><div class="team-track" data-track tabindex="0" aria-label="Browse practitioners">${cards}</div>${railButtons('practitioners')}</div>`;
@@ -414,14 +414,11 @@ function appointmentSidebar(page) {
 }
 
 function heroPractitioners(team) {
-  const ordered = [...team.slice(1),team[0]];
-  return `<div class="page-practitioners" data-carousel>
-    <div class="rail-heading"><h2>Our practitioners</h2>${railButtons('practitioners')}</div>
-    <div class="rail" data-track tabindex="0" aria-label="Browse Bowral practitioners">
-    ${ordered.map(person=>{
-      const portrait = person.file
-        ? `<picture><source media="(min-width: 51.01rem)" srcset="${person.file}"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" decoding="async" fetchpriority="low"></picture>`
-        : '<span class="tile-initials" aria-hidden="true">AS</span>';
+  return `<div class="page-practitioners">
+    <div class="rail-heading"><h2>Our practitioners</h2></div>
+    <div class="rail">
+    ${team.map(person=>{
+      const portrait = `<picture><source media="(min-width: 51.01rem)" srcset="${person.file}"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" decoding="async" fetchpriority="low"></picture>`;
       return `<a class="tile practitioner-tile" href="/our-team/#${person.id}">${portrait}<span class="tile-person"><strong>${esc(person.name)}</strong><small>${esc(person.role)}</small></span></a>`;
     }).join('')}</div></div>`;
 }
@@ -473,7 +470,7 @@ function clinicPageHero({title, summary, destination, action, style, photo, mobi
 function meetTheTeam(team) {
   return `${clinicPageHero({
     title: 'Meet the Team',
-    summary: 'Get to know the four podiatrists who see patients at our Boolwey Street clinic.',
+    summary: 'Get to know the podiatrists who see patients at our Boolwey Street clinic.',
     destination: '#bowral-practitioners',
     action: 'Explore the team',
     style: 'team-hero',
@@ -485,7 +482,7 @@ function meetTheTeam(team) {
       <h2 id="bowral-practitioners-title">Our Bowral podiatrists</h2>
       <div class="team-grid">${team.map(person=>`
         <article class="team-profile" id="${person.id}" aria-labelledby="${person.id}-name">
-          <div class="team-profile-portrait">${image(person.file) || '<div class="initials" aria-hidden="true">AS</div>'}</div>
+          <div class="team-profile-portrait">${image(person.file)}</div>
           <header><h3 id="${person.id}-name">${esc(person.name)}</h3><p>${esc(person.role)}</p></header>
           <div class="team-profile-details">
             <p class="team-qualification">${esc(person.qualification)}</p>
@@ -502,7 +499,7 @@ function meetTheTeam(team) {
         <div class="actions">${book()}<a class="outline-button" href="${phoneUrl}">Call ${phoneNumber}</a></div>
       </div>
       <div class="team-booking-options">
-        <div><h3>Routine foot care</h3><p>Choose a general treatment appointment for routine concerns such as nails, corns and calluses. Arega sees patients for general foot care.</p></div>
+        <div><h3>Routine foot care</h3><p>Choose a general treatment appointment for routine concerns such as nails, corns and calluses.</p></div>
         <div><h3>Biomechanical assessment</h3><p>For a <a class="text-link" href="/biomechanics/">lower-limb biomechanical assessment</a>, choose Elissa, Mohemed or Yousef. Call the clinic if you’re unsure which appointment to select.</p></div>
       </div>
     </div></section>
@@ -695,7 +692,7 @@ async function main() {
       const profile=source.find(p=>p.slug==='team/'+id+'/');
       const portrait=profile.blocks.find(b=>b.type==='image'&&b.media[0]);
       const localPhoto = {'dr-elissa-all':clinicPhotos.get('elissa'),'dr-mohemed-al-heyoury':clinicPhotos.get('mohemed')}[id];
-      team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':localPhoto || await asset(portrait?.media[0].url),...details});
+      team.push({id,name:profile.headings[0],role:'Podiatrist',file:localPhoto || await asset(portrait?.media[0].url),...details});
     }
     // Keep the shared stylesheet and script in sync with newly generated pages.
     const [styleVersion, scriptVersion] = await Promise.all(['site.css', 'site.js'].map(async file => {

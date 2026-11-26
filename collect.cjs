@@ -1,5 +1,6 @@
 const fs = require('node:fs/promises');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
+const { teamProfiles } = require('./interior-data.cjs');
 
 const groups = {
   general: ['','about','our-team','book-online'],
@@ -36,7 +37,8 @@ async function main() {
   const browser = await chromium.launch({channel:'chrome'});
   try {
     const tasks = Object.entries(groups).flatMap(([group, slugs]) => slugs.map(slug=>({group,slug,url:'https://thebowralfootclinic.com.au/'+(slug?slug+'/':'')})));
-    tasks.push(...['','team/','locations/podiatrist-bowral/','team/arega-sarkisian/','team/dr-elissa-all/','team/dr-mohemed-al-heyoury/','team/dr-yousef-najjarine/'].map(slug=>({group:'reference',slug,url:'https://dr-abbie.com/'+slug})));
+    const referenceRoutes = ['', 'team/', 'locations/podiatrist-bowral/', ...Object.keys(teamProfiles).map(id => `team/${id}/`)];
+    tasks.push(...referenceRoutes.map(slug=>({group:'reference',slug,url:'https://dr-abbie.com/'+slug})));
     const results = [];
     await Promise.all(Array.from({length:5}, async () => {
       const page = await browser.newPage({viewport:{width:1440,height:1000}});

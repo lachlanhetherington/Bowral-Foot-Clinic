@@ -137,11 +137,6 @@ const care = {
 
 // Qualifications and interests are based on the practitioners’ Dr. Abbie Clinics profiles.
 const teamProfiles = {
-  'arega-sarkisian': {
-    qualification: 'B Pod',
-    summary: 'Arega sees patients in Bowral for routine foot care, including nail, corn and callus concerns.',
-    interests: ['general-foot-care'],
-  },
   'dr-elissa-all': {
     qualification: 'Bachelor of Podiatric Medicine with distinction, Western Sydney University',
     summary: 'Elissa has further training in lower-limb biomechanics, including orthotic prescription and foot mobilisation. She is a member of the Australian Podiatry Association.',

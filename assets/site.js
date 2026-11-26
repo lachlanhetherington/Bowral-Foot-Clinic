@@ -158,7 +158,7 @@ for (const carousel of document.querySelectorAll('[data-carousel]')) {
   const rail = carousel.querySelector('[data-track]');
   const buttons = [...carousel.querySelectorAll('[data-step]')];
   const originals = [...rail.children];
-  const looping = carousel.hasAttribute('data-loop') && originals.length > 3;
+  const looping = carousel.hasAttribute('data-loop') && originals.length > 1;
   function updateControls() {
     buttons[0].disabled = rail.scrollLeft < 2;
     buttons[1].disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
