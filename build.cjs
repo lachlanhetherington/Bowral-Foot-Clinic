@@ -164,7 +164,7 @@ function header(logo) {
   ${navGroup('Locations', {
     menuClass:'locations-menu',
     title:'Visit us in Bowral', description:'Our Boolwey Street clinic serves Bowral and the Southern Highlands.',
-    cta:{slug:'#visit',label:'Address and opening hours'}, items:[{slug:'#visit',label:'Bowral'},...group('locations')],
+    cta:{slug:'#visit',label:'Address & hours'}, items:[{slug:'#visit',label:'Bowral'},...group('locations')],
     feature:{slug:'our-team',file:home.blocks[5].file,title:'Meet the Bowral practitioners',label:'Meet the team'}
   })}
   ${link('our-team','Meet the Team')}${link('about','About')}</nav>

@@ -83,6 +83,8 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .mega-intro strong { font-size: 1.35rem; line-height: 1.25; letter-spacing: -.025em; }
 .mega-intro p { margin-top: .75rem; color: var(--muted); font-weight: 400; }
 .mega-intro a { margin-top: auto; color: var(--link); padding-block: .7rem; }
+.locations-menu .mega-intro a { display: inline-flex; align-items: center; align-self: flex-start; min-height: 44px; padding: .45rem .85rem; border-radius: var(--pill); background: var(--navy); color: var(--paper); font-size: .82rem; line-height: 1.3; text-decoration: none; }
+.locations-menu .mega-intro a:hover { background: var(--link); }
 .mega-links { display: grid; grid-template-columns: repeat(2,minmax(0, 1fr)); align-content: safe center; gap: .2rem .55rem; padding: clamp(.65rem,1.8vw,1.5rem); list-style: none; margin: 0; }
 .locations-menu .mega-links { gap: 1.4rem 1rem; }
 .mega-links li { min-width: 0; }
@@ -377,6 +379,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .mega-intro strong { font-size: 1rem; }
   .mega-intro p { display: none; }
   .mega-intro a { padding-block: .45rem 0; }
+  .locations-menu .mega-intro a { margin-top: .4rem; }
   .mega-links { grid-template-columns: 1fr; align-content: start; padding: .4rem; }
   .locations-menu .mega-links { row-gap: .65rem; }
   .mega-links a { align-items: center; }
