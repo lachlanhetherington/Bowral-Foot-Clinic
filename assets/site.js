@@ -42,6 +42,25 @@ document.addEventListener('keydown', event => {
 });
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const serviceToolbar = document.querySelector('.service-toolbar');
+if (serviceToolbar) {
+  const filters = [...serviceToolbar.querySelectorAll('[data-service-filter]')];
+  const cards = [...document.querySelectorAll('[data-service-category]')];
+  const count = serviceToolbar.querySelector('.service-count');
+  serviceToolbar.hidden = false;
+  for (const filter of filters) {
+    filter.addEventListener('click', () => {
+      const category = filter.dataset.serviceFilter;
+      let visible = 0;
+      for (const card of cards) {
+        card.hidden = category !== 'all' && card.dataset.serviceCategory !== category;
+        if (!card.hidden) visible++;
+      }
+      filters.forEach(button=>button.setAttribute('aria-pressed', String(button===filter)));
+      count.textContent = `${visible} services`;
+    });
+  }
+}
 const motionSetting = document.querySelector('.motion-setting');
 let animationsPaused = false;
 if (motionSetting) {

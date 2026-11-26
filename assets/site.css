@@ -163,7 +163,6 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .review-summary .rating-stars { color: #946000; }
 .review-summary img { width: 3.75rem; height: auto; }
 .care-grid { display: grid; grid-template-columns: repeat(3,minmax(0, 1fr)); gap: 1rem; }
-.care-grid-images { grid-template-columns: repeat(4,minmax(0, 1fr)); }
 .care-card { display: flex; flex-direction: column; overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; }
 .care-card:hover { border-color: var(--link); }
 .care-card img { aspect-ratio: 16/10; }
@@ -212,7 +211,29 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .link-list { display: flex; flex-wrap: wrap; gap: .6rem; }
 .link-list a { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .85rem; border: 1px solid var(--line); border-radius: var(--pill); text-decoration: none; }
 .link-list a:hover { text-decoration: underline; }
-.services-section { border-top: 1px solid var(--line); }
+.services-section { background: var(--paper); }
+.services-heading { margin-bottom: 1.65rem; }
+.services-heading p { color: var(--muted); margin-bottom: 0; }
+.service-toolbar:not([hidden]) { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem 0; margin-bottom: 1.4rem; border-bottom: 1px solid var(--line); }
+.service-filters { display: flex; flex-wrap: wrap; gap: .4rem; }
+.service-filters button { min-height: 44px; padding: .4rem .85rem; border: 1px solid var(--line); border-radius: var(--pill); background: var(--paper); color: var(--ink); font-size: .84rem; font-weight: 600; }
+.service-filters button:hover { background: #f0f7fb; }
+.service-filters [aria-pressed="true"], .service-filters [aria-pressed="true"]:hover { background: var(--navy); border-color: var(--navy); color: var(--light); }
+.service-count { margin: 0; color: var(--muted); font-size: .83rem; }
+.service-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.service-card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; color: var(--ink); text-decoration: none; }
+.service-card[hidden] { display: none; }
+.service-card:hover, .service-card:focus-visible { border-color: var(--link); }
+.service-card > img { aspect-ratio: 16/9; }
+.service-card-copy { flex: 1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .6rem; align-items: start; padding: .9rem .75rem; background: #f4f9fc; }
+.service-card-copy strong, .service-card-copy small { display: block; line-height: 1.35; }
+.service-card-copy small { color: var(--muted); margin-top: .28rem; font-size: .79rem; }
+.service-card-copy .condition-chevron { align-self: center; margin-inline: .12rem; }
+.service-card:hover strong { color: var(--link); text-decoration: underline; }
+.service-more { margin-inline: 0; }
+@media (max-width: 66rem) {
+  .service-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 .source-list { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
 .source-list ul { margin: 0; padding-inline-start: 1.3rem; }
 .source-list li { margin: .2rem 0; }
@@ -327,7 +348,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .tile { aspect-ratio: 4/3; }
   .team-grid { grid-template-columns: repeat(2,1fr); }
   .team-track { grid-auto-columns: 68%; }
-  .care-grid, .care-grid-images { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .care-grid, .service-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .conditions-layout { grid-template-columns: 1fr; }
   .clinic-story { grid-template-columns: 1fr; }
   .clinic-story-copy { padding-inline: 1rem; }
@@ -338,7 +359,10 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .visit-layout, .visit-layout .visit-data { grid-template-columns: 1fr; }
 }
 @media (max-width: 21rem) {
-  .care-grid, .care-grid-images { grid-template-columns: 1fr; }
+  .care-grid, .service-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 34rem) {
+  .service-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 24rem) {
   .header-inner { gap: .3rem; }

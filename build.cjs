@@ -210,12 +210,28 @@ function treatmentRail() {
   <div class="rail" data-track tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
 }
 
-function careCards(items, withImages=false) {
-  return `<div class="care-grid${withImages?' care-grid-images':''}">${items.map(item=>{
-    const title = item.label || titleFor(item);
-    const media = withImages && (treatmentImages.get(item.slug) || item.blocks?.find(b=>b.file)?.file);
-    return `<a class="care-card" href="${href(item.slug)}">${media ? image(media) : ''}<span class="care-card-body"><strong>${esc(title)}</strong><span class="text-link">Learn more <span aria-hidden="true">→</span></span></span></a>`;
-  }).join('')}</div>`;
+function homepageServices() {
+  const categories = [
+    {key:'assessment',label:'Assessment & movement',slugs:['biomechanics','childrens-podiatry','custom-orthotics','sports-podiatry']},
+    {key:'recovery',label:'Treatment & recovery',slugs:['shockwave-therapy','dry-needling','foot-mobilisations','strapping','neural-therapy','shockwave-therapy-2']},
+    {key:'nails',label:'Skin & nail care',slugs:['general-foot-care',...additions.map(item=>item.slug)]}
+  ];
+  const services = [...group('services'),...additions];
+  const cards = categories.flatMap(category=>category.slugs.map(slug=>{
+    const item = services.find(service=>service.slug===slug);
+    const photo = carouselImages.get(slug) || interiorImages.get(slug);
+    return `<a class="service-card" data-service-category="${category.key}" href="${href(slug)}">
+      ${image(photo)}<span class="service-card-copy">${megaMenuIcon(slug)}<span><strong>${esc(item.label || titleFor(item))}</strong><small>${esc(menuDescriptions[slug])}</small></span><span class="condition-chevron" aria-hidden="true"></span></span></a>`;
+  }));
+  return `<section class="section services-section" id="services" aria-labelledby="services-title"><div class="wrap">
+    <header class="services-heading"><h2 id="services-title">Range of services</h2><p>Explore podiatry services available at our Bowral clinic.</p></header>
+    <div class="service-toolbar" hidden>
+      <div class="service-filters" role="group" aria-label="Filter services">${[{key:'all',label:'All services'},...categories].map(filter=>`<button type="button" data-service-filter="${filter.key}" aria-controls="service-results" aria-pressed="${filter.key==='all'}">${esc(filter.label)}</button>`).join('')}</div>
+      <p class="service-count" role="status">${cards.length} services</p>
+    </div>
+    <div class="service-grid" id="service-results">${cards.join('')}</div>
+    <details class="more-care service-more"><summary>See our full range of care</summary><div class="source-list">${home.blocks[27].clean}${home.blocks[28].clean}</div></details>
+  </div></section>`;
 }
 
 function homepageConditions() {
@@ -261,7 +277,7 @@ function homepage(hero,team,googleWordmark) {
   ${reviews()}
   ${homepageConditions()}
   ${homepageClinicStory()}
-  <section class="section tint services-section" id="services"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
+  ${homepageServices()}
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
   <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
   <section class="section tint" id="visit"><div class="wrap visit-layout"><div><h2>Visit us in Bowral</h2>${visit()}<div class="link-list">${group('locations').map(p=>link(p.slug,'Podiatrist near '+titleFor(p))).join('')}</div></div>${bowralStreetPhoto()}</div></section>
