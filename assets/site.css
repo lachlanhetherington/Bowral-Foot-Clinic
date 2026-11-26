@@ -158,6 +158,10 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .reviews .section-heading { margin-bottom: 0; }
 .review-panel { max-width: 44rem; padding: 1.25rem; margin: 1.8rem auto 0; border-radius: var(--radius); background: var(--paper); }
 .review-panel p { margin-inline: auto; }
+.review-summary { display: flex; align-items: center; justify-content: center; gap: .65rem; margin-bottom: .55rem; }
+.review-summary strong { font-size: 1.35rem; }
+.review-summary .rating-stars { color: #946000; }
+.review-summary img { width: 3.75rem; height: auto; }
 .care-grid { display: grid; grid-template-columns: repeat(3,minmax(0, 1fr)); gap: 1rem; }
 .care-grid-images { grid-template-columns: repeat(4,minmax(0, 1fr)); }
 .care-card { display: flex; flex-direction: column; overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; }
