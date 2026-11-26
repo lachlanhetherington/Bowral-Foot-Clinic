@@ -69,11 +69,6 @@ const featuredReviews = [
     quote: 'Consistantly a great friendly and professional service.',
     reply: 'Hi Rachel, thank you for your lovely feedback! We’re so glad to hear you’ve consistently experienced friendly and professional care at our clinic. Your continued trust means a lot to us, and we look forward to seeing you again soon.',
   },
-  {
-    name: 'Vida',
-    initials: 'V',
-    reply: 'Thank you for the five-star rating, Vida. We are delighted you had a positive experience and truly appreciate your support. We look forward to welcoming you back soon.',
-  },
 ];
 
 function reviews(id) {
@@ -89,7 +84,7 @@ function reviews(id) {
           <h3>${esc(name)}</h3>
           <span class="rating-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
         </div></div>
-        ${quote ? `<blockquote><p>${esc(quote)}</p></blockquote>` : '<p class="review-rating-only">Rating only</p>'}
+        <blockquote><p>${esc(quote)}</p></blockquote>
         <details class="review-reply"><summary>Response from the owner</summary><p>${esc(reply)}</p></details>
       </li>`).join('')}
     </ul>
