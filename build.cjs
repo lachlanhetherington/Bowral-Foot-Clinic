@@ -282,7 +282,10 @@ function practitioners(team, full=false) {
 }
 
 function railButtons(label) {
-  return `<div class="rail-controls"><button type="button" data-step="-1" aria-label="Previous ${label}">←</button><button type="button" data-step="1" aria-label="Next ${label}">→</button></div>`;
+  return `<div class="rail-controls">
+    <button type="button" data-step="-1" aria-label="Previous ${label}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="m10 4-4 4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" data-step="1" aria-label="Next ${label}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="m6 4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>`;
 }
 
 function treatmentRail() {
