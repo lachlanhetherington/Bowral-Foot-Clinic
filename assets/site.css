@@ -456,7 +456,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
   .booking-band.is-parallax::before {
-    --parallax-distance: clamp(1.25rem, 3vw, 2.5rem);
+    --parallax-distance: clamp(3.5rem, 8vw, 7rem);
     inset-block: calc(-1 * var(--parallax-distance));
     transform: translateY(calc(var(--booking-parallax, 0) * var(--parallax-distance)));
   }
