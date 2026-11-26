@@ -1,43 +1,75 @@
 const navigation = document.querySelector('#navigation');
 const menu = document.querySelector('.menu-toggle');
+const menuPanel = document.querySelector('#mobile-navigation');
+const menuBody = menuPanel.querySelector('.mobile-menu-body');
+const closeButton = menuPanel.querySelector('.menu-close');
 const mobile = matchMedia('(max-width: 60rem)');
-
-function setMenu(open) {
-  menu.setAttribute('aria-expanded', String(open));
-  navigation.hidden = mobile.matches && !open;
-}
-menu.hidden = false;
-setMenu(false);
-menu.addEventListener('click', () => setMenu(navigation.hidden));
-mobile.addEventListener('change', () => setMenu(false));
 const dropdowns = [...navigation.querySelectorAll('details')];
+
+function closeDropdowns() {
+  dropdowns.forEach(item => { item.open = false; });
+}
+
+function openMobileMenu() {
+  menuBody.append(navigation);
+  navigation.hidden = false;
+  menuPanel.showModal();
+  menu.setAttribute('aria-expanded', 'true');
+  menuBody.scrollTop = 0;
+}
+
+function closeMobileMenu(restoreFocus = true) {
+  if (!menuPanel.open) return;
+  menuPanel.close();
+  menu.after(navigation);
+  menu.setAttribute('aria-expanded', 'false');
+  navigation.hidden = mobile.matches;
+  closeDropdowns();
+  if (restoreFocus) {
+    const focusTarget = mobile.matches ? menu : navigation.querySelector('summary');
+    focusTarget?.focus({preventScroll: true});
+  }
+}
+
+function syncNavigation() {
+  if (!mobile.matches) closeMobileMenu();
+  menu.hidden = !mobile.matches;
+  navigation.hidden = mobile.matches && !menuPanel.open;
+}
+
+syncNavigation();
+menu.addEventListener('click', openMobileMenu);
+closeButton.addEventListener('click', () => closeMobileMenu());
+menuPanel.addEventListener('cancel', event => {
+  event.preventDefault();
+  closeMobileMenu();
+});
+menuPanel.addEventListener('click', event => {
+  if (event.target.closest('a')) closeMobileMenu(false);
+});
+mobile.addEventListener('change', syncNavigation);
 for (const current of dropdowns) {
   current.addEventListener('toggle', () => {
     if (current.open) dropdowns.filter(item => item !== current).forEach(item => { item.open = false; });
   });
 }
 document.addEventListener('click', event => {
-  if (!navigation.contains(event.target)) dropdowns.forEach(item => { item.open = false; });
+  if (!menuPanel.open && !navigation.contains(event.target)) closeDropdowns();
 });
 navigation.addEventListener('click', event => {
-  if (!event.target.closest('a')) return;
-  dropdowns.forEach(item => { item.open = false; });
-  if (mobile.matches) setMenu(false);
+  if (event.target.closest('a') && !menuPanel.open) closeDropdowns();
 });
 navigation.addEventListener('focusout', event => {
-  if (event.relatedTarget && !navigation.contains(event.relatedTarget)) {
-    dropdowns.forEach(item => { item.open = false; });
+  if (!menuPanel.open && event.relatedTarget && !navigation.contains(event.relatedTarget)) {
+    closeDropdowns();
   }
 });
 document.addEventListener('keydown', event => {
-  if (event.key !== 'Escape') return;
+  if (event.key !== 'Escape' || menuPanel.open) return;
   const current = dropdowns.find(item => item.open);
   if (current) {
     current.open = false;
     current.querySelector('summary').focus();
-  } else if (mobile.matches && !navigation.hidden) {
-    setMenu(false);
-    menu.focus();
   }
 });
 

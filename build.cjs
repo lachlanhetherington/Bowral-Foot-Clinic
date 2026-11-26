@@ -179,7 +179,7 @@ function header(logo) {
   return `<a class="skip" href="#content">Skip to content</a>
   <header class="header"><div class="wrap header-inner">
   <a class="logo" href="/">${image(logo,'Bowral Foot Clinic home',true)}</a>
-  <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" hidden>Menu</button>
+  <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-navigation" aria-haspopup="dialog" hidden>Menu</button>
   <nav id="navigation" aria-label="Main navigation">
   ${navGroup('Services', {
     title:'Find the right treatment', description:'Browse the treatments available at The Bowral Foot Clinic.',
@@ -199,7 +199,15 @@ function header(logo) {
     feature:{slug:'our-team',file:home.blocks[5].file,title:'Meet the Bowral practitioners',label:'Meet the team'}
   })}
   ${link('our-team','Meet the Team')}${link('about','About')}</nav>
-  <div class="header-actions">${phone}${book()}</div></div></header>`;
+  <div class="header-actions">${phone}${book()}</div></div></header>
+  <dialog class="mobile-navigation" id="mobile-navigation" aria-label="Site menu">
+    <div class="mobile-menu-header">
+      <a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a>
+      <button type="button" class="menu-close" autofocus>Close <svg width="16" height="16" viewBox="0 0 16 16" fill="none" focusable="false" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="mobile-menu-body"></div>
+    <div class="mobile-menu-actions"><a class="outline-button" href="${phoneUrl}">Call the clinic</a>${book()}</div>
+  </dialog>`;
 }
 
 const clinicAddress = '<address>Shop 3, 2-4 Boolwey St<br>Bowral NSW 2576</address>';
