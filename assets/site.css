@@ -207,7 +207,9 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .more-care .source-list { padding-bottom: 1rem; }
 .booking-band { padding: clamp(3.5rem, 10vw, 8rem) 0; text-align: center; color: var(--light); background: linear-gradient(90deg,#102e43f2,#102e43b8), url("dr.abbieclinicshoot-145.jpg") center 70%/cover; }
 .booking-band p { margin-inline: auto; }
-.network { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.network { padding-block: clamp(2.75rem, 5vw, 4.5rem); }
+.network-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: start; gap: clamp(1.35rem, 5vw, 4rem); }
+.network h2 { margin: .12em 0 0; text-wrap: balance; }
 .link-list { display: flex; flex-wrap: wrap; gap: .6rem; }
 .link-list a { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .85rem; border: 1px solid var(--line); border-radius: var(--pill); text-decoration: none; }
 .link-list a:hover { text-decoration: underline; }
@@ -274,9 +276,18 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 address { font-style: normal; margin-bottom: .55rem; }
 dl, dd { margin: 0; }
 dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 22rem; }
-.partners { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
-.partners a { display: grid; place-items: center; background: #fcfcfd; padding: 1rem; border-radius: var(--radius); }
-.partners img { width: min(100%, 11rem); height: 5rem; object-fit: contain; }
+.partners { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.partners li { border-bottom: 1px solid var(--line); }
+.partners a { display: grid; grid-template-columns: clamp(4rem, 15vw, 10rem) minmax(0, 1fr) auto; align-items: center; gap: clamp(.65rem, 2vw, 1.4rem); min-height: 5.75rem; padding: .75rem clamp(.35rem, 1.5vw, 1rem); text-decoration: none; }
+.partners a:hover { background: var(--light); color: var(--link); }
+.partners a:hover strong, .partners a:focus-visible strong { text-decoration: underline; }
+.partner-logo { display: grid; place-items: center; }
+.partner-logo img { width: 100%; height: 3.75rem; object-fit: contain; }
+.partner-name { display: grid; gap: .2rem; line-height: 1.35; overflow-wrap: anywhere; }
+.partner-name strong { text-wrap: pretty; }
+.partner-name small { color: var(--muted); font-size: .82rem; }
+.partner-arrow { display: grid; place-items: center; width: 2.25rem; aspect-ratio: 1; border-radius: 50%; background: var(--tint); color: var(--link); }
+.partners a:hover .partner-arrow, .partners a:focus-visible .partner-arrow { background: var(--navy); color: var(--paper); }
 .footer { background: var(--footer); color: var(--light); padding-block: 3.5rem 1.5rem; }
 .footer .text-link { color: #d7efff; }
 .footer-links { display: flex; flex-wrap: wrap; gap: .75rem 1.4rem; }
@@ -381,6 +392,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .visit-data { grid-template-columns: 1fr; }
   .visit-layout { grid-template-columns: 1fr; }
   .visit-photo img { flex: none; height: auto; min-height: 0; aspect-ratio: 4/3; }
+  .network-layout { grid-template-columns: 1fr; }
 }
 @media (max-width: 39rem) {
   .visit-nearby ul { grid-template-columns: 1fr; }
@@ -396,7 +408,6 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .header .logo { width: 108px; }
   .hero .button { padding-inline: .7rem; font-size: .84rem; }
   .rail { grid-auto-columns: calc((100% - .5rem)/2.35); }
-  .partners { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .header { background: #f7f8f9; backdrop-filter: none; }

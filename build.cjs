@@ -298,6 +298,22 @@ function homepageClinicStory() {
   </section>`;
 }
 
+function homepageNetwork() {
+  const partners = [
+    { name: 'Custom Foot', url: 'https://www.customfoot.com.au/', logo: home.blocks[42].file },
+    { name: 'Forster-Tuncurry Sports Podiatry', url: 'https://ftspodiatry.com.au/', logo: home.blocks[43].file },
+    { name: 'Dr. Abbie Clinics', url: 'https://dr-abbie.com/', logo: home.blocks[44].file },
+  ];
+  return `<section class="section network" id="clinic-network" aria-labelledby="network-title"><div class="wrap network-layout">
+    <h2 id="network-title">Our clinic network</h2>
+    <ul class="partners">${partners.map(({name, url, logo})=>`<li><a href="${url}">
+      <span class="partner-logo">${image(logo)}</span>
+      <span class="partner-name"><strong>${esc(name)}</strong><small>${new URL(url).hostname.replace(/^www\./, '')}</small></span>
+      <span class="partner-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" focusable="false"><path d="M4.5 13.5l9-9m-7 0h7v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a></li>`).join('')}</ul>
+  </div></section>`;
+}
+
 function homepage(hero,team,googleWordmark) {
   const b=home.blocks;
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
@@ -312,7 +328,7 @@ function homepage(hero,team,googleWordmark) {
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
   <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
   ${homepageVisit()}
-  <section class="section network"><div class="wrap"><div class="section-heading"><h2>Our clinic network</h2></div><div class="partners">${['https://www.customfoot.com.au/','https://ftspodiatry.com.au/','https://dr-abbie.com/'].map((url,i)=>`<a href="${url}">${image(b[42+i].file,b[45+i].text)}</a>`).join('')}</div></div></section>`;
+  ${homepageNetwork()}`;
 }
 
 function clinicSection(tinted=true) {
