@@ -12,6 +12,7 @@ const reviewsListing = 'https://maps.app.goo.gl/U7JjjtqZqgvtb4Z99';
 const phone = '<a href="tel:+61240052668">(02) 4005 2668</a>';
 const assetCache = new Map();
 const treatmentImages = new Map();
+const carouselImages = new Map();
 const interiorImages = new Map();
 const bowralPhotos = {
   kneeAssessment: 'DR.ABBIECLINICSHOOT-014-1.jpg',
@@ -192,12 +193,15 @@ function railButtons(label) {
 }
 
 function treatmentRail() {
-  const featured = ['biomechanics','custom-orthotics','shockwave-therapy','general-foot-care','sports-podiatry'];
-  const tiles = [...featured.map(slug=>{
-    const page=pages.find(p=>p.slug===slug);
-    return {slug,label:titleFor(page),file:treatmentImages.get(slug) || page.blocks.find(b=>b.file)?.file};
-  })];
-  tiles.splice(3,0,...additions);
+  const featured = ['biomechanics','custom-orthotics','shockwave-therapy'].map(slug=>pages.find(page=>page.slug===slug));
+  const followUp = ['general-foot-care','sports-podiatry'].map(slug=>pages.find(page=>page.slug===slug));
+  const tiles = [...featured,...additions,...followUp].map(item=>({
+    slug:item.slug, label:item.label || titleFor(item),
+    file:carouselImages.get(item.slug) || treatmentImages.get(item.slug)
+  }));
+  if (tiles.some(tile=>!tile.file) || new Set(tiles.map(tile=>tile.file)).size!==tiles.length) {
+    throw new Error('Every treatment carousel card needs a distinct photograph.');
+  }
   return `<div class="treatments" data-carousel data-loop><div class="rail-heading"><h2>Our treatments</h2>${railButtons('treatments')}</div>
   <div class="rail" data-track tabindex="0" aria-label="Browse treatments">${tiles.map(tile=>`<a class="tile" href="${href(tile.slug)}">${image(tile.file)}<span>${esc(tile.label)}</span></a>`).join('')}</div></div>`;
 }
@@ -210,10 +214,10 @@ function careCards(items, withImages=false) {
   }).join('')}</div>`;
 }
 
-function homepage(hero,team) {
+function homepage(hero,team,googleWordmark) {
   const b=home.blocks;
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
-  <a class="rating" href="${reviewsListing}">Google reviews <span aria-hidden="true">↗</span></a>
+  <a class="rating" href="${reviewsListing}" aria-label="5 out of 5 stars on Google. Read reviews"><span aria-hidden="true">5 Stars</span><span class="rating-stars" aria-hidden="true">★★★★★</span><img src="${googleWordmark}" alt="" width="78" height="27" decoding="async"></a>
   <h1>Welcome to<br><strong>Bowral Foot Clinic</strong></h1>
   ${b[1].clean}<div class="actions">${book()}<a class="button secondary" href="#visit">Find our clinic</a></div></div>${treatmentRail()}</div></section>
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
@@ -354,6 +358,14 @@ async function main() {
     const logo=await asset(home.images.find(i=>i.alt==='Bowral Foot Clinic logo').url);
     const favicon=await asset('https://i0.wp.com/thebowralfootclinic.com.au/wp-content/uploads/2025/07/cropped-Agency-Canva-Templates-1.png?fit=192%2C192&ssl=1');
     const reference=source.find(p=>p.group==='reference' && !p.slug);
+    const drAbbieImage = filename => 'https://dr-abbie.com/wp-content/dr-abbie-assets/img/'+filename;
+    const googleWordmark = await asset(drAbbieImage('google-wordmark.webp'));
+    for (const [slug,filename] of [
+      ['toenail-problems/#partial-nail-avulsion','hero-ingrown.webp'],
+      ['general-foot-care/#wart-removal','hero-foot-care.webp'],
+      ['general-foot-care','hero-clinic.webp'],
+      ['sports-podiatry','tx-sports.webp']
+    ]) carouselImages.set(slug,await asset(drAbbieImage(filename)));
     for (const [slug,filename] of [['biomechanics','svc-biomechanics.webp'],['custom-orthotics','svc-orthotics.webp'],['shockwave-therapy','svc-shockwave.webp']]) {
       treatmentImages.set(slug,await asset(reference.images.find(i=>i.url.endsWith('/'+filename))?.url));
     }
@@ -367,6 +379,7 @@ async function main() {
       const url = 'https://i0.wp.com/thebowralfootclinic.com.au/wp-content/uploads/2025/07/'+filename+'?w=1150&ssl=1';
       return [role,await asset(url)];
     })));
+    carouselImages.set('toenail-problems/#onyfix',clinicPhotos.get('generalCare'));
     interiorImages.set('knee-hip-back-pain',clinicPhotos.get('kneeAssessment'));
     interiorImages.set('biomechanics',clinicPhotos.get('biomechanics'));
     interiorImages.set('general-foot-care',clinicPhotos.get('generalCare'));
@@ -386,7 +399,7 @@ async function main() {
       team.push({id,name:profile.headings[0],role:id==='arega-sarkisian'?'General treatment podiatrist (general foot care only)':'Podiatrist',file:id==='arega-sarkisian'?'':localPhoto || await asset(portrait?.media[0].url),bio:bio.blocks.map(renderBlock)});
     }
     for (const page of pages) {
-      const body = page.slug ? interior(page,team) : homepage(home.blocks[5].file,team);
+      const body = page.slug ? interior(page,team) : homepage(home.blocks[5].file,team,googleWordmark);
       const base=page.slug?'../':'./';
       const document=`<!doctype html>
 <html lang="en-AU">
