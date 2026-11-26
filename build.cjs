@@ -209,9 +209,31 @@ function homepageVisit() {
   </div></section>`;
 }
 
-function footer(logo, hasMotion) {
-  return `<footer class="footer"><div class="wrap"><div class="footer-top"><a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a><nav class="footer-links" aria-label="Footer navigation">${link('our-team','Meet the Team')}${link('about','About')}${link('book-online','Book Online')}<a href="https://dr-abbie.com/">Dr. Abbie Clinics</a></nav>${book()}</div>
-  ${visit()}<div class="footer-bottom"><small>© ${new Date().getFullYear()} The Bowral Foot Clinic</small>${hasMotion?'<button type="button" class="motion-setting" hidden>Pause animations</button>':''}</div></div></footer>`;
+function footer(logo) {
+  return `<footer class="footer" id="site-footer"><div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand"><a class="logo" href="/">${image(logo,'Bowral Foot Clinic home')}</a>${book()}</div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <h2>Explore</h2>
+        ${link('our-team','Meet the Team')}
+        ${link('about','About the clinic')}
+        ${link('book-online','Booking information')}
+        <a href="https://dr-abbie.com/">Dr. Abbie Clinics</a>
+      </nav>
+      <div class="footer-visit">
+        <h2>Visit and contact</h2>
+        ${clinicAddress}
+        <a href="${maps}">Get directions <span aria-hidden="true">↗</span></a>
+        ${phone}
+        ${clinicEmail}
+      </div>
+      <div class="footer-hours"><h2>Opening hours</h2>${clinicHours}</div>
+    </div>
+    <div class="footer-bottom">
+      <small>© ${new Date().getFullYear()} The Bowral Foot Clinic</small>
+      <a class="footer-terms" href="https://dr-abbie.com/dr-abbie-clinics-terms-and-conditions/" aria-label="Terms and Conditions at Dr. Abbie Clinics">Terms <span aria-hidden="true">↗</span></a>
+    </div>
+  </div></footer>`;
 }
 
 function practitioners(team, full=false) {
@@ -516,7 +538,7 @@ ${page.description===null?'':`<meta name="description" content="${esc(page.descr
 <link rel="stylesheet" href="${base}assets/site.css">
 <script src="${base}assets/site.js" defer></script>
 </head>
-<body class="photo-header${page.slug?'':' home'}">${header(logo)}<main id="content">${body}</main>${footer(logo,!page.slug)}</body>
+<body class="photo-header${page.slug?'':' home'}">${header(logo)}<main id="content">${body}</main>${footer(logo)}</body>
 </html>`.replace(/(?:src|srcset)="assets\/[^"]+"/g,attribute=>attribute.replaceAll('assets/',base+'assets/')).replaceAll('href="assets/mega-menu-icons.svg#','href="'+base+'assets/mega-menu-icons.svg#').split('\n').map(line=>line.trimEnd()).join('\n')+'\n';
       if(page.slug) await fs.mkdir(page.slug,{recursive:true});
       await fs.writeFile(path.join(page.slug,'index.html'),document);

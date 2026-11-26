@@ -61,17 +61,6 @@ if (serviceToolbar) {
     });
   }
 }
-const motionSetting = document.querySelector('.motion-setting');
-let animationsPaused = false;
-if (motionSetting) {
-  document.body.dataset.ambientMotion = 'playing';
-  motionSetting.hidden = false;
-  motionSetting.addEventListener('click', () => {
-    animationsPaused = !animationsPaused;
-    document.body.dataset.ambientMotion = animationsPaused ? 'paused' : 'playing';
-    motionSetting.textContent = animationsPaused ? 'Resume animations' : 'Pause animations';
-  });
-}
 const headerScrollMarker = document.querySelector('.header-scroll-marker');
 if (headerScrollMarker) {
   const header = document.querySelector('.header');
@@ -127,7 +116,7 @@ function initializeCarouselLoop(carousel, rail, originals, advance) {
     window.addEventListener(event, () => { interacting = false; }, {passive:true});
   }
   setInterval(() => {
-    if (!visible || animationsPaused || interacting || document.hidden || reducedMotion.matches) return;
+    if (!visible || interacting || document.hidden || reducedMotion.matches) return;
     if (carousel.matches(':focus-within') || (hover.matches && carousel.matches(':hover'))) return;
     advance(1);
   }, 4200);
