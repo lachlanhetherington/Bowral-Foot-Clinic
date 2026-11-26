@@ -212,11 +212,9 @@ function visit() {
   <div><h3>Contact</h3>${phone}<br>${clinicEmail}</div></div>`;
 }
 
-function homepageVisit() {
+function clinicVisitCard() {
   const street = pages.find(page=>page.slug==='general-foot-care').blocks.find(block=>block.file==='assets/0.webp');
-  return `<section class="section tint" id="visit" aria-labelledby="visit-title"><div class="wrap">
-    <h2 id="visit-title">Visit us in Bowral</h2>
-    <div class="visit-layout">
+  return `<div class="visit-layout">
       <div class="visit-details">
         <div class="visit-address">
           ${megaMenuIcon('#visit')}
@@ -234,7 +232,13 @@ function homepageVisit() {
         ${image(street.file,'The Bowral Foot Clinic storefront in the Boolwey 2000 shopping complex')}
         <figcaption><strong>Look for Boolwey 2000</strong><span>You’ll find the clinic entrance at Shop 3.</span></figcaption>
       </figure>
-    </div>
+    </div>`;
+}
+
+function homepageVisit() {
+  return `<section class="section tint" id="visit" aria-labelledby="visit-title"><div class="wrap">
+    <h2 id="visit-title">Visit us in Bowral</h2>
+    ${clinicVisitCard()}
     <div class="visit-nearby">
       <h3>Coming from nearby?</h3>
       <ul>${group('locations').map(page=>`<li><a href="${href(page.slug)}">${megaMenuIcon(page.slug)}<span>${esc(titleFor(page))}</span><span aria-hidden="true">→</span></a></li>`).join('')}</ul>
@@ -446,14 +450,18 @@ function interiorDetail(blocks, hero, illustration) {
   return rendered.join('').trim();
 }
 
-function meetTheTeam(team) {
-  return `<section class="page-hero team-hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(home.blocks[5].file,'',true)}
+function clinicPageHero(title, summary, destination, action) {
+  return `<section class="page-hero clinic-page-hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(home.blocks[5].file,'',true)}
     <div class="wrap page-hero-inner"><div class="page-hero-copy">
-      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">Meet the Team</span></nav>
-      <h1>Meet the Team</h1>
-      <p>Get to know the four podiatrists who see patients at our Boolwey Street clinic.</p>
-      <div class="actions">${book()}<a class="button secondary" href="#bowral-practitioners">Explore the team <span aria-hidden="true">↓</span></a></div>
-    </div></div></section>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">${esc(title)}</span></nav>
+      <h1>${esc(title)}</h1>
+      <p>${esc(summary)}</p>
+      <div class="actions">${book()}<a class="button secondary" href="${destination}">${esc(action)} <span aria-hidden="true">↓</span></a></div>
+    </div></div></section>`;
+}
+
+function meetTheTeam(team) {
+  return `${clinicPageHero('Meet the Team', 'Get to know the four podiatrists who see patients at our Boolwey Street clinic.', '#bowral-practitioners', 'Explore the team')}
     <section class="section" id="bowral-practitioners" aria-labelledby="bowral-practitioners-title"><div class="wrap">
       <h2 id="bowral-practitioners-title">Our Bowral podiatrists</h2>
       <div class="team-grid">${team.map(person=>`
@@ -482,15 +490,67 @@ function meetTheTeam(team) {
     ${clinicSection(false)}`;
 }
 
+function aboutClinic() {
+  const careLinks = [
+    ['general-foot-care', 'General foot care', 'Routine care for nails, corns and calluses.'],
+    ['childrens-podiatry', 'Children’s podiatry', 'Assessment for concerns about how your child stands or walks.'],
+    ['sports-podiatry', 'Sports podiatry', 'Foot and lower-leg concerns related to running, sport or training.'],
+    ['custom-orthotics', 'Custom orthotics', 'Prescription insoles fitted to your feet and footwear.'],
+  ];
+  return `${clinicPageHero('About Bowral Foot Clinic', 'Podiatry and lower-limb care for adults and children in Bowral and the Southern Highlands.', '#about-visit', 'Plan your visit')}
+    <section class="section" id="about-story" aria-labelledby="about-story-title"><div class="wrap split about-story">
+      <div>
+        <h2 id="about-story-title">From Mona Road to Boolwey Street</h2>
+        <p>The clinic began on Mona Road in Bowral and later moved to Boolwey Street. We continue to care for adults and children from Bowral and surrounding Southern Highlands communities.</p>
+        <p>As part of Dr. Abbie Clinics, our Bowral team provides routine foot care and lower-limb assessment. If you’re booking a biomechanical assessment, your podiatrist can look at how you stand and walk, how your footwear fits, and how your symptoms change with activity.</p>
+        <a class="outline-button" href="/our-team/">Meet the Bowral team <span aria-hidden="true">→</span></a>
+      </div>
+      <figure>
+        ${image(interiorImages.get('book-online'),'Dr. Abbie Clinics practitioners talking at reception')}
+        <figcaption>Practitioners from the Dr. Abbie Clinics network.</figcaption>
+      </figure>
+    </div></section>
+    <section class="section tint" aria-labelledby="about-care-title"><div class="wrap about-columns">
+      <div>
+        <h2 id="about-care-title">What we help with</h2>
+        <p>Whether you need a routine foot care appointment or have a concern that keeps coming back, the team can help you choose where to start.</p>
+        <a class="text-link" href="/#services">See all treatments <span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="about-care-links">${careLinks.map(([slug, name, description])=>`<li><a href="${href(slug)}">${megaMenuIcon(slug)}
+        <span><strong>${esc(name)}</strong><small>${esc(description)}</small></span><span aria-hidden="true">→</span>
+      </a></li>`).join('')}</ul>
+    </div></section>
+    <section class="section" id="first-visit" aria-labelledby="first-visit-title"><div class="wrap about-columns">
+      <div>
+        <h2 id="first-visit-title">Your first appointment</h2>
+        <ol class="booking-steps">
+          <li><strong>Tell us what brought you in</strong><p>Your podiatrist will ask what you’ve noticed, when it started and what you’d like help with.</p></li>
+          <li><strong>Have an assessment suited to your concern</strong><p>A routine visit may focus on the skin or nails. A <a class="text-link" href="/biomechanics/">biomechanical assessment</a> may also include a look at the way you stand and walk.</p></li>
+          <li><strong>Discuss the next steps</strong><p>Your podiatrist will explain their findings and talk through the options with you.</p></li>
+        </ol>
+      </div>
+      <aside class="about-preparation" aria-labelledby="about-preparation-title">
+        <h3 id="about-preparation-title">What to bring</h3>
+        <ul><li>The shoes you wear most often or for the activity that bothers you.</li><li>Any orthotics or insoles you already use.</li><li>Any referral, imaging or reports relevant to your visit.</li></ul>
+        <a class="outline-button" href="/book-online/">How to book <span aria-hidden="true">→</span></a>
+      </aside>
+    </div></section>
+    <section class="section tint" id="about-visit" aria-labelledby="about-visit-title"><div class="wrap">
+      <h2 id="about-visit-title">Find us on Boolwey Street</h2>
+      <p class="about-arrival">We’re in Shop 3 at Boolwey 2000. Street parking is available nearby. Call the clinic if you need help planning an accessible visit.</p>
+      ${clinicVisitCard()}
+    </div></section>`;
+}
+
 function interior(page,team) {
   if (page.slug==='our-team') return meetTheTeam(team);
+  if (page.slug==='about') return aboutClinic();
   const blocks = [...page.blocks];
   const clinicPhoto = home.blocks[5].file;
   const title = page.group==='locations' ? `Podiatry near ${titleFor(page)}` : page.headings[0];
   if (blocks[0].type==='heading') blocks.shift();
   const leadingBlock = blocks[0]?.type==='text-editor' ? blocks.shift() : null;
   const introductions = {
-    about:'Foot and lower limb care for Bowral and the Southern Highlands.',
     'book-online':'Choose an appointment at The Bowral Foot Clinic through Nookal.',
     'heel-pain':'Heel pain can make your first steps in the morning or after sitting uncomfortable. Explore common causes and book an assessment at our Bowral clinic.'
   };
@@ -513,10 +573,6 @@ function interior(page,team) {
     content = `<section class="section"><div class="wrap interior-layout"><article class="prose"><h2>Book online with Nookal</h2><ol class="booking-steps">
     <li><strong>Select an appointment</strong><p>Choose an appointment type and practitioner at the Bowral location.</p></li><li><strong>Choose a time</strong><p>Pick an available time and enter your details to confirm the booking.</p></li>
     <li><strong>Check your confirmation</strong><p>Use the appointment confirmation to check the time and location. If you have a referral or relevant records, bring them along.</p></li></ol></article>${appointmentSidebar(page)}</div></section>${clinicSection()}`;
-  } else if (page.slug==='about') {
-    content = `<section class="section"><div class="wrap split"><article class="prose"><h2>About the clinic</h2><p>${esc(home.blocks[4].text)}</p><a class="text-link" href="/our-team/">Meet the Team ↗</a></article>${renderBlock(home.blocks[25])}</div></section>
-    <section class="section about-frontage"><div class="wrap"><h2>The clinic on Boolwey Street</h2><figure>${image(home.blocks[37].file,'Podiatry signage above the Bowral Foot Clinic entrance')}<figcaption>Shop 3, 2-4 Boolwey Street, Bowral. <a class="text-link" href="${maps}">Get directions ↗</a></figcaption></figure></div></section>
-    ${relatedCare(['general-foot-care','biomechanics','childrens-podiatry'])}${clinicSection()}`;
   }
   else {
     const extras = {'toenail-problems':[['partial-nail-avulsion','Partial nail avulsion (PNA)','Ask our podiatrists about this procedure for ingrown toenails.'],['onyfix','Onyfix nail correction','Ask at your appointment whether Onyfix nail correction is suitable for you.']],
