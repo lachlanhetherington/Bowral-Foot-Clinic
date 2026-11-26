@@ -235,6 +235,22 @@ function homepageConditions() {
     </div></div></section>`;
 }
 
+function homepageClinicStory() {
+  return `<section class="clinic-story" id="about-clinic" aria-labelledby="clinic-story-title">
+    <div class="clinic-story-copy">
+      <h2 id="clinic-story-title">Local foot care for every age</h2>
+      <p>From our first practice on Mona Road to our clinic on Boolwey Street, we’ve cared for adults and children across Bowral and the Southern Highlands.</p>
+      <p>We provide routine foot care and assess how your feet and legs move. Our focus is prevention and identifying problems early.</p>
+      <a class="outline-button" href="/about/">About the clinic <span aria-hidden="true">→</span></a>
+      <a class="clinic-story-address" href="/#visit">${megaMenuIcon('#visit')}<span><strong>Visit us on Boolwey Street</strong><small>Shop 3, 2-4 Boolwey Street, Bowral</small></span></a>
+    </div>
+    <figure class="clinic-story-photo">
+      ${image(interiorImages.get('book-online'),'Dr. Abbie Clinics practitioners talking at reception')}
+      <figcaption>The Dr. Abbie Clinics team</figcaption>
+    </figure>
+  </section>`;
+}
+
 function homepage(hero,team,googleWordmark) {
   const b=home.blocks;
   return `<section class="hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(hero,'',true)}<div class="wrap hero-inner"><div class="hero-copy">
@@ -244,7 +260,7 @@ function homepage(hero,team,googleWordmark) {
   <section class="section"><div class="wrap"><div class="section-heading"><h2>Meet the Team</h2><p>${esc(b[14].text)}</p></div>${practitioners(team)}<div class="section-action"><a class="outline-button" href="/our-team/">Meet all practitioners →</a></div></div></section>
   ${reviews()}
   ${homepageConditions()}
-  <section class="section tint"><div class="wrap split"><div><h2>${esc(b[3].text)}</h2><p>${esc(b[4].text)}</p><a class="text-link" href="/about/">About the clinic ↗</a></div>${renderBlock(b[5])}</div></section>
+  ${homepageClinicStory()}
   <section class="section tint services-section" id="services"><div class="wrap"><div class="section-heading"><h2>Range of services</h2><p>${esc(b[17].text)}</p></div>${careCards([...group('services'),...additions],true)}<details class="more-care"><summary>See our full range of care</summary><div class="source-list">${b[27].clean}${b[28].clean}</div></details></div></section>
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
   <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>

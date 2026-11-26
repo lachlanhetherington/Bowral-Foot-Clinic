@@ -189,6 +189,20 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .condition-chevron { width: .55rem; height: .55rem; margin-inline: .25rem; border: solid var(--link); border-width: 0 2px 2px 0; transform: rotate(-45deg); }
 .condition-more summary { padding: .85rem .25rem; min-height: 44px; color: var(--link); font-weight: 600; }
 .condition-more .source-list { padding-bottom: 1rem; }
+.clinic-story { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); background: var(--tint); }
+.clinic-story-copy { align-self: center; padding-block: clamp(3rem, 6vw, 6rem); padding-inline: max(1.5rem, calc((100vw - 77rem) / 2)) clamp(1.6rem, 5vw, 5rem); }
+.clinic-story-copy h2 { max-width: 15ch; text-wrap: balance; }
+.clinic-story-copy p { color: var(--muted); max-width: 53ch; }
+.clinic-story-copy .outline-button { gap: .55rem; }
+.clinic-story-copy .outline-button:hover { background: var(--paper); }
+.clinic-story-address { display: flex; align-items: center; gap: .75rem; width: fit-content; max-width: 100%; padding: 1.05rem 0 0; margin-top: 1.75rem; border-top: 1px solid var(--line); text-decoration: none; }
+.clinic-story-address .mega-icon { flex: 0 0 auto; background: var(--paper); }
+.clinic-story-address strong, .clinic-story-address small { display: block; }
+.clinic-story-address small { color: var(--muted); }
+.clinic-story-address:hover strong { color: var(--link); text-decoration: underline; }
+.clinic-story-photo { display: flex; flex-direction: column; min-width: 0; }
+.clinic-story-photo img { flex: 1 0 0; min-height: 0; object-position: 58% center; }
+.clinic-story-photo figcaption { color: var(--light); background: var(--navy); padding: .7rem 1.5rem; font-size: .82rem; }
 .more-care { margin: 1.65rem auto 0; max-width: 47rem; border-top: 1px solid var(--line); }
 .more-care summary { padding: .9rem 0; font-weight: 600; color: var(--link); }
 .more-care .source-list { padding-bottom: 1rem; }
@@ -315,6 +329,10 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
   .team-track { grid-auto-columns: 68%; }
   .care-grid, .care-grid-images { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .conditions-layout { grid-template-columns: 1fr; }
+  .clinic-story { grid-template-columns: 1fr; }
+  .clinic-story-copy { padding-inline: 1rem; }
+  .clinic-story-photo img { flex: none; aspect-ratio: 3/2; }
+  .clinic-story-photo figcaption { padding-inline: 1rem; }
   .care-card-body { padding: .85rem; }
   .visit-data { grid-template-columns: 1fr; }
   .visit-layout, .visit-layout .visit-data { grid-template-columns: 1fr; }
