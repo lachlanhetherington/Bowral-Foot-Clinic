@@ -2,7 +2,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
-const { photography, detailIllustrations, care, teamProfiles } = require('./interior-data.cjs');
+const { photography, detailIllustrations, care, teamProfiles, locationHeroes } = require('./interior-data.cjs');
 const source = require('../Incoming/source-audit.json');
 const pages = source.filter(page => page.group !== 'reference');
 const home = pages.find(page => !page.slug);
@@ -450,8 +450,10 @@ function interiorDetail(blocks, hero, illustration) {
   return rendered.join('').trim();
 }
 
-function clinicPageHero(title, summary, destination, action) {
-  return `<section class="page-hero clinic-page-hero"><span class="header-scroll-marker" aria-hidden="true"></span>${image(home.blocks[5].file,'',true)}
+function clinicPageHero({title, summary, destination, action, style, photo, mobilePhoto, alt = ''}) {
+  const heroImage = image(photo, alt, true);
+  return `<section class="page-hero clinic-page-hero ${style}"><span class="header-scroll-marker" aria-hidden="true"></span>
+    ${mobilePhoto ? `<picture><source media="(max-width: 51rem)" srcset="${mobilePhoto}">${heroImage}</picture>` : heroImage}
     <div class="wrap page-hero-inner"><div class="page-hero-copy">
       <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">${esc(title)}</span></nav>
       <h1>${esc(title)}</h1>
@@ -461,7 +463,16 @@ function clinicPageHero(title, summary, destination, action) {
 }
 
 function meetTheTeam(team) {
-  return `${clinicPageHero('Meet the Team', 'Get to know the four podiatrists who see patients at our Boolwey Street clinic.', '#bowral-practitioners', 'Explore the team')}
+  return `${clinicPageHero({
+    title: 'Meet the Team',
+    summary: 'Get to know the four podiatrists who see patients at our Boolwey Street clinic.',
+    destination: '#bowral-practitioners',
+    action: 'Explore the team',
+    style: 'team-hero',
+    photo: 'assets/hero-team-wide.webp',
+    mobilePhoto: 'assets/hero-team-portrait.webp',
+    alt: 'A group portrait of Dr. Abbie Clinics practitioners',
+  })}
     <section class="section" id="bowral-practitioners" aria-labelledby="bowral-practitioners-title"><div class="wrap">
       <h2 id="bowral-practitioners-title">Our Bowral podiatrists</h2>
       <div class="team-grid">${team.map(person=>`
@@ -497,7 +508,14 @@ function aboutClinic() {
     ['sports-podiatry', 'Sports podiatry', 'Foot and lower-leg concerns related to running, sport or training.'],
     ['custom-orthotics', 'Custom orthotics', 'Prescription insoles fitted to your feet and footwear.'],
   ];
-  return `${clinicPageHero('About Bowral Foot Clinic', 'Podiatry and lower-limb care for adults and children in Bowral and the Southern Highlands.', '#about-visit', 'Plan your visit')}
+  return `${clinicPageHero({
+    title: 'About Bowral Foot Clinic',
+    summary: 'Podiatry and lower-limb care for adults and children in Bowral and the Southern Highlands.',
+    destination: '#about-visit',
+    action: 'Plan your visit',
+    style: 'about-hero',
+    photo: 'assets/bowral-shopfront.webp',
+  })}
     <section class="section" id="about-story" aria-labelledby="about-story-title"><div class="wrap split about-story">
       <div>
         <h2 id="about-story-title">From Mona Road to Boolwey Street</h2>
@@ -546,7 +564,6 @@ function interior(page,team) {
   if (page.slug==='our-team') return meetTheTeam(team);
   if (page.slug==='about') return aboutClinic();
   const blocks = [...page.blocks];
-  const clinicPhoto = home.blocks[5].file;
   const title = page.group==='locations' ? `Podiatry near ${titleFor(page)}` : page.headings[0];
   if (blocks[0].type==='heading') blocks.shift();
   const leadingBlock = blocks[0]?.type==='text-editor' ? blocks.shift() : null;
@@ -560,7 +577,10 @@ function interior(page,team) {
     : useExistingLead ? leadingBlock.clean : `<p>${esc(introductions[page.slug] || menuDescriptions[page.slug]+'.')}</p>`;
   if (leadingBlock && !useExistingLead) blocks.unshift(leadingBlock);
   const illustration = detailIllustrations[page.slug];
-  const photo = illustration?.hero ? 'assets/' + illustration.hero : interiorImages.get(page.slug) || clinicPhoto;
+  const regionalPhoto = locationHeroes[page.slug];
+  const heroFile = regionalPhoto?.file || illustration?.hero;
+  const photo = heroFile ? 'assets/' + heroFile : interiorImages.get(page.slug);
+  if (!photo) throw new Error('Missing hero photograph for ' + page.slug);
   const parent = {services:['#services','Services'],conditions:['#conditions','Conditions'],locations:['#visit','Locations']}[page.group];
   const breadcrumb = `<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span>
     ${parent ? link(...parent)+' <span aria-hidden="true">/</span> ' : ''}<span aria-current="page">${esc(titleFor(page))}</span></nav>`;
@@ -585,7 +605,10 @@ function interior(page,team) {
       ${(extras[page.slug]||[]).map(([id,label,copy])=>`<section id="${id}"><h2>${label}</h2><p>${copy}</p></section>`).join('')}${questions}</article>${appointmentSidebar(page)}</div></section>
       ${relatedCare(care[page.slug] || ['general-foot-care','biomechanics','our-team'])}${page.group==='locations'?reviews():''}`;
   }
-  return banner + content;
+  const credit = regionalPhoto
+    ? `<p class="wrap location-photo-credit"><a href="${esc(regionalPhoto.source)}">${esc(regionalPhoto.title)}</a> by ${esc(regionalPhoto.author)} · <a href="${esc(regionalPhoto.licenseUrl)}">${esc(regionalPhoto.license)}</a> · cropped for display</p>`
+    : '';
+  return banner + credit + content;
 }
 
 async function normalize(tab, page) {

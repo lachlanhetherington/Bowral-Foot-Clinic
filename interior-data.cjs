@@ -159,4 +159,31 @@ const teamProfiles = {
   },
 };
 
-module.exports = {photography, detailIllustrations, care, teamProfiles};
+const locationHeroes = {
+  'podiatrists-moss-vale': {
+    file: 'hero-moss-vale.jpg',
+    title: 'Argyle Street, Moss Vale',
+    author: 'Nick-D',
+    source: 'https://commons.wikimedia.org/wiki/File:Argyle_Street_Moss_Vale_November_2020.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+  'podiatrist-southern-highlands': {
+    file: 'hero-southern-highlands.jpg',
+    title: 'Bowral from Mount Gibraltar',
+    author: 'Ryan Wick',
+    source: 'https://commons.wikimedia.org/wiki/File:Bowral_panorama.jpg',
+    license: 'CC BY 2.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
+  },
+  'podiatrists-wollondilly': {
+    file: 'hero-wollondilly.jpg',
+    title: 'Picton, Wollondilly',
+    author: 'JustARandomEditor123',
+    source: 'https://commons.wikimedia.org/wiki/File:Picton,_New_South_Wales,_July_2025.jpg',
+    license: 'CC BY-SA 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+  },
+};
+
+module.exports = {photography, detailIllustrations, care, teamProfiles, locationHeroes};
