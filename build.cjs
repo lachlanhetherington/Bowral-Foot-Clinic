@@ -658,8 +658,8 @@ async function main() {
   const browser=await chromium.launch({channel:'chrome'});
   try {
     const tab=await browser.newPage();
-    const logo=await asset(home.images.find(i=>i.alt==='Bowral Foot Clinic logo').url);
-    const favicon=await asset('https://i0.wp.com/thebowralfootclinic.com.au/wp-content/uploads/2025/07/cropped-Agency-Canva-Templates-1.png?fit=192%2C192&ssl=1');
+    const logo = 'assets/bowral-foot-clinic-logo-horizontal.svg';
+    const favicon = 'assets/bowral-foot-clinic-icon.svg';
     const reference=source.find(p=>p.group==='reference' && !p.slug);
     const drAbbieImage = filename => 'https://dr-abbie.com/wp-content/dr-abbie-assets/img/'+filename;
     const googleWordmark = await asset(drAbbieImage('google-wordmark.webp'));
@@ -713,7 +713,7 @@ async function main() {
 <title>${esc(page.pageTitle)}</title>
 ${page.description===null?'':`<meta name="description" content="${esc(page.description)}">`}
 <link rel="canonical" href="${esc(page.canonical)}">
-<link rel="icon" type="image/png" sizes="192x192" href="${base}${favicon}">
+<link rel="icon" type="image/svg+xml" sizes="any" href="${base}${favicon}">
 <link rel="preload" href="${base}assets/poppins-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${base}assets/poppins-semibold.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('has-js');</script>

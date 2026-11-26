@@ -49,7 +49,7 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .header-inner, .header-actions, .header nav { display: flex; align-items: center; }
 .header-inner { min-height: 88px; gap: clamp(1rem, 4vw, 4rem); width: min(100% - 3rem, 94rem); }
 .logo { display: block; flex: 0 0 auto; width: 158px; background: #fcfcfd; padding: 3px 9px; border-radius: 8px; }
-.logo img { aspect-ratio: 1024/359; object-fit: contain; }
+.logo img { aspect-ratio: 250/70; object-fit: contain; }
 .header .logo { width: clamp(9rem, 12vw, 12rem); background: transparent; padding: 0; border-radius: 0; }
 .photo-header .header:not(.scrolled) .logo img { filter: url("logo-white-filter.svg#white-wordmark"); }
 .header-scroll-marker { position: absolute; top: 32px; width: 1px; height: 1px; pointer-events: none; }

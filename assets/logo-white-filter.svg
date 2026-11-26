@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg">
   <filter id="white-wordmark" primitiveUnits="objectBoundingBox" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
     <!-- Split in the transparent space between the blue icon and the lettering. -->
-    <feFlood x="0" y="0" width=".258" height="1" result="icon-area"/>
+    <feFlood x="0" y="0" width=".302" height="1" result="icon-area"/>
     <feComposite in="SourceGraphic" in2="icon-area" operator="in" result="original-icon"/>
-    <feFlood x=".258" y="0" width=".742" height="1" flood-color="white" result="wordmark-ink"/>
+    <feFlood x=".302" y="0" width=".698" height="1" flood-color="white" result="wordmark-ink"/>
     <feComposite in="wordmark-ink" in2="SourceAlpha" operator="in" result="white-text"/>
     <feMerge>
       <feMergeNode in="original-icon"/>
