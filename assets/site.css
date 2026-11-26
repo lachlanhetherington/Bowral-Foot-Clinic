@@ -217,7 +217,10 @@ p { margin: 0 0 1.1em; max-width: 68ch; }
 .more-care { margin: 1.65rem auto 0; max-width: 47rem; border-top: 1px solid var(--line); }
 .more-care summary { padding: .9rem 0; font-weight: 600; color: var(--link); }
 .more-care .source-list { padding-bottom: 1rem; }
-.booking-band { padding: clamp(3.5rem, 10vw, 8rem) 0; text-align: center; color: var(--light); background: linear-gradient(90deg,#102e43b8,#102e43db 50%,#102e43bf), url("resized_20250414_101058_1753329708937.jpeg") center 10%/cover, var(--navy); }
+.booking-band { position: relative; isolation: isolate; overflow: clip; padding: clamp(3.5rem, 10vw, 8rem) 0; text-align: center; color: var(--light); background: var(--navy); }
+.booking-band::before, .booking-band::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.booking-band::before { background: url("resized_20250414_101058_1753329708937.jpeg") center 10%/cover; }
+.booking-band::after { background: linear-gradient(90deg,#102e43b8,#102e43db 50%,#102e43bf); }
 .booking-band p { margin-inline: auto; }
 .network { padding-block: clamp(2.75rem, 5vw, 4.5rem); }
 .network-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: start; gap: clamp(1.35rem, 5vw, 4rem); }
@@ -432,7 +435,7 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 }
 @media (max-width: 39rem) {
   .visit-nearby ul { grid-template-columns: 1fr; }
-  .booking-band { background-position: center, 51% top; background-size: auto, auto 195%; }
+  .booking-band::before { background-position: 51% top; background-size: auto 195%; }
 }
 @media (max-width: 21rem) {
   .care-grid, .service-grid { grid-template-columns: 1fr; }
@@ -452,6 +455,11 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+  .booking-band.is-parallax::before {
+    --parallax-distance: clamp(1.25rem, 3vw, 2.5rem);
+    inset-block: calc(-1 * var(--parallax-distance));
+    transform: translateY(calc(var(--booking-parallax, 0) * var(--parallax-distance)));
+  }
   .home .hero > img { animation: hero-photo-zoom 18s ease-in-out infinite alternate; transform-origin: 60% 58%; }
   @keyframes hero-photo-zoom { from { transform: scale(1); } to { transform: scale(1.095); } }
   .button, .rail-controls button, .header { transition: transform 160ms ease-out, background-color 200ms ease-out; }

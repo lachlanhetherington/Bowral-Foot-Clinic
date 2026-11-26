@@ -151,16 +151,44 @@ for (const carousel of document.querySelectorAll('[data-carousel]')) {
   }
 }
 
+const bookingBand = document.querySelector('.booking-band');
+if (bookingBand) {
+  let visible = false;
+  let frame = 0;
+
+  function updateBookingParallax() {
+    frame = 0;
+    if (!visible || reducedMotion.matches) return;
+    const bounds = bookingBand.getBoundingClientRect();
+    const viewport = document.documentElement.clientHeight;
+    const progress = (viewport - 2 * bounds.top - bounds.height) / (viewport + bounds.height);
+    bookingBand.style.setProperty('--booking-parallax', Math.max(-1, Math.min(1, progress)));
+    bookingBand.classList.add('is-parallax');
+  }
+
+  function scheduleBookingParallax() {
+    if (visible && !reducedMotion.matches && !frame) frame = requestAnimationFrame(updateBookingParallax);
+  }
+
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    scheduleBookingParallax();
+  }).observe(bookingBand);
+  window.addEventListener('scroll', scheduleBookingParallax, {passive: true});
+  window.addEventListener('resize', scheduleBookingParallax);
+  reducedMotion.addEventListener('change', scheduleBookingParallax);
+}
+
 if (!reducedMotion.matches) {
   const reveal = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;
-      if (!animationsPaused && !reducedMotion.matches) entry.target.animate(
+      if (!reducedMotion.matches) entry.target.animate(
         [{opacity:.76, transform:'translateY(12px)'},{opacity:1, transform:'translateY(0)'}],
         {duration:420, easing:'cubic-bezier(.16,1,.3,1)'}
       );
       reveal.unobserve(entry.target);
     }
   }, {threshold:.25});
-  document.querySelectorAll('.home .section-heading, .home .booking-band .wrap').forEach(node => reveal.observe(node));
+  document.querySelectorAll('.home .section-heading').forEach(node => reveal.observe(node));
 }
