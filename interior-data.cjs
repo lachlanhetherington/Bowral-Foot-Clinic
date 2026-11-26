@@ -20,8 +20,8 @@ const photography = {
   'toenail-problems': 'tx-foot-care.webp'
 };
 
-// Body figures use Bowral photography and the Dr. Abbie Clinics treatment library.
-const serviceIllustrations = {
+// Body figures use Bowral and Dr. Abbie Clinics imagery, with external credits where applicable.
+const detailIllustrations = {
   biomechanics: {
     file: 'edu-biomechanics.webp', width: 560, height: 560, beforeHeading: 3,
     alt: 'Two skeletons compare an uneven pelvis with level alignment.',
@@ -77,6 +77,42 @@ const serviceIllustrations = {
     alt: 'Dr Abbie Najjarine examines a patient’s foot while they stand.',
     caption: 'Dr Abbie Najjarine assessing foot position before treatment.',
   },
+  'childrens-foot-problems': {
+    file: 'edu-pigeon.webp', width: 510, height: 340, beforeHeading: 3,
+    alt: 'A young child walking barefoot on the beach.',
+    caption: 'Watching how a child walks can help a podiatrist assess concerns such as in-toeing.',
+  },
+  'diabetic-foot-care': {
+    hero: 'dsc04893-scaled-1.jpg', file: 'diabetic-foot-exam-cdc.jpg', width: 700, height: 464,
+    alt: 'A clinician supports and examines the right foot of a seated patient.',
+    caption: 'A clinician examines a patient’s foot during a diabetes assessment.',
+    credit: { label: 'Amanda Mills, CDC Public Health Image Library', url: 'https://wwwn.cdc.gov/phil/Details.aspx?pid=13705' },
+  },
+  'foot-ankle-injuries': {
+    file: 'cond-shin-splints.webp', width: 720, height: 720, beforeHeading: 4, diagram: true,
+    alt: 'Lower-leg diagram highlighting the inner edge of the tibia in red.',
+    caption: 'Medial shin splints can cause pain along the inside edge of the shin.',
+    descriptions: {
+      Metatarsalgia: 'Metatarsalgia is pain in the ball of the foot. It can have several causes, including repetitive activity or pressure from footwear.',
+      'Posterior Tibial Tendon Dysfunction': 'The posterior tibial tendon helps support the arch. When it stops working properly, pain may develop along the inside of the ankle and the arch can gradually flatten.',
+    },
+  },
+  'heel-pain': {
+    file: 'cond-heel-pain.webp', width: 720, height: 720, beforeHeading: 3, diagram: true,
+    alt: 'Side view of the foot labelling the heel bone, plantar fascia and a small heel spur.',
+    caption: 'The plantar fascia attaches to the underside of the heel bone, near where a heel spur can form.',
+  },
+  'knee-hip-back-pain': {
+    file: 'edu-knee.webp', width: 256, height: 252,
+    alt: 'An illustration highlights the bones and joint at the knee.',
+    caption: 'The knee joint, shown between the thigh and lower leg.',
+  },
+  'toenail-problems': {
+    hero: 'hero-ingrown.webp', file: 'ingrown-toenail-niddk.jpg', width: 1344, height: 1240, diagram: true,
+    alt: 'Illustration of an ingrown big toenail with the affected edge marked.',
+    caption: 'An ingrown toenail along one edge of the big toe.',
+    credit: { label: 'National Institute of Diabetes and Digestive and Kidney Diseases, National Institutes of Health', url: 'https://www.niddk.nih.gov/news/media-library/17603' },
+  },
 };
 
 const care = {
@@ -99,4 +135,4 @@ const care = {
   'toenail-problems': ['general-foot-care','diabetic-foot-care','our-team']
 };
 
-module.exports = {photography, serviceIllustrations, care};
+module.exports = {photography, detailIllustrations, care};

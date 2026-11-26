@@ -2,7 +2,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { chromium } = require(process.env.BOWRAL_PLAYWRIGHT);
-const { photography, serviceIllustrations, care } = require('./interior-data.cjs');
+const { photography, detailIllustrations, care } = require('./interior-data.cjs');
 const source = require('../Incoming/source-audit.json');
 const pages = source.filter(page => page.group !== 'reference');
 const home = pages.find(page => !page.slug);
@@ -427,14 +427,20 @@ function interiorDetail(blocks, hero, illustration) {
     block.file !== hero && block.file !== 'assets/0.webp' &&
     !(illustration && block.type === 'image')
   );
-  const rendered = detail.map(renderBlock);
+  const rendered = detail.map((block, index) => {
+    const previous = detail[index - 1];
+    const description = block.type === 'text-editor' && previous?.type === 'heading'
+      ? illustration?.descriptions?.[previous.text]
+      : null;
+    return description ? `<p>${esc(description)}</p>` : renderBlock(block);
+  });
   if (illustration) {
-    const {file, width, height, alt, caption, beforeHeading = 2} = illustration;
+    const {file, width, height, alt, caption, credit, diagram, beforeHeading = 2} = illustration;
     const nextHeading = detail.filter(block => block.type === 'heading')[beforeHeading - 1];
     const position = nextHeading ? detail.indexOf(nextHeading) : rendered.length;
-    rendered.splice(position, 0, `<figure class="service-figure">
+    rendered.splice(position, 0, `<figure class="detail-figure${diagram ? ' detail-figure-diagram' : ''}">
       <img src="assets/${file}" alt="${esc(alt)}" width="${width}" height="${height}" loading="lazy" decoding="async">
-      <figcaption>${esc(caption)}</figcaption>
+      <figcaption>${esc(caption)}${credit ? `<small>Image credit <a href="${esc(credit.url)}">${esc(credit.label)}</a></small>` : ''}</figcaption>
     </figure>`);
   }
   return rendered.join('').trim();
@@ -457,7 +463,7 @@ function interior(page,team) {
     ? `<p>Visiting from ${esc(titleFor(page))}? Appointments are held at The Bowral Foot Clinic on Boolwey Street.</p>`
     : useExistingLead ? leadingBlock.clean : `<p>${esc(introductions[page.slug] || menuDescriptions[page.slug]+'.')}</p>`;
   if (leadingBlock && !useExistingLead) blocks.unshift(leadingBlock);
-  const illustration = serviceIllustrations[page.slug];
+  const illustration = detailIllustrations[page.slug];
   const photo = illustration?.hero ? 'assets/' + illustration.hero : interiorImages.get(page.slug) || clinicPhoto;
   const parent = {services:['#services','Services'],conditions:['#conditions','Conditions'],locations:['#visit','Locations']}[page.group];
   const breadcrumb = `<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span>

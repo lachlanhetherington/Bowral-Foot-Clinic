@@ -359,9 +359,11 @@ dl div { display: flex; justify-content: space-between; gap: .5rem; max-width: 2
 .prose { max-width: 49rem; }
 .prose :is(h2,h3,h4):not(:first-child), .prose section { margin-top: 1.5em; }
 .prose figure { margin-block: 1.75rem; }
-.prose .service-figure { width: fit-content; max-width: 100%; margin-block: clamp(1.5rem, 4vw, 2.5rem); }
-.service-figure img { width: auto; max-width: 100%; height: auto; aspect-ratio: auto; border: 1px solid var(--line); }
-.service-figure figcaption { max-width: 54ch; margin-top: .6rem; color: var(--muted); font-size: .88rem; }
+.prose .detail-figure { width: fit-content; max-width: 100%; margin-block: clamp(1.5rem, 4vw, 2.5rem); }
+.prose .detail-figure-diagram { max-width: min(100%, 34rem); }
+.detail-figure img { width: auto; max-width: 100%; height: auto; aspect-ratio: auto; border: 1px solid var(--line); }
+.detail-figure figcaption { max-width: 54ch; margin-top: .6rem; color: var(--muted); font-size: .88rem; }
+.detail-figure figcaption small { display: block; margin-top: .3rem; }
 .interior-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(15rem, .4fr); gap: clamp(1.75rem, 5vw, 5rem); align-items: start; }
 .interior-layout .prose h2 { font-size: clamp(1.45rem, 2.6vw, 2.4rem); }
 .interior-layout .prose a { overflow-wrap: anywhere; }
