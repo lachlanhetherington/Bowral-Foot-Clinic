@@ -350,7 +350,7 @@ function homepage(hero,team,googleWordmark) {
   ${homepageClinicStory()}
   ${homepageServices()}
   <section class="section"><div class="wrap faq"><h2>Before you book with us</h2><div>${b[30].clean}</div></div></section>
-  <section class="booking-band"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
+  <section class="booking-band" id="book-appointment"><div class="wrap"><h2>Book your next appointment</h2><p>Visit The Bowral Foot Clinic on Boolwey Street.</p>${book()}</div></section>
   ${homepageVisit()}
   ${homepageNetwork()}`;
 }
